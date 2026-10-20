@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dieu gi xay ra trong nao khi chung ta uong ruou?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #050d1f; --navy2: #0a1628; --navy3: #0f1f3d;
+      --accent: #3d7af5; --cyan: #00d4ff; --teal: #00f5d4;
+      --purple: #9b59b6; --orange: #f5a623; --red: #e74c3c; --green: #2ecc71;
+      --text: #e8edf5; --muted: #7a8ba5;
+      --glass: rgba(255,255,255,0.05); --glass2: rgba(255,255,255,0.08);
+      --border: rgba(255,255,255,0.1);
+    }
+    html, body { width:100%; height:100%; overflow:hidden; font-family:'Be Vietnam Pro',sans-serif; background:var(--navy); color:var(--text); }
+    #deck { width:100vw; height:100vh; position:relative; overflow:hidden; }
+    .slide { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:115px 75px 55px; opacity:0; pointer-events:none; transition:opacity .5s cubic-bezier(.4,0,.2,1), transform .5s cubic-bezier(.4,0,.2,1); transform:translateX(55px); overflow:hidden; }
+    .slide.active { opacity:1; pointer-events:all; transform:translateX(0); }
+    .slide.exit-left { opacity:0; transform:translateX(-55px); }
+    .slide::before { content:''; position:absolute; inset:0; background: radial-gradient(ellipse 70% 60% at 20% 80%, rgba(61,122,245,.12) 0%, transparent 70%), radial-gradient(ellipse 50% 50% at 80% 20%, rgba(0,212,255,.08) 0%, transparent 60%), linear-gradient(135deg, var(--navy) 0%, var(--navy2) 50%, var(--navy3) 100%); z-index:0; }
+    .bg-nodes { position:absolute; inset:0; z-index:0; opacity:.06; transform:scale(0.6); transform-origin:center center; }
+    .slide > * { position:relative; z-index:1; }
+    #progress-bar { position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg,var(--cyan),var(--accent),var(--teal)); transition:width .4s ease; z-index:100; box-shadow:0 0 12px var(--cyan); }
+    #counter { display:none; }
+    .nav-btn { position:fixed; top:50%; transform:translateY(-50%); width:50px; height:50px; border-radius:50%; border:1px solid var(--border); background:var(--glass2); backdrop-filter:blur(12px); cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--text); font-size:20px; z-index:100; transition:all .25s ease; user-select:none; }
+    .nav-btn:hover { background:rgba(61,122,245,.25); border-color:var(--accent); box-shadow:0 0 20px rgba(61,122,245,.3); }
+    #prev { left:18px; } #next { right:18px; }
+    #dots { display:none; }
+    #hint { position:fixed; top:14px; right:22px; font-size:12px; color:var(--muted); z-index:100; display:flex; gap:7px; align-items:center; background:var(--glass2); border:1px solid var(--border); border-radius:999px; padding:6px 14px; backdrop-filter:blur(12px); }
+    .key { display:inline-flex; align-items:center; justify-content:center; border:1px solid var(--border); border-radius:4px; width:22px; height:22px; font-size:11px; background:var(--glass); }
+    .hkey { cursor:pointer; transition:all .2s ease; }
+    .hkey:hover { background:rgba(61,122,245,.3); border-color:var(--accent); color:var(--cyan); transform:scale(1.12); }
+    .hkey:active { transform:scale(.9); }
+    .hsep { opacity:.35; font-size:10px; margin:0 2px; }
+    .badge { display:inline-flex; align-items:center; gap:8px; background:rgba(61,122,245,.15); border:1px solid rgba(61,122,245,.3); border-radius:999px; padding:6px 16px; font-size:13px; font-weight:600; color:var(--cyan); letter-spacing:.08em; text-transform:uppercase; margin-bottom:18px; }
+    .dot-pulse { width:8px; height:8px; border-radius:50%; background:var(--cyan); box-shadow:0 0 6px var(--cyan); animation:pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.3);} }
+    .dot-pulse { display:none; }
+    .slide .badge { display:none !important; }
+    h1 { font-size:clamp(1.6rem,3.2vw,2.6rem); font-weight:900; line-height:1.15; text-align:center; letter-spacing:-.02em; margin-bottom:18px; }
+    h1 .highlight { background:linear-gradient(135deg,var(--cyan) 0%,var(--accent) 50%,var(--teal) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    h2.section-title { font-size:clamp(1.1rem,2vw,1.65rem); font-weight:800; letter-spacing:-.02em; text-align:center; margin-bottom:8px; line-height:1.25; }
+    .sub { font-size:1rem; color:var(--muted); text-align:center; max-width:680px; line-height:1.7; margin-bottom:32px; }
+    .divider { width:60px; height:3px; background:linear-gradient(90deg,var(--accent),var(--cyan)); border-radius:999px; margin:0 auto 26px; }
+    .chapter-number { font-size:6.5rem; font-weight:900; line-height:1; letter-spacing:-.04em; background:linear-gradient(135deg,rgba(61,122,245,.2),rgba(0,212,255,.1)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:8px; font-family:'Space Grotesk',sans-serif; }
+    .card-row { display:flex; gap:14px; width:100%; max-width:1040px; flex-wrap:wrap; justify-content:center; }
+    .card { background:var(--glass2); border:1px solid var(--border); border-radius:16px; padding:20px; flex:1 1 200px; min-width:200px; max-width:300px; backdrop-filter:blur(8px); transition:all .3s ease; }
+    .card:hover { transform:translateY(-4px); border-color:rgba(61,122,245,.3); }
+    .card-icon { font-size:1.75rem; margin-bottom:10px; display:block; }
+    .card h3 { font-size:.96rem; font-weight:700; margin-bottom:8px; }
+    .card p, .card li { font-size:.83rem; color:var(--muted); line-height:1.65; }
+    .card ul { padding-left:16px; } .card li { margin-bottom:4px; }
+    .c-cyan { border-top:2px solid var(--cyan); } .c-teal { border-top:2px solid var(--teal); }
+    .c-purple { border-top:2px solid var(--purple); } .c-orange { border-top:2px solid var(--orange); }
+    .c-red { border-top:2px solid var(--red); } .c-green { border-top:2px solid var(--green); } .c-blue { border-top:2px solid var(--accent); }
+    .accent-cyan{color:var(--cyan);} .accent-teal{color:var(--teal);} .accent-blue{color:var(--accent);}
+    .accent-purple{color:var(--purple);} .accent-orange{color:var(--orange);} .accent-red{color:var(--red);} .accent-green{color:var(--green);}
+    .overview-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:15px; width:100%; max-width:980px; }
+    .ov-item { background:var(--glass2); border:1px solid var(--border); border-radius:14px; padding:18px; display:flex; gap:13px; align-items:flex-start; transition:all .3s ease; cursor:pointer; }
+    .ov-item:hover { border-color:var(--accent); transform:translateY(-2px); }
+    .ov-num { font-family:'Space Grotesk',sans-serif; font-size:1.7rem; font-weight:700; color:rgba(61,122,245,.4); line-height:1; min-width:28px; }
+    .ov-text h4 { font-size:.88rem; font-weight:700; margin-bottom:4px; } .ov-text p { font-size:.76rem; color:var(--muted); line-height:1.5; }
+    .flow { display:flex; align-items:center; width:100%; max-width:880px; flex-wrap:wrap; justify-content:center; margin-top:18px; }
+    .flow-item { display:flex; flex-direction:column; align-items:center; gap:7px; background:var(--glass2); border:1px solid var(--border); border-radius:14px; padding:16px 20px; min-width:115px; text-align:center; font-size:.8rem; color:var(--muted); transition:all .3s ease; }
+    .flow-item:hover { border-color:var(--accent); color:var(--text); }
+    .fi-icon { font-size:1.5rem; } .flow-item strong { font-size:.88rem; color:var(--text); }
+    .flow-arrow { font-size:1.3rem; color:var(--accent); padding:0 3px; opacity:.7; }
+    .nt-split { display:grid; grid-template-columns:1fr 1fr; gap:22px; width:100%; max-width:980px; }
+    .nt-panel { background:var(--glass2); border:1px solid var(--border); border-radius:18px; padding:24px; }
+    .nt-header { display:flex; align-items:center; gap:11px; margin-bottom:16px; padding-bottom:13px; border-bottom:1px solid var(--border); }
+    .nt-badge { padding:5px 13px; border-radius:999px; font-size:.76rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; }
+    .nt-inhibit { background:rgba(0,212,255,.15); color:var(--cyan); } .nt-excite { background:rgba(245,166,35,.15); color:var(--orange); }
+    .nt-panel h3 { font-size:1.15rem; font-weight:800; }
+    .nt-row { display:flex; flex-direction:column; gap:11px; }
+    .nt-row-item { display:flex; gap:9px; align-items:flex-start; }
+    .nt-row-item .di { width:8px; height:8px; border-radius:50%; margin-top:6px; flex-shrink:0; }
+    .nt-row-item p { font-size:.81rem; color:var(--muted); line-height:1.55; } .nt-row-item p strong { color:var(--text); }
+    .nt-effect { margin-top:14px; padding:13px; border-radius:10px; font-size:.81rem; line-height:1.5; }
+    .eff-cyan { background:rgba(0,212,255,.08); border:1px solid rgba(0,212,255,.2); color:var(--cyan); }
+    .eff-orange { background:rgba(245,166,35,.08); border:1px solid rgba(245,166,35,.2); color:var(--orange); }
+    .comp-table { width:100%; max-width:1020px; border-collapse:separate; border-spacing:0; font-size:.83rem; }
+    .comp-table th { padding:13px 16px; text-align:left; font-weight:700; font-size:.88rem; letter-spacing:.04em; border-bottom:1px solid var(--border); }
+    .comp-table th:nth-child(2) { color:var(--cyan); } .comp-table th:nth-child(3) { color:var(--orange); }
+    .comp-table td { padding:11px 16px; border-bottom:1px solid rgba(255,255,255,.05); color:var(--muted); line-height:1.5; vertical-align:top; }
+    .comp-table td:first-child { color:var(--text); font-weight:600; font-size:.8rem; }
+    .comp-table tr:hover td { background:var(--glass); }
+    .pill { display:inline-block; padding:3px 9px; border-radius:999px; font-size:.76rem; font-weight:600; }
+    .pill-cyan { background:rgba(0,212,255,.15); color:var(--cyan); } .pill-orange { background:rgba(245,166,35,.15); color:var(--orange); }
+    .region-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:15px; width:100%; max-width:1020px; }
+    .region-card { background:var(--glass2); border:1px solid var(--border); border-radius:16px; padding:18px 18px 14px; transition:all .3s ease; }
+    .region-card:hover { transform:translateY(-3px); box-shadow:0 10px 30px rgba(0,0,0,.3); }
+    .rc-top { display:flex; align-items:center; gap:9px; margin-bottom:9px; }
+    .rc-emoji { font-size:1.4rem; } .rc-name { font-size:.92rem; font-weight:700; }
+    .rc-fn { font-size:.76rem; color:var(--muted); line-height:1.5; }
+    .rc-effect { margin-top:9px; padding-top:9px; border-top:1px solid var(--border); font-size:.76rem; color:var(--muted); line-height:1.5; }
+    .rc-effect strong { color:var(--text); }
+    .wks-table { width:100%; max-width:1020px; font-size:.76rem; border-collapse:separate; border-spacing:0; }
+    .wks-table th { padding:11px 13px; text-align:left; font-weight:700; font-size:.8rem; border-bottom:1px solid var(--border); }
+    .wks-table th:nth-child(2) { color:var(--orange); } .wks-table th:nth-child(3) { color:var(--red); }
+    .wks-table td { padding:9px 13px; border-bottom:1px solid rgba(255,255,255,.05); color:var(--muted); line-height:1.5; vertical-align:top; }
+    .wks-table td:first-child { color:var(--text); font-weight:600; }
+    .wks-table tr:hover td { background:var(--glass); }
+    .callout { width:100%; max-width:780px; padding:18px 22px; border-radius:14px; border-left:4px solid; font-size:.88rem; line-height:1.65; margin-top:14px; }
+    .callout-warning { background:rgba(231,76,60,.08); border-color:var(--red); color:#f1a8a0; }
+    .callout-info { background:rgba(61,122,245,.08); border-color:var(--accent); color:#a5bdf5; }
+    .callout-teal { background:rgba(0,245,212,.06); border-color:var(--teal); color:#80f5e0; }
+    .slide-inner { display:flex; flex-direction:column; align-items:center; width:100%; max-height:84vh; overflow-y:auto; padding:0 3px; scrollbar-width:thin; scrollbar-color:var(--border) transparent; }
+    .slide-inner::-webkit-scrollbar { width:4px; } .slide-inner::-webkit-scrollbar-thumb { background:var(--border); border-radius:999px; }
+    .treat-list { display:flex; flex-direction:column; gap:13px; width:100%; max-width:780px; }
+    .treat-item { display:flex; align-items:flex-start; gap:15px; background:var(--glass2); border:1px solid var(--border); border-radius:14px; padding:16px 20px; }
+    .treat-icon { font-size:1.5rem; min-width:34px; text-align:center; }
+    .treat-body h4 { font-size:.93rem; font-weight:700; margin-bottom:4px; } .treat-body p { font-size:.8rem; color:var(--muted); line-height:1.55; }
+    .cycle { display:flex; flex-direction:column; align-items:center; gap:0; max-width:560px; width:100%; }
+    .cycle-node { background:var(--glass2); border:1px solid var(--border); border-radius:14px; padding:16px 18px; text-align:center; width:100%; }
+    .cycle-node strong { font-size:.92rem; display:block; margin-bottom:5px; } .cycle-node span { font-size:.78rem; color:var(--muted); }
+    .cycle-arrow-v { font-size:1.4rem; color:var(--accent); text-align:center; padding:3px; }
+    .stat-box { background:var(--glass2); border:1px solid var(--border); border-radius:16px; padding:22px 28px; text-align:center; flex:1 1 150px; }
+    .stat-num { font-family:'Space Grotesk',sans-serif; font-size:2.4rem; font-weight:700; background:linear-gradient(135deg,var(--cyan),var(--teal)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height:1.1; }
+    .stat-label { font-size:.8rem; color:var(--muted); margin-top:5px; line-height:1.4; }
+    .brain-anim { width:160px; height:160px; margin-bottom:28px; }
+    .brain-anim svg { width:100%; height:100%; }
+    .neuron-ring { animation:spin 18s linear infinite; transform-origin:center; }
+    .neuron-ring2 { animation:spin 12s linear infinite reverse; transform-origin:center; }
+    @keyframes spin { from{transform:rotate(0deg);}to{transform:rotate(360deg);} }
+    @media(max-width:900px){.slide{padding:36px 26px;}.region-grid,.nt-split,.overview-grid{grid-template-columns:repeat(2,1fr);}}
+    /* Region Explorer */
+    .region-explorer { display:grid; grid-template-columns:210px 1fr; gap:16px; width:100%; max-width:1020px; height:420px; }
+    .region-nav { display:flex; flex-direction:column; gap:7px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:var(--border) transparent; }
+    .rni { display:flex; align-items:center; gap:10px; padding:10px 14px; border-radius:11px; border:1px solid var(--border); background:var(--glass2); cursor:pointer; transition:all .22s ease; }
+    .rni:hover { transform:translateX(4px); }
+    .rni.active { border-color:var(--rni-color,var(--accent)); background:rgba(61,122,245,.12); box-shadow:inset 3px 0 0 var(--rni-color,var(--accent)); transform:translateX(4px); }
+    .rni-emoji { font-size:1.1rem; flex-shrink:0; }
+    .rni-text { flex:1; min-width:0; }
+    .rni-name { font-size:.8rem; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .rni-en { font-size:.68rem; color:var(--muted); }
+    .region-detail { background:var(--glass2); border:1px solid var(--border); border-radius:16px; padding:20px 22px; display:grid; grid-template-columns:1fr 240px; gap:18px; align-items:start; overflow:hidden; transition:opacity .25s; }
+    .rd-left { display:flex; flex-direction:column; gap:12px; }
+    .rd-title { display:flex; align-items:center; gap:10px; }
+    .rd-emoji { font-size:1.6rem; }
+    .rd-name { font-size:1.1rem; font-weight:800; }
+    .rd-en { font-size:.75rem; color:var(--muted); margin-top:2px; }
+    .rd-section { font-size:.8rem; line-height:1.6; color:var(--muted); }
+    .rd-section strong { color:var(--text); }
+    .rd-section .label { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:4px; display:block; }
+    .rd-effect-box { border-radius:10px; padding:11px 14px; font-size:.8rem; line-height:1.55; }
+    .rd-img-panel { border-radius:12px; overflow:hidden; background:rgba(255,255,255,.95); display:flex; align-items:center; justify-content:center; padding:8px; height:100%; max-height:320px; }
+    .rd-img-panel img { width:100%; height:100%; object-fit:contain; display:block; }
+    .rd-no-img { display:flex; align-items:center; justify-content:center; border-radius:12px; border:1px dashed var(--border); height:100%; font-size:3rem; color:var(--muted); }
+    /* Ethanol journey 2-col explorer */
+    .ethanol-explorer { display:grid; grid-template-columns:220px 1fr; gap:18px; width:100%; max-width:1020px; height:420px; }
+    .eth-flow { display:flex; flex-direction:column; gap:0; justify-content:center; }
+    .eth-step { display:flex; align-items:center; gap:11px; padding:11px 14px; border-radius:11px; border:1px solid var(--border); background:var(--glass2); cursor:pointer; transition:all .22s ease; }
+    .eth-step:hover { transform:translateX(3px); }
+    .eth-step.active { border-color:var(--eth-color,var(--cyan)); background:rgba(0,212,255,.1); box-shadow:inset 3px 0 0 var(--eth-color,var(--cyan)); transform:translateX(4px); }
+    .eth-step-icon { font-size:1.2rem; flex-shrink:0; }
+    .eth-step-text { flex:1; }
+    .eth-step-name { font-size:.82rem; font-weight:700; }
+    .eth-step-desc { font-size:.7rem; color:var(--muted); margin-top:2px; }
+    .eth-step-desc { display:none; }
+    .eth-connector { display:flex; align-items:center; justify-content:center; color:var(--accent); font-size:.9rem; opacity:.5; padding:1px 0; margin-left:20px; }
+    .eth-img-panel { background:var(--glass2); border:1px solid var(--border); border-radius:16px; padding:14px; display:flex; flex-direction:column; gap:10px; overflow:hidden; }
+    .eth-img-wrap { flex:2; min-height:0; border-radius:10px; overflow:hidden; background:rgba(255,255,255,.95); display:flex; align-items:center; justify-content:center; }
+    .eth-img-wrap img { width:100%; height:100%; object-fit:contain; display:block; transition:opacity .22s ease; }
+    .eth-caption { flex:1; min-height:0; overflow-y:auto; font-size:.88rem; color:var(--muted); line-height:1.65; padding:10px 14px; border-radius:8px; background:rgba(0,212,255,.06); border:1px solid rgba(0,212,255,.15); }
+    .eth-caption .eth-desc { color:var(--text); font-size:.93rem; font-weight:500; margin-bottom:7px; }
+    .eth-caption .eth-note { color:var(--muted); font-size:.85rem; }
+    /* Home button - top left */
+    /* Top-left nav group */
+    #top-left { position:fixed; top:14px; left:22px; display:flex; align-items:center; gap:8px; z-index:100; }
+    #home-btn { display:flex; align-items:center; gap:7px; background:var(--glass2); border:1px solid var(--border); border-radius:999px; padding:7px 15px; cursor:pointer; color:var(--muted); font-size:12px; font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spacing:.04em; backdrop-filter:blur(12px); transition:all .3s ease; opacity:0; pointer-events:none; flex-shrink:0; white-space:nowrap; }
+    #home-btn.visible { opacity:1; pointer-events:all; }
+    #home-btn:hover { background:rgba(61,122,245,.2); border-color:var(--accent); color:var(--cyan); box-shadow:0 0 14px rgba(61,122,245,.25); }
+    #home-btn svg { width:13px; height:13px; fill:currentColor; }
+    /* Section indicator bar - inline after home btn */
+    #section-bar { display:flex; align-items:center; gap:10px; background:var(--glass2); border:1px solid var(--border); border-radius:999px; padding:7px 16px; backdrop-filter:blur(14px); opacity:0; pointer-events:none; transition:opacity .4s ease, border-color .4s ease; white-space:nowrap; }
+    #section-bar.visible { opacity:1; }
+    #section-bar .sec-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; transition:background .4s ease, box-shadow .4s ease; }
+    #section-bar .sec-name { font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; transition:color .4s ease; }
+    #section-bar .sec-divider { width:1px; height:13px; background:var(--border); margin:0 2px; }
+    #section-bar .sec-pips { display:flex; gap:5px; align-items:center; }
+    #section-bar .sec-pip { width:18px; height:4px; border-radius:999px; background:rgba(255,255,255,.12); transition:all .3s ease; }
+    #section-bar .sec-pip.done { opacity:.5; }
+    #section-bar .sec-pip.active { }
+    #section-bar .sec-prog { font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; margin-left:2px; transition:color .4s ease; letter-spacing:.04em; }
+    .ov-item { position:relative; overflow:hidden; }
+    .ov-item::after { content:'\2192'; position:absolute; right:14px; top:50%; transform:translateY(-50%) translateX(6px); font-size:1rem; color:var(--accent); opacity:0; transition:all .3s ease; }
+    .ov-item:hover::after { opacity:1; transform:translateY(-50%) translateX(0); }
+    .ov-item:active { transform:scale(.98); }
+    /* Image panels */
+    .img-panel { border-radius:14px; overflow:hidden; background:rgba(255,255,255,.96); border:1px solid var(--border); flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+    .img-panel img { width:100%; height:100%; object-fit:contain; display:block; }
+    .rc-img { width:100%; border-radius:9px; overflow:hidden; margin-top:9px; border:1px solid var(--border); background:rgba(255,255,255,.95); display:flex; align-items:center; justify-content:center; padding:6px; }
+    .rc-img img { width:100%; height:auto; object-fit:contain; display:block; max-height:120px; }
+    /* Fixed slide header - centered, stays put between slides */
+    #slide-header { position:fixed; top:54px; left:50%; transform:translateX(-50%); z-index:90; display:flex; flex-direction:column; align-items:center; opacity:0; pointer-events:none; transition:opacity .22s ease; width:max-content; max-width:75vw; }
+    #slide-header.visible { opacity:1; }
+    .sh-title { font-size:clamp(1.5rem,2.8vw,2.2rem); font-weight:800; letter-spacing:-.02em; color:var(--text); white-space:nowrap; text-align:center; }
+    /* Chapter intro slides keep their h2 — make it bigger */
+    .slide:has(.chapter-number) h2.section-title { font-size:clamp(1.8rem,3.2vw,2.6rem); }
+    /* Hide original badge/title/divider inside slides — JS wraps them in .slide-hdr */
+    .slide .slide-hdr { display:none !important; }
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+<div class="nav-btn" id="prev">&#8592;</div>
+<div class="nav-btn" id="next">&#8594;</div>
+<div id="top-left">
+  <div id="home-btn">
+    <svg viewBox="0 0 20 20"><path d="M10 2L2 9h2v9h5v-5h2v5h5V9h2L10 2z"/></svg>
+    T&#7893;ng quan
+  </div>
+  <div id="section-bar">
+    <span class="sec-dot"></span>
+    <span class="sec-name"></span>
+    <span class="sec-divider"></span>
+    <span class="sec-pips"></span>
+    <span class="sec-prog"></span>
+  </div>
+</div>
+<div id="slide-header">
+  <h2 class="sh-title" id="sh-title-text"></h2>
+  <div class="divider" style="margin:6px auto 0;"></div>
+</div>
+<div id="dots"></div>
+<div id="counter"></div>
+<div id="hint">
+  <span class="key hkey" onclick="navPrev()" title="Previous">&#8592;</span>
+  <span class="key hkey" onclick="navNext()" title="Next">&#8594;</span>
+  <span class="hsep">nav</span>
+  <span class="hsep">|</span>
+  <span class="key hkey" onclick="navNext()" title="Space = Next">&#9251;</span>
+  <span class="hsep">next</span>
+  <span class="hsep">|</span>
+  <span class="key hkey" onclick="goHome()" title="Go to overview">H</span>
+  <span class="hsep">home</span>
+</div>
+<div id="deck">
+<section class="slide">
+  <svg class="bg-nodes" viewBox="0 0 1000 600" fill="none">
+    <g class="neuron-ring"><circle cx="500" cy="300" r="240" stroke="white" stroke-width="0.5" stroke-dasharray="4 12"/>
+    <circle cx="500" cy="60" r="5" fill="white"/><circle cx="716" cy="420" r="5" fill="white"/><circle cx="284" cy="420" r="5" fill="white"/>
+    <line x1="500" y1="60" x2="716" y2="420" stroke="white" stroke-width="0.5"/>
+    <line x1="716" y1="420" x2="284" y2="420" stroke="white" stroke-width="0.5"/>
+    <line x1="284" y1="420" x2="500" y2="60" stroke="white" stroke-width="0.5"/></g>
+    <g class="neuron-ring2"><circle cx="500" cy="300" r="170" stroke="white" stroke-width="0.5" stroke-dasharray="2 8"/></g>
+  </svg>
+  <div class="brain-anim"><svg viewBox="0 0 180 180" fill="none">
+    <circle cx="90" cy="90" r="70" fill="url(#bg)" opacity="0.15"/>
+    <path d="M90 40 C60 40,40 58,40 80 C40 98,52 112,68 118 C68 125,72 132,80 134 L90 136 L100 134 C108 132,112 125,112 118 C128 112,140 98,140 80 C140 58,120 40,90 40Z" fill="#1a3a6b" opacity="0.9"/>
+    <path d="M65 70 Q75 60 85 68 Q95 76 105 65" stroke="rgba(0,212,255,.6)" stroke-width="1.5" fill="none"/>
+    <path d="M60 90 Q72 82 82 90 Q92 98 105 85" stroke="rgba(0,245,212,.5)" stroke-width="1.5" fill="none"/>
+    <path d="M68 108 Q80 100 90 106 Q100 112 112 104" stroke="rgba(61,122,245,.5)" stroke-width="1.5" fill="none"/>
+    <circle cx="85" cy="68" r="3" fill="#00d4ff"><animate attributeName="opacity" values="0.9;0.3;0.9" dur="2s" repeatCount="indefinite"/></circle>
+    <circle cx="105" cy="65" r="3" fill="#00f5d4"><animate attributeName="opacity" values="0.9;0.3;0.9" dur="2.5s" repeatCount="indefinite"/></circle>
+    <circle cx="82" cy="90" r="3" fill="#3d7af5"><animate attributeName="opacity" values="0.3;0.9;0.3" dur="1.8s" repeatCount="indefinite"/></circle>
+    <circle cx="105" cy="85" r="3" fill="#00d4ff"><animate attributeName="opacity" values="0.7;0.2;0.7" dur="3s" repeatCount="indefinite"/></circle>
+    <defs><radialGradient id="bg"><stop offset="0%" stop-color="#00d4ff"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs>
+  </svg></div>
+  <div class="badge"><span class="dot-pulse"></span>Khoa h&#7885;c th&#7847;n kinh</div>
+  <h1>&#272;i&#7873;u g&#236; x&#7843;y ra trong <span class="highlight">n&#227;o b&#7897;</span><br/>khi ch&#250;ng ta u&#7889;ng r&#432;&#7907;u?</h1>
+  <p style="font-size:1.1rem;color:var(--muted);text-align:center;max-width:600px;line-height:1.7;margin-bottom:32px;">H&#224;nh tr&#236;nh c&#7911;a ethanol &#8212; t&#7915; ly r&#432;&#7907;u &#273;&#7871;n t&#7871; b&#224;o th&#7847;n kinh</p>
+  <p style="font-size:.9rem;color:var(--muted);letter-spacing:.06em;">C&#417; ch&#7871; &middot; T&#225;c &#273;&#7897;ng &middot; Nghi&#7879;n &middot; Ph&#7909;c h&#7891;i</p>
+</section><section class="slide">
+  <div class="badge"><span class="dot-pulse"></span>N&#7897;i dung tr&#236;nh b&#224;y</div>
+  <h2 class="section-title">T&#7893;ng quan 6 ph&#7847;n</h2>
+  <div class="divider"></div>
+  <div class="overview-grid">
+    <div class="ov-item" onclick="goTo(2)"><div class="ov-num">1</div><div class="ov-text"><h4>&#128640; &#272;&#432;&#7901;ng &#273;i c&#7911;a Ethanol</h4><p>T&#7915; &#273;&#432;&#7901;ng ti&#234;u h&#243;a &#273;&#7871;n h&#224;ng r&#224;o m&#225;u n&#227;o</p></div></div>
+    <div class="ov-item" onclick="goTo(4)"><div class="ov-num">2</div><div class="ov-text"><h4>&#9879;&#65039; Ch&#7845;t d&#7851;n truy&#7873;n th&#7847;n kinh</h4><p>GABA, Glutamate v&#224; th&#7909; th&#7875; m&#7909;c ti&#234;u</p></div></div>
+    <div class="ov-item" onclick="goTo(8)"><div class="ov-num">3</div><div class="ov-text"><h4>&#129504; V&#249;ng n&#227;o b&#7883; &#7843;nh h&#432;&#7903;ng</h4><p>6 v&#249;ng n&#227;o v&#224; bi&#7875;u hi&#7879;n th&#7921;c t&#7871;</p></div></div>
+    <div class="ov-item" onclick="goTo(11)"><div class="ov-num">4</div><div class="ov-text"><h4>&#9201; &#7842;nh h&#432;&#7903;ng c&#7845;p &amp; m&#227;n t&#237;nh</h4><p>Ng&#7855;n h&#7841;n v&#224; t&#7893;n th&#432;&#417;ng v&#297;nh vi&#7877;n</p></div></div>
+    <div class="ov-item" onclick="goTo(15)"><div class="ov-num">5</div><div class="ov-text"><h4>&#128260; V&#242;ng l&#7863;p nghi&#7879;n</h4><p>Th&#237;ch nghi th&#7847;n kinh v&#224; c&#417; ch&#7871; nghi&#7879;n</p></div></div>
+    <div class="ov-item" onclick="goTo(18)"><div class="ov-num">6</div><div class="ov-text"><h4>&#128138; &#272;i&#7873;u tr&#7883; &amp; Ph&#7909;c h&#7891;i</h4><p>C&#225;c ph&#432;&#417;ng ph&#225;p v&#224; li&#7879;u ph&#225;p hi&#7879;n &#273;&#7841;i</p></div></div>
+  </div>
+</section><section class="slide">
+  <div class="chapter-number">01</div>
+  <div class="badge"><span class="dot-pulse"></span>Ph&#7847;n 1</div>
+  <h2 class="section-title">T&#7915; &#273;&#432;&#7901;ng ti&#234;u h&#243;a &#273;&#7871;n n&#227;o b&#7897;</h2>
+  <div class="divider"></div>
+  <p class="sub">Ethanol &#273;&#432;&#7907;c h&#7845;p thu nh&#432; th&#7871; n&#224;o v&#224; l&#224;m th&#7871; n&#224;o &#273;&#7875; x&#226;m nh&#7853;p v&#224;o h&#7879; th&#7847;n kinh trung &#432;&#417;ng?</p>
+</section><section class="slide">
+  <div class="badge"><span class="dot-pulse"></span>C&#417; ch&#7871; h&#7845;p thu</div>
+  <h2 class="section-title">H&#224;nh tr&#236;nh c&#7911;a Ethanol</h2>
+  <div class="divider"></div>
+  <div class="ethanol-explorer">
+    <div class="eth-flow" id="ethFlow"></div>
+    <div class="eth-img-panel" id="ethImgPanel">
+      <div class="eth-img-wrap"><img id="ethImg" src="" alt=""></div>
+      <div class="eth-caption" id="ethCaption"></div>
+    </div>
+  </div>
+</section><section class="slide">
+  <div class="chapter-number">02</div>
+  <div class="badge"><span class="dot-pulse"></span>Ph&#7847;n 2</div>
+  <h2 class="section-title">Ethanol t&#225;c &#273;&#7897;ng l&#234;n<br/>c&#225;c ch&#7845;t d&#7851;n truy&#7873;n th&#7847;n kinh</h2>
+  <div class="divider"></div>
+  <p class="sub">Hai h&#7879; th&#7889;ng ch&#237;nh: <span class="accent-cyan">GABA (&#7913;c ch&#7871;)</span> v&#224; <span class="accent-orange">Glutamate (h&#432;ng ph&#7845;n)</span></p>
+</section><section class="slide">
+  <div class="badge"><span class="dot-pulse"></span>H&#7879; th&#7889;ng GABA</div>
+  <h2 class="section-title">&#129514; GABA &#8212; Ch&#226;n Phanh c&#7911;a N&#227;o</h2>
+  <div class="divider"></div>
+  <div style="display:grid;grid-template-columns:1fr 260px 1fr;gap:16px;width:100%;max-width:1020px;align-items:start;">
+    <div class="nt-panel">
+      <div class="nt-header"><span class="nt-badge nt-inhibit">&#7913;c ch&#7871;</span><h3>B&#236;nh th&#432;&#7901;ng</h3></div>
+      <div class="nt-row">
+        <div class="nt-row-item"><div class="di" style="background:var(--cyan)"></div><p>GABA g&#7855;n v&#224;o th&#7909; th&#7875; <strong>GABA-A</strong> tr&#234;n neuron nh&#7853;n</p></div>
+        <div class="nt-row-item"><div class="di" style="background:var(--cyan)"></div><p>M&#7903; k&#234;nh cho <strong>ion Cl&#8315;</strong> &#273;i v&#224;o t&#7871; b&#224;o</p></div>
+        <div class="nt-row-item"><div class="di" style="background:var(--cyan)"></div><p>&#8594; <strong>Gi&#7843;m</strong> kh&#7843; n&#259;ng neuron ph&#225;t &#273;i&#7879;n th&#7871; &#8594; &#7168;c ch&#7871; th&#7847;n kinh</p></div>
+      </div>
+      <div class="nt-effect eff-cyan">&#9878;&#65039; Duy tr&#236; <strong>c&#226;n b&#7857;ng ho&#7841;t &#273;&#7897;ng th&#7847;n kinh</strong></div>
+    </div>
+    <div class="img-panel" style="padding:8px;"><img src="images/gaba.png" alt="GABA receptor diagram"></div>
+    <div class="nt-panel">
+      <div class="nt-header"><span class="nt-badge nt-inhibit">+ Ethanol</span><h3>Khi u&#7889;ng r&#432;&#7907;u</h3></div>
+      <div class="nt-row">
+        <div class="nt-row-item"><div class="di" style="background:var(--red)"></div><p>Ethanol <strong>t&#259;ng c&#432;&#7901;ng</strong> ho&#7841;t &#273;&#7897;ng th&#7909; th&#7875; GABA-A</p></div>
+        <div class="nt-row-item"><div class="di" style="background:var(--red)"></div><p>K&#234;nh Cl&#8315; m&#7903; l&#226;u h&#417;n / nhi&#7873;u h&#417;n &#8594; <strong>&#7913;c ch&#7871; m&#7841;nh h&#417;n</strong></p></div>
+        <div class="nt-row-item"><div class="di" style="background:var(--red)"></div><p>Ho&#7841;t &#273;&#7897;ng m&#7841;ch th&#7847;n kinh b&#7883; <strong>suy gi&#7843;m</strong></p></div>
+      </div>
+      <div class="nt-effect" style="background:rgba(231,76,60,.08);border:1px solid rgba(231,76,60,.25);color:#f1a8a0;">&#128308; H&#7853;u qu&#7843;: Bu&#7891;n ng&#7911; &middot; Ph&#7843;n x&#7841; ch&#7853;m &middot; M&#7845;t ph&#7889;i h&#7907;p v&#7853;n &#273;&#7897;ng</div>
+    </div>
+  </div>
+</section><section class="slide">
+  <div class="badge"><span class="dot-pulse"></span>H&#7879; th&#7889;ng Glutamate</div>
+  <h2 class="section-title">&#9889; Glutamate &#8212; Ch&#226;n Ga c&#7911;a N&#227;o</h2>
+  <div class="divider"></div>
+  <div style="display:grid;grid-template-columns:1fr 260px 1fr;gap:16px;width:100%;max-width:1020px;align-items:start;">
+    <div class="nt-panel">
+      <div class="nt-header"><span class="nt-badge nt-excite">H&#432;ng ph&#7845;n</span><h3>B&#236;nh th&#432;&#7901;ng</h3></div>
+      <div class="nt-row">
+        <div class="nt-row-item"><div class="di" style="background:var(--orange)"></div><p>Glutamate g&#7855;n v&#224;o th&#7909; th&#7875; <strong>NMDA</strong> tr&#234;n neuron nh&#7853;n</p></div>
+        <div class="nt-row-item"><div class="di" style="background:var(--orange)"></div><p>M&#7903; k&#234;nh cho ion d&#432;&#417;ng <strong>Na&#8314;, Ca&#178;&#8314;</strong> v&#224;o t&#7871; b&#224;o</p></div>
+        <div class="nt-row-item"><div class="di" style="background:var(--orange)"></div><p>&#8594; K&#237;ch ho&#7841;t neuron &middot; H&#7895; tr&#7907; <strong>t&#237;nh d&#7867;o synapse</strong> (h&#7885;c t&#7853;p &amp; ghi nh&#7899;)</p></div>
+      </div>
+      <div class="nt-effect eff-orange">&#129504; Tham gia <strong>t&#432; duy &middot; h&#7885;c t&#7853;p &middot; ghi nh&#7899; &middot; t&#7881;nh t&#225;o</strong></div>
+    </div>
+    <div class="img-panel" style="padding:8px;"><img src="images/glutamate.png" alt="Glutamate NMDA receptor diagram"></div>
+    <div class="nt-panel">
+      <div class="nt-header"><span class="nt-badge nt-excite">+ Ethanol</span><h3>Khi u&#7889;ng r&#432;&#7907;u</h3></div>
+      <div class="nt-row">
+        <div class="nt-row-item"><div class="di" style="background:var(--red)"></div><p>Ethanol <strong>&#7913;c ch&#7871;</strong> th&#7909; th&#7875; NMDA</p></div>
+        <div class="nt-row-item"><div class="di" style="background:var(--red)"></div><p>D&#242;ng ion Na&#8314;, Ca&#178;&#8314; v&#224;o t&#7871; b&#224;o <strong>gi&#7843;m</strong></p></div>
+        <div class="nt-row-item"><div class="di" style="background:var(--red)"></div><p>Truy&#7873;n t&#237;n hi&#7879;u h&#432;ng ph&#7845;n b&#7883; <strong>gi&#225;n &#273;o&#7841;n</strong></p></div>
+      </div>
+      <div class="nt-effect" style="background:rgba(231,76,60,.08);border:1px solid rgba(231,76,60,.25);color:#f1a8a0;">&#128308; H&#7853;u qu&#7843;: Gi&#7843;m tr&#237; nh&#7899; &middot; Ch&#7853;m t&#432; duy &middot; K&#233;m t&#7853;p trung &middot; <strong>Blackout</strong></div>
+    </div>
+  </div>
+</section><section class="slide">
+  <div class="badge"><span class="dot-pulse"></span>So s&#225;nh</div>
+  <h2 class="section-title">GABA vs Glutamate &#8212; T&#243;m t&#7855;t</h2>
+  <div class="divider"></div>
+  <div class="slide-inner">
+    <table class="comp-table">
+      <thead><tr><th>Ti&#234;u ch&#237;</th><th>&#128309; H&#7879; GABA</th><th>&#128993; H&#7879; Glutamate</th></tr></thead>
+      <tbody>
+        <tr><td>Vai tr&#242; sinh l&#253;</td><td><span class="pill pill-cyan">&#7168;c ch&#7871;</span> &#8212; l&#224;m d&#7883;u ho&#7841;t &#273;&#7897;ng th&#7847;n kinh</td><td><span class="pill pill-orange">H&#432;ng ph&#7845;n</span> &#8212; k&#237;ch th&#237;ch t&#432; duy, ghi nh&#7899;</td></tr>
+        <tr><td>Th&#7909; th&#7875; m&#7909;c ti&#234;u</td><td>GABA-A</td><td>NMDA</td></tr>
+        <tr><td>Ion li&#234;n quan</td><td>Cl&#8315; (&#226;m) v&#224;o &#8594; &#7913;c ch&#7871; neuron</td><td>Na&#8314;, Ca&#178;&#8314; (d&#432;&#417;ng) v&#224;o &#8594; k&#237;ch th&#237;ch neuron</td></tr>
+        <tr><td>T&#225;c &#273;&#7897;ng Ethanol</td><td><strong style="color:var(--cyan)">T&#259;ng c&#432;&#7901;ng</strong> &#8212; m&#7903; k&#234;nh Cl&#8315; l&#226;u h&#417;n</td><td><strong style="color:var(--orange)">&#7168;c ch&#7871;</strong> &#8212; ng&#259;n ion d&#432;&#417;ng v&#224;o t&#7871; b&#224;o</td></tr>
+        <tr><td>&#7848;n d&#7909;</td><td>&#129462; <em>&#272;&#7841;p m&#7841;nh ch&#226;n <strong>phanh</strong></em></td><td>&#129462; <em>Nh&#7843; ch&#226;n <strong>ga</strong></em></td></tr>
+        <tr><td>H&#7853;u qu&#7843;</td><td>Bu&#7891;n ng&#7911; &middot; Ph&#7843;n x&#7841; ch&#7853;m &middot; M&#7845;t th&#259;ng b&#7857;ng</td><td>Suy gi&#7843;m tr&#237; nh&#7899; &middot; Ch&#7853;m t&#432; duy &middot; Blackout</td></tr>
+      </tbody>
+    </table>
+    <div class="callout callout-teal" style="margin-top:16px;">&#128161; <strong>T&#7893;ng h&#7907;p:</strong> Ethanol <strong>&#273;&#7891;ng th&#7901;i t&#259;ng &#7913;c ch&#7871; GABA</strong> v&#224; <strong>gi&#7843;m h&#432;ng ph&#7845;n Glutamate</strong> &#8212; c&#7843; hai h&#432;&#7899;ng &#273;&#7873;u l&#224;m <strong>ch&#7853;m to&#224;n b&#7897; ho&#7841;t &#273;&#7897;ng th&#7847;n kinh</strong>.</div>
+  </div>
+</section><section class="slide">
+  <div class="chapter-number">03</div>
+  <div class="badge"><span class="dot-pulse"></span>Ph&#7847;n 3</div>
+  <h2 class="section-title">Ethanol &#7843;nh h&#432;&#7903;ng &#273;&#7871;n<br/>nh&#7919;ng v&#249;ng n&#227;o n&#224;o?</h2>
+  <div class="divider"></div>
+  <p class="sub">6 v&#249;ng n&#227;o b&#7883; &#7843;nh h&#432;&#7903;ng &#8212; m&#7895;i v&#249;ng g&#226;y ra nh&#7919;ng bi&#7875;u hi&#7879;n kh&#225;c nhau</p>
+</section><section class="slide">
+  <div class="badge"><span class="dot-pulse"></span>B&#7843;n &#273;&#7891; n&#227;o b&#7897;</div>
+  <h2 class="section-title">6 V&#249;ng N&#227;o B&#7883; &#7842;nh H&#432;&#7903;ng</h2>
+  <div class="divider"></div>
+  <div class="region-explorer">
+    <div class="region-nav" id="regionNav"></div>
+    <div class="region-detail" id="regionDetail"></div>
+  </div>
+  </div>
+</section><section class="slide">
+  <div class="badge"><span class="dot-pulse"></span>&#272;&#7863;c bi&#7879;t l&#432;u &#253;</div>
+  <h2 class="section-title">&#127754; Alcohol-Induced Blackout</h2>
+  <div class="divider"></div>
+  <p class="sub">Khi Hippocampus b&#7883; &#7843;nh h&#432;&#7903;ng n&#7863;ng &#8212; kh&#244;ng th&#7875; t&#7841;o k&#253; &#7913;c m&#7899;i</p>
+  <div class="card-row">
+    <div class="card c-teal"><span class="card-icon">&#9989;</span><h3>Ng&#432;&#7901;i b&#7883; blackout V&#7848;N C&#211; TH&#7874;...</h3><ul><li>N&#243;i chuy&#7879;n, t&#432;&#417;ng t&#225;c ng&#432;&#7901;i kh&#225;c</li><li>&#272;i l&#7841;i, th&#7921;c hi&#7879;n ho&#7841;t &#273;&#7897;ng th&#244;ng th&#432;&#7901;ng</li><li>Nh&#236;n c&#243; v&#7867; &#8220;t&#7881;nh t&#225;o&#8221; v&#7899;i ng&#432;&#7901;i ngo&#224;i</li><li>Ph&#7843;n &#7913;ng v&#7899;i m&#244;i tr&#432;&#7901;ng xung quanh</li></ul></div>
+    <div class="card c-red"><span class="card-icon">&#10060;</span><h3>Nh&#432;ng SAU &#272;&#211; kh&#244;ng th&#7875;...</h3><ul><li>Nh&#7899; l&#7841;i nh&#7919;ng g&#236; &#273;&#227; x&#7843;y ra</li><li>H&#236;nh th&#224;nh k&#253; &#7913;c m&#7899;i trong giai &#273;o&#7841;n &#273;&#243;</li><li>Gi&#7843;i th&#237;ch h&#224;nh &#273;&#7897;ng c&#7911;a m&#236;nh</li><li>C&#243; tr&#237; nh&#7899; li&#234;n t&#7909;c v&#7873; bu&#7893;i t&#7889;i &#273;&#243;</li></ul></div>
+    <div class="card c-blue"><span class="card-icon">&#129516;</span><h3>C&#417; ch&#7871;</h3><ul><li>Ethanol &#7913;c ch&#7871; th&#7909; th&#7875; NMDA</li><li>Ph&#225; v&#7905; <em>t&#237;nh d&#7867;o synapse</em></li><li>Hippocampus kh&#244;ng ghi nh&#7853;n th&#244;ng tin m&#7899;i</li><li>K&#253; &#7913;c ng&#7855;n h&#7841;n &#8594; d&#224;i h&#7841;n b&#7883; gi&#225;n &#273;o&#7841;n</li></ul></div>
+  </div>
+  <div class="callout callout-warning" style="max-width:880px;">&#9888;&#65039; <strong>Blackout &#8800; B&#7845;t t&#7881;nh.</strong> Ng&#432;&#7901;i &#273;ang blackout v&#7851;n c&#243; th&#7875; th&#7921;c hi&#7879;n c&#225;c h&#224;nh vi nguy hi&#7875;m m&#224; kh&#244;ng c&#243; k&#253; &#7913;c sau &#273;&#243;.</div>
+</section><section class="slide">
+  <div class="chapter-number">04</div>
+  <div class="badge"><span class="dot-pulse"></span>Ph&#7847;n 4</div>
+  <h2 class="section-title">&#7842;nh h&#432;&#7903;ng c&#7845;p t&#237;nh &amp;<br/>m&#227;n t&#237;nh c&#7911;a r&#432;&#7907;u</h2>
+  <div class="divider"></div>
+  <p class="sub">T&#7915; say r&#432;&#7907;u c&#7845;p t&#237;nh &#273;&#7871;n t&#7893;n th&#432;&#417;ng n&#227;o v&#297;nh vi&#7877;n</p>
+</section><section class="slide">
+  <div class="badge"><span class="dot-pulse"></span>Ng&#7855;n h&#7841;n</div>
+  <h2 class="section-title">&#9201; &#7842;nh h&#432;&#7903;ng Ng&#7855;n H&#7841;n</h2>
+  <div class="divider"></div>
+  <div class="slide-inner">
+    <div class="card-row" style="max-width:1020px;">
+      <div class="card c-orange" style="flex:1 1 280px;"><span class="card-icon">&#129504;</span><h3 class="accent-orange">V&#7887; n&#227;o &amp; Th&#249;y n&#227;o</h3><p>&#7168;c ch&#7871; v&#249;ng <strong>Broca</strong> (th&#249;y tr&#225;n) &#8594; n&#243;i l&#237;u l&#432;&#7905;i; v&#249;ng <strong>Wernicke</strong> (th&#249;y th&#225;i d&#432;&#417;ng) &#8594; r&#7889;i lo&#7841;n hi&#7875;u ng&#244;n ng&#7919;.</p><p style="margin-top:8px;">CT scan: teo v&#7887; n&#227;o to&#224;n th&#7875; &#8212; gi&#227;n r&#7897;ng r&#227;nh v&#7887; n&#227;o.</p><p style="margin-top:8px;">&#8594; <strong>Suy gi&#7843;m ph&#225;n &#273;o&#225;n, t&#432; duy logic, ki&#7875;m so&#225;t xung &#273;&#7897;ng</strong></p></div>
+      <div class="card c-purple" style="flex:1 1 280px;"><span class="card-icon">&#9878;&#65039;</span><h3 class="accent-purple">Ti&#7875;u n&#227;o &amp; Th&#226;n n&#227;o</h3><p>Tho&#225;i h&#243;a <strong>t&#7871; b&#224;o Purkinje</strong> &#8594; teo ti&#7875;u n&#227;o (&#273;&#7863;c bi&#7879;t th&#249;y nh&#7897;ng &#8211; vermis).</p><p style="margin-top:8px;">CT scan: gi&#227;n r&#7897;ng r&#227;nh ti&#7875;u n&#227;o v&#224; b&#7875; n&#227;o sau.</p><p style="margin-top:8px;">&#8594; <strong>Gi&#7843;m tr&#432;&#417;ng l&#7921;c c&#417; &middot; M&#7845;t ph&#7889;i h&#7907;p v&#7853;n &#273;&#7897;ng &middot; D&#225;ng &#273;i th&#7845;t &#273;i&#7873;u</strong></p></div>
+    </div>
+    <div class="callout callout-info" style="max-width:1020px; margin-top:14px;">&#128202; <strong>H&#236;nh &#7843;nh h&#7885;c (CT scan):</strong> L&#7841;m d&#7909;ng r&#432;&#7907;u m&#7841;n t&#237;nh g&#226;y <strong>teo n&#227;o to&#224;n th&#7875;</strong>, teo ti&#7875;u n&#227;o, gi&#227;n h&#7879; th&#7889;ng n&#227;o th&#7845;t. &#272;i&#7875;m s&#7889; teo n&#227;o <strong>t&#432;&#417;ng quan thu&#7853;n</strong> v&#7899;i th&#7901;i gian v&#224; m&#7913;c &#273;&#7897; l&#7841;m d&#7909;ng.</div>
+  </div>
+</section><section class="slide">
+  <div class="badge"><span class="dot-pulse"></span>D&#224;i h&#7841;n</div>
+  <h2 class="section-title">&#128308; T&#7893;n Th&#432;&#417;ng M&#227;n T&#237;nh</h2>
+  <div class="divider"></div>
+  <div class="slide-inner">
+    <div class="card-row" style="max-width:1020px;">
+      <div class="card c-red" style="flex:1 1 220px;"><span class="card-icon">&#128371;&#65039;</span><h3 class="accent-red">Ch&#7845;t tr&#7855;ng &amp; N&#227;o th&#7845;t</h3><p>Ch&#7871;t n&#417;-ron &#8594; gi&#227;n n&#227;o th&#7845;t b&#234;n, III &amp; IV, teo th&#7875; chai.</p><p style="margin-top:6px;font-style:italic;">H&#7897;i ch&#7913;ng Marchiafava-Bignami</p><p style="margin-top:6px;">&#8594; <strong>Sa s&#250;t tr&#237; tu&#7879; do r&#432;&#7907;u (ARD)</strong></p></div>
+      <div class="card" style="border-top:2px solid var(--orange);flex:1 1 220px;"><span class="card-icon">&#128065;&#65039;</span><h3 class="accent-orange">Th&#249;y ch&#7849;m &amp; Th&#249;y &#273;&#7843;o</h3><p>Th&#249;y ch&#7849;m: &#7843;o gi&#225;c kinh ho&#224;ng (s&#7843;ng run).</p><p style="margin-top:6px;">Th&#249;y &#273;&#7843;o: t&#225;i c&#7845;u tr&#250;c &#8594; ph&#225;t xung b&#225;o &#273;&#7897;ng li&#234;n t&#7909;c.</p><p style="margin-top:6px;">&#8594; <strong>C&#417;n th&#232;m c&#7891;n c&#432;&#7905;ng ch&#7871;</strong></p></div>
+      <div class="card c-purple" style="flex:1 1 220px;"><span class="card-icon">&#128314;</span><h3 class="accent-purple">&#272;&#7891;i th&#7883; &amp; Ti&#7875;u n&#227;o</h3><p>Thi&#7871;u Vitamin B1 &#8594; xu&#7845;t huy&#7871;t ho&#7841;i t&#7917; &#273;&#7891;i th&#7883;-th&#7875; v&#250;.</p><p style="margin-top:6px;font-style:italic;">H&#7897;i ch&#7913;ng Wernicke-Korsakoff</p><p style="margin-top:6px;">&#8594; <strong>Tam ch&#7913;ng th&#7845;t &#273;i&#7873;u v&#297;nh vi&#7877;n:</strong> &#273;i l&#7843;o &#273;&#7843;o &middot; ch&#7881; tr&#432;&#7907;t m&#7909;c ti&#234;u &middot; nh&#227;n c&#7847;u rung gi&#7853;t</p></div>
+    </div>
+  </div>
+</section><section class="slide">
+  <div class="badge"><span class="dot-pulse"></span>H&#7897;i ch&#7913;ng &#273;&#7863;c bi&#7879;t</div>
+  <h2 class="section-title">Wernicke vs Korsakoff</h2>
+  <div class="divider"></div>
+  <div class="slide-inner">
+    <table class="wks-table">
+      <thead><tr><th>Ti&#234;u ch&#237;</th><th>&#128993; Wernicke&#8217;s Encephalopathy (WE)</th><th>&#128308; Korsakoff&#8217;s Syndrome (KS)</th></tr></thead>
+      <tbody>
+        <tr><td>B&#7843;n ch&#7845;t</td><td>C&#7845;p t&#237;nh/b&#225;n c&#7845;p &#8212; <strong>c&#243; th&#7875; &#273;&#7843;o ng&#432;&#7907;c</strong></td><td>M&#227;n t&#237;nh (di ch&#7913;ng) &#8212; <strong>ph&#7847;n l&#7899;n kh&#244;ng &#273;&#7843;o ng&#432;&#7907;c</strong></td></tr>
+        <tr><td>C&#417; ch&#7871;</td><td>Thi&#7871;u h&#7909;t <strong>Thiamin (B1)</strong> c&#7845;p t&#237;nh &#273;&#7897;t ng&#7897;t</td><td>T&#7893;n th&#432;&#417;ng c&#7845;u tr&#250;c n&#227;o v&#297;nh vi&#7877;n do WE kh&#244;ng &#273;i&#7873;u tr&#7883;</td></tr>
+        <tr><td>Tri&#7879;u ch&#7913;ng ch&#237;nh</td><td><strong>Tam ch&#7913;ng:</strong> R&#7889;i lo&#7841;n v&#7853;n &#273;&#7897;ng m&#7855;t &middot; Th&#7845;t &#273;i&#7873;u ti&#7875;u n&#227;o &middot; L&#250; l&#7851;n c&#7845;p</td><td>M&#7845;t tr&#237; nh&#7899; to&#224;n th&#7875; &middot; <strong>B&#7883;a chuy&#7879;n (Confabulation)</strong> &middot; Th&#7901; &#417;</td></tr>
+        <tr><td>V&#249;ng n&#227;o t&#7893;n th&#432;&#417;ng</td><td>Ph&#249; xung quanh c&#7889;ng n&#227;o, n&#227;o th&#7845;t III, IV, th&#7875; v&#250;, &#273;&#7891;i th&#7883;</td><td>Teo v&#297;nh vi&#7877;n th&#7875; v&#250;, nh&#226;n &#273;&#7891;i th&#7883; &#8212; m&#7845;t n&#417;-ron nghi&#234;m tr&#7885;ng</td></tr>
+        <tr><td>&#272;i&#7873;u tr&#7883;</td><td><strong>&#272;&#225;p &#7913;ng nhanh</strong> v&#7899;i Thiamin B1 li&#7873;u cao IV</td><td>Kh&#244;ng hi&#7879;u qu&#7843; v&#7899;i thu&#7889;c &middot; Ph&#7909;c h&#7891;i ph&#7909; thu&#7897;c ng&#432;ng r&#432;&#7907;u</td></tr>
+        <tr><td>M&#7889;i quan h&#7879;</td><td>Giai &#273;o&#7841;n c&#7845;p t&#237;nh ti&#7873;n &#273;&#7873;</td><td>~<strong>80%</strong> b&#7879;nh nh&#226;n WE nghi&#7879;n r&#432;&#7907;u &#8594; KS n&#7871;u kh&#244;ng &#273;i&#7873;u tr&#7883;</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section><section class="slide">
+  <div class="chapter-number">05</div>
+  <div class="badge"><span class="dot-pulse"></span>Ph&#7847;n 5</div>
+  <h2 class="section-title">Th&#237;ch nghi th&#7847;n kinh<br/>v&#224; V&#242;ng l&#7863;p Nghi&#7879;n</h2>
+  <div class="divider"></div>
+  <p class="sub">T&#7841;i sao n&#227;o b&#7897; l&#7841;i &#8220;b&#7851;y&#8221; ng&#432;&#7901;i u&#7889;ng v&#224;o v&#242;ng nghi&#7879;n?</p>
+</section><section class="slide">
+  <div class="badge"><span class="dot-pulse"></span>Th&#237;ch nghi th&#7847;n kinh</div>
+  <h2 class="section-title">&#128260; N&#227;o B&#7897; T&#7921; &#272;i&#7873;u Ch&#7881;nh</h2>
+  <div class="divider"></div>
+  <div class="card-row">
+    <div class="card c-cyan" style="flex:1 1 250px;"><span class="card-icon">&#128257;</span><h3>Dung n&#7841;p (Tolerance)</h3><p>Khi ti&#7871;p x&#250;c r&#432;&#7907;u l&#7863;p l&#7841;i, n&#227;o &#273;i&#7873;u ch&#7881;nh &#273;&#7875; <strong>th&#237;ch nghi v&#7899;i ethanol</strong>.</p><p style="margin-top:8px;">&#8594; C&#7847;n <strong>nhi&#7873;u r&#432;&#7907;u h&#417;n</strong> &#273;&#7875; &#273;&#7841;t t&#225;c d&#7909;ng t&#432;&#417;ng t&#7921;</p></div>
+    <div class="card c-red" style="flex:1 1 250px;"><span class="card-icon">&#9889;</span><h3>H&#7897;i ch&#7913;ng cai (Withdrawal)</h3><p>Ng&#432;ng r&#432;&#7907;u &#273;&#7897;t ng&#7897;t &#8594; <strong>m&#7845;t c&#226;n b&#7857;ng h&#432;ng ph&#7845;n/&#7913;c ch&#7871;:</strong></p><ul style="margin-top:8px;"><li>Run r&#7849;y &middot; Lo &#226;u &middot; M&#7845;t ng&#7911;</li><li>N&#7863;ng: <strong>co gi&#7853;t</strong> &#8212; nguy hi&#7875;m t&#237;nh m&#7841;ng</li></ul></div>
+    <div class="card c-orange" style="flex:1 1 250px;"><span class="card-icon">&#127919;</span><h3>Thay &#273;&#7893;i &#273;&#7897;ng l&#7921;c</h3><p>&#272;&#7897;ng l&#7921;c u&#7889;ng <strong>chuy&#7875;n h&#432;&#7899;ng:</strong></p><p style="margin-top:8px;">T&#7915;: t&#236;m ki&#7871;m <em>c&#7843;m gi&#225;c d&#7877; ch&#7883;u</em></p><p style="margin-top:6px;">Sang: u&#7889;ng &#273;&#7875; <em>gi&#7843;m kh&#243; ch&#7883;u</em> khi thi&#7871;u r&#432;&#7907;u</p></div>
+  </div>
+</section><section class="slide">
+  <div class="badge"><span class="dot-pulse"></span>V&#242;ng l&#7863;p nghi&#7879;n</div>
+  <h2 class="section-title">&#128260; V&#242;ng L&#7863;p Nghi&#7879;n R&#432;&#7907;u</h2>
+  <div class="divider"></div>
+  <div style="display:flex;gap:36px;width:100%;max-width:980px;align-items:flex-start;justify-content:center;">
+    <div class="cycle">
+      <div class="cycle-node" style="border-top:2px solid var(--cyan)"><strong class="accent-cyan">&#9312; U&#7889;ng Say / Ph&#7847;n Th&#432;&#7903;ng</strong><span>Tr&#7843;i nghi&#7879;m d&#7877; ch&#7883;u &middot; Dopamine t&#259;ng &middot; C&#7911;ng c&#7889; h&#224;nh vi l&#7863;p l&#7841;i</span></div>
+      <div class="cycle-arrow-v">&darr;</div>
+      <div class="cycle-node" style="border-top:2px solid var(--orange)"><strong class="accent-orange">&#9313; C&#7843;m X&#250;c Ti&#234;u C&#7921;c / Cai</strong><span>Kh&#243; ch&#7883;u th&#7875; ch&#7845;t &amp; c&#7843;m x&#250;c khi kh&#244;ng c&#243; r&#432;&#7907;u &#8594; u&#7889;ng &#273;&#7875; gi&#7843;m nh&#7865;</span></div>
+      <div class="cycle-arrow-v">&darr;</div>
+      <div class="cycle-node" style="border-top:2px solid var(--red)"><strong class="accent-red">&#9314; &#7844;m &#7842;nh / Th&#232;m Mu&#7889;n</strong><span>T&#237;n hi&#7879;u g&#7907;i (&#273;&#7883;a &#273;i&#7875;m, b&#7841;n b&#232;, stress) &#8594; th&#232;m mu&#7889;n c&#432;&#7905;ng ch&#7871;</span></div>
+      <div class="cycle-arrow-v" style="color:var(--muted);">&uarr;&uarr;&uarr; (l&#7863;p l&#7841;i)</div>
+    </div>
+    <div style="flex:1;max-width:340px;">
+      <div class="callout callout-info"><strong>V&#237; d&#7909; minh h&#7885;a:</strong><br/>Anh A b&#7883; v&#7907; m&#7855;ng &#8594; b&#7913;c b&#7897;i &#8594; ra qu&#225;n r&#432;&#7907;u gi&#7843;i to&#7843; v&#7899;i b&#7841;n b&#232;.<br/><br/>&#8594; H&#224;nh vi &#273;&#432;&#7907;c <strong>c&#7911;ng c&#7889;</strong>: m&#7895;i khi stress, n&#227;o l&#7841;i g&#7907;i &#8220;gi&#7843;i ph&#225;p&#8221; l&#224; r&#432;&#7907;u.</div>
+      <div class="callout callout-teal" style="margin-top:12px;">&#9888;&#65039; &#272;&#226;y l&#224; <strong>m&#244; h&#236;nh kh&#225;i qu&#225;t</strong> &#8212; kh&#244;ng ph&#7843;i tr&#236;nh t&#7921; b&#7855;t bu&#7897;c, kh&#244;ng gi&#7889;ng nhau &#7903; m&#7885;i ng&#432;&#7901;i.</div>
+    </div>
+  </div>
+</section><section class="slide">
+  <div class="chapter-number">06</div>
+  <div class="badge"><span class="dot-pulse"></span>Ph&#7847;n 6</div>
+  <h2 class="section-title">&#272;i&#7873;u Tr&#7883; &amp; Ph&#7909;c H&#7891;i</h2>
+  <div class="divider"></div>
+  <p class="sub">Ph&#7909;c h&#7891;i l&#224; qu&#225; tr&#236;nh l&#226;u d&#224;i, c&#7847;n nhi&#7873;u ph&#432;&#417;ng ph&#225;p k&#7871;t h&#7907;p</p>
+</section><section class="slide">
+  <div class="badge"><span class="dot-pulse"></span>C&#225;c ph&#432;&#417;ng ph&#225;p</div>
+  <h2 class="section-title">&#128138; &#272;i&#7873;u Tr&#7883; R&#7889;i Lo&#7841;n S&#7917; D&#7909;ng R&#432;&#7907;u</h2>
+  <div class="divider"></div>
+  <div class="treat-list">
+    <div class="treat-item"><div class="treat-icon">&#129529;</div><div class="treat-body"><h4 class="accent-cyan">Gi&#7843;i &#273;&#7897;c (Detoxification)</h4><p>Giai &#273;o&#7841;n &#273;&#7847;u, c&#7847;n h&#7895; tr&#7907; y t&#7871; &#273;&#7875; x&#7917; l&#253; h&#7897;i ch&#7913;ng cai an to&#224;n &#8212; ph&#242;ng ng&#7915;a co gi&#7853;t.</p></div></div>
+    <div class="treat-item"><div class="treat-icon">&#128137;</div><div class="treat-body"><h4 class="accent-orange">D&#249;ng thu&#7889;c (Medication)</h4><p>Gi&#7843;m th&#232;m r&#432;&#7907;u, &#273;i&#7873;u tr&#7883; h&#7897;i ch&#7913;ng cai ho&#7863;c g&#226;y ph&#7843;n &#7913;ng kh&#243; ch&#7883;u khi d&#249;ng r&#432;&#7907;u (disulfiram, naltrexone, acamprosate&#8230;).</p></div></div>
+    <div class="treat-item"><div class="treat-icon">&#129504;</div><div class="treat-body"><h4 class="accent-teal">Li&#7879;u ph&#225;p Nh&#7853;n th&#7913;c H&#224;nh vi (CBT)</h4><p>Nh&#7853;n di&#7879;n v&#224; thay &#273;&#7893;i suy ngh&#297;, c&#7843;m x&#250;c, h&#224;nh vi duy tr&#236; vi&#7879;c u&#7889;ng. Ph&#225;t tri&#7875;n k&#7929; n&#259;ng &#273;&#7889;i ph&#243; v&#7899;i stress v&#224; t&#236;nh hu&#7889;ng nguy c&#417; cao.</p></div></div>
+    <div class="treat-item"><div class="treat-icon">&#127807;</div><div class="treat-body"><h4 class="accent-purple">Li&#7879;u ph&#225;p Ch&#7845;p nh&#7853;n &amp; Cam k&#7871;t (ACT)</h4><p>H&#7885;c c&#225;ch &#273;&#7889;i di&#7879;n v&#7899;i c&#7843;m x&#250;c kh&#243; ch&#7883;u m&#224; kh&#244;ng h&#224;nh &#273;&#7897;ng theo ch&#250;ng. S&#7889;ng ph&#249; h&#7907;p v&#7899;i gi&#225; tr&#7883; c&#225; nh&#226;n.</p></div></div>
+    <div class="treat-item"><div class="treat-icon">&#129309;</div><div class="treat-body"><h4 class="accent-green">Ph&#7887;ng v&#7845;n T&#7841;o &#272;&#7897;ng L&#7921;c &amp; H&#7895; tr&#7907; T&#226;m l&#253;-X&#227; h&#7897;i</h4><p>T&#259;ng &#273;&#7897;ng l&#7921;c thay &#273;&#7893;i v&#224; c&#7911;ng c&#7889; h&#224;nh tr&#236;nh ph&#7909;c h&#7891;i qua h&#7895; tr&#7907; chuy&#234;n gia v&#224; c&#7897;ng &#273;&#7891;ng.</p></div></div>
+  </div>
+</section><section class="slide">
+  <svg class="bg-nodes" viewBox="0 0 1000 600" fill="none">
+    <g class="neuron-ring"><circle cx="500" cy="300" r="240" stroke="white" stroke-width="0.5" stroke-dasharray="4 12"/></g>
+    <g class="neuron-ring2"><circle cx="500" cy="300" r="170" stroke="white" stroke-width="0.5" stroke-dasharray="2 8"/></g>
+  </svg>
+  <div class="badge"><span class="dot-pulse"></span>K&#7871;t lu&#7853;n</div>
+  <h2 class="section-title">Nh&#7919;ng &#273;i&#7875;m c&#7847;n nh&#7899;</h2>
+  <div class="divider"></div>
+  <div class="card-row" style="max-width:1020px;">
+    <div class="card c-cyan" style="flex:1 1 180px;"><span class="card-icon">&#9879;&#65039;</span><h3>C&#417; ch&#7871; k&#233;p</h3><p>Ethanol v&#7915;a <strong>t&#259;ng GABA</strong> (phanh), v&#7915;a <strong>&#7913;c ch&#7871; Glutamate</strong> (nh&#7843; ga)</p></div>
+    <div class="card c-teal" style="flex:1 1 180px;"><span class="card-icon">&#128506;&#65039;</span><h3>Nhi&#7873;u v&#249;ng n&#227;o</h3><p>6 v&#249;ng b&#7883; &#7843;nh h&#432;&#7903;ng kh&#225;c nhau: h&#224;nh vi, c&#7843;m x&#250;c, tr&#237; nh&#7899;, v&#7853;n &#273;&#7897;ng, s&#7889;ng c&#242;n, n&#7897;i m&#244;i</p></div>
+    <div class="card c-orange" style="flex:1 1 180px;"><span class="card-icon">&#9203;</span><h3>T&#7893;n th&#432;&#417;ng t&#237;ch l&#361;</h3><p>T&#7893;n th&#432;&#417;ng n&#227;o v&#297;nh vi&#7877;n c&#243; th&#7875; x&#7843;y ra: teo n&#227;o, WKS, sa s&#250;t tr&#237; tu&#7879;</p></div>
+    <div class="card c-purple" style="flex:1 1 180px;"><span class="card-icon">&#128260;</span><h3>Nghi&#7879;n l&#224; b&#7879;nh n&#227;o</h3><p>Th&#237;ch nghi th&#7847;n kinh &#8594; v&#242;ng l&#7863;p nghi&#7879;n &#8594; c&#7847;n &#273;i&#7873;u tr&#7883; chuy&#234;n khoa</p></div>
+    <div class="card c-green" style="flex:1 1 180px;"><span class="card-icon">&#128154;</span><h3>Ph&#7909;c h&#7891;i l&#224; kh&#7843; thi</h3><p>K&#7871;t h&#7907;p gi&#7843;i &#273;&#7897;c, thu&#7889;c, CBT, ACT v&#224; h&#7895; tr&#7907; x&#227; h&#7897;i</p></div>
+  </div>
+  <div class="callout callout-teal" style="max-width:880px;margin-top:20px;">&#129504; <strong>Hi&#7875;u n&#227;o b&#7897; l&#224; b&#432;&#7899;c &#273;&#7847;u ti&#234;n</strong> &#8212; &#273;&#7875; &#273;&#432;a ra l&#7921;a ch&#7885;n s&#225;ng su&#7889;t h&#417;n v&#7873; s&#7913;c kh&#7887;e c&#7911;a ch&#237;nh m&#236;nh.</div>
+</section><section class="slide">
+  <svg class="bg-nodes" viewBox="0 0 1000 600" fill="none">
+    <g class="neuron-ring"><circle cx="500" cy="300" r="280" stroke="white" stroke-width="0.4" stroke-dasharray="6 20"/></g>
+    <g class="neuron-ring2"><circle cx="500" cy="300" r="170" stroke="white" stroke-width="0.5" stroke-dasharray="2 8"/></g>
+  </svg>
+  <div style="font-size:4.5rem;margin-bottom:20px;animation:pulse 3s infinite;">&#10067;</div>
+  <h1>C&#226;u h&#7887;i &amp;<br/><span class="highlight">Th&#7843;o lu&#7853;n</span></h1>
+  <p style="font-size:1.1rem;color:var(--muted);text-align:center;max-width:600px;line-height:1.7;margin-bottom:28px;">C&#7843;m &#417;n &#273;&#227; l&#7855;ng nghe!</p>
+  <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;">
+    <div class="stat-box"><div class="stat-num">6</div><div class="stat-label">V&#249;ng n&#227;o<br/>b&#7883; &#7843;nh h&#432;&#7903;ng</div></div>
+    <div class="stat-box"><div class="stat-num">2</div><div class="stat-label">H&#7879; th&#7889;ng<br/>d&#7851;n truy&#7873;n ch&#237;nh</div></div>
+    <div class="stat-box"><div class="stat-num">80%</div><div class="stat-label">B&#7879;nh nh&#226;n WE &#8594; KS<br/>n&#7871;u kh&#244;ng &#273;i&#7873;u tr&#7883;</div></div>
+  </div>
+</section>
+</div>
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const dotsEl = document.getElementById('dots');
+  const counter = document.getElementById('counter');
+  const progressBar = document.getElementById('progress-bar');
+  const total = slides.length;
+  let current = 0;
+  slides.forEach((_,i)=>{
+    const d=document.createElement('div');
+    d.className='dot'+(i===0?' active':'');
+    d.onclick=()=>goTo(i);
+    dotsEl.appendChild(d);
+  });
+  const homeBtn = document.getElementById('home-btn');
+  const sectionBar = document.getElementById('section-bar');
+  const secDot = sectionBar.querySelector('.sec-dot');
+  const secName = sectionBar.querySelector('.sec-name');
+  const secPips = sectionBar.querySelector('.sec-pips');
+  const secProg = sectionBar.querySelector('.sec-prog');
+  const OVERVIEW_SLIDE = 1;
+  const CHAPTERS = [
+    { start:2,  end:3,  num:1, name:'Ph\u1ea7n 1 \u2014 \u0110\u01b0\u1eddng \u0111i Ethanol',        color:'#00d4ff' },
+    { start:4,  end:7,  num:2, name:'Ph\u1ea7n 2 \u2014 D\u1eabn truy\u1ec1n TK',                    color:'#00f5d4' },
+    { start:8,  end:10, num:3, name:'Ph\u1ea7n 3 \u2014 V\u00f9ng n\u00e3o',                         color:'#9b59b6' },
+    { start:11, end:14, num:4, name:'Ph\u1ea7n 4 \u2014 \u1ea2nh h\u01b0\u1edfng',                  color:'#f5a623' },
+    { start:15, end:17, num:5, name:'Ph\u1ea7n 5 \u2014 V\u00f2ng l\u1eb7p Nghi\u1ec7n',            color:'#e74c3c' },
+    { start:18, end:20, num:6, name:'Ph\u1ea7n 6 \u2014 \u0110i\u1ec1u tr\u1ecb & Ph\u1ee5c h\u1ed3i', color:'#2ecc71' },
+  ];
+  const slideHeader = document.getElementById('slide-header');
+  const shBadgeText = document.getElementById('sh-badge-text');
+  const shTitleText = document.getElementById('sh-title-text');
+  // Pre-read badge + title from each slide, then wrap them in .slide-hdr so CSS hides them
+  const SLIDE_HDRS = Array.from(slides).map(slide => {
+    const badge = slide.querySelector('.badge');
+    const title = slide.querySelector('h2.section-title');
+    const isChapterIntro = !!slide.querySelector('.chapter-number');
+    if (badge && title && !isChapterIntro) {
+      const hdr = document.createElement('div');
+      hdr.className = 'slide-hdr';
+      badge.parentNode.insertBefore(hdr, badge);
+      hdr.appendChild(badge);
+      hdr.appendChild(title);
+      const next = hdr.nextElementSibling;
+      if (next && next.classList.contains('divider')) hdr.appendChild(next);
+      return { badge: badge.querySelector('span:last-child')?.textContent.trim() || badge.textContent.trim(), title: title.textContent.trim() };
+    }
+    return null;
+  });
+  function updateSlideHeader(){
+    const h = SLIDE_HDRS[current];
+    if(h && h.title){
+      slideHeader.style.transition = 'none';
+      slideHeader.style.opacity = '0';
+      shTitleText.textContent = h.title;
+      requestAnimationFrame(()=>{
+        slideHeader.style.transition = 'opacity .22s ease';
+        slideHeader.style.opacity = '1';
+        slideHeader.classList.add('visible');
+      });
+    } else {
+      slideHeader.style.opacity = '0';
+      slideHeader.classList.remove('visible');
+    }
+  }
+  function update(){
+    slides.forEach((s,i)=>{s.classList.remove('active','exit-left');if(i===current)s.classList.add('active');});
+    document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===current));
+    counter.textContent=(current+1)+' / '+total;
+    progressBar.style.width=((current+1)/total*100)+'%';
+    // Home button visibility
+    if(current>1){ homeBtn.classList.add('visible'); } else { homeBtn.classList.remove('visible'); }
+    // Update fixed slide header
+    updateSlideHeader();
+    // Section indicator
+    const ch = CHAPTERS.find(c => current >= c.start && current <= c.end);
+    if(ch){
+      const slideInCh = current - ch.start + 1;
+      const totalInCh = ch.end - ch.start + 1;
+      secDot.style.background = ch.color;
+      secDot.style.boxShadow = '0 0 8px '+ch.color;
+      secName.textContent = ch.name;
+      secName.style.color = ch.color;
+      secProg.textContent = slideInCh+'/'+totalInCh;
+      secProg.style.color = ch.color;
+      sectionBar.style.borderColor = ch.color+'55';
+      // Build pip indicators
+      secPips.innerHTML = '';
+      for(let i=0;i<totalInCh;i++){
+        const p = document.createElement('span');
+        p.className = 'sec-pip' + (i===slideInCh-1?' active':i<slideInCh-1?' done':'');
+        p.style.background = i===slideInCh-1 ? ch.color : i<slideInCh-1 ? ch.color+'66' : 'rgba(255,255,255,.12)';
+        if(i===slideInCh-1) p.style.boxShadow = '0 0 6px '+ch.color+'99';
+        secPips.appendChild(p);
+      }
+      sectionBar.classList.add('visible');
+    } else {
+      sectionBar.classList.remove('visible');
+    }
+  }
+  function goTo(idx){
+    if(idx<0||idx>=total)return;
+    const prev=current; current=idx;
+    if(idx>prev){slides[prev].classList.add('exit-left');setTimeout(()=>slides[prev].classList.remove('exit-left'),500);}
+    update();
+  }
+  // Expose globals for onclick usage
+  window.goHome = function(){ goTo(OVERVIEW_SLIDE); };
+  window.navNext = function(){ goTo(current+1); };
+  window.navPrev = function(){ goTo(current-1); };
+  homeBtn.onclick=()=>goTo(OVERVIEW_SLIDE);
+  document.getElementById('next').onclick=()=>goTo(current+1);
+  document.getElementById('prev').onclick=()=>goTo(current-1);
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();goTo(current+1);}
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();goTo(current-1);}
+    if(e.key==='Home'||e.key==='h'||e.key==='H'){e.preventDefault();goTo(OVERVIEW_SLIDE);}
+    if(e.key==='End')goTo(total-1);
+  });
+  let tx=0;
+  document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+  document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50)dx<0?goTo(current+1):goTo(current-1);},{passive:true});
+  update();
+  // ── Region Explorer ──────────────────────────────────────
+  const REGIONS_DATA = [
+    { name:'V\u1ecf n\u00e3o tr\u01b0\u1edbc tr\u00e1n', en:'Prefrontal Cortex', emoji:'\uD83E\uDDE9', color:'#3d7af5',
+      fn:'Ki\u1ec3m so\u00e1t h\u00e0nh vi \u00b7 Ra quy\u1ebft \u0111\u1ecbnh \u00b7 \u0110i\u1ec1u ch\u1ec9nh c\u1ea3m x\u00fac',
+      effect:'Gi\u1ea3m ki\u1ec3m so\u00e1t \u2192 B\u1ed1c \u0111\u1ed3ng, thi\u1ebfu c\u00e2n nh\u1eafc h\u1eadu qu\u1ea3. D\u1ec5 \u0111\u01b0a ra quy\u1ebft \u0111\u1ecbnh li\u1ec1u l\u0129nh.',
+      img:'images/prefrontal.png', effectColor:'#3d7af5' },
+    { name:'H\u1ea1ch h\u1ea1nh nh\u00e2n', en:'Amygdala', emoji:'\uD83D\uDC9B', color:'#f5a623',
+      fn:'X\u1eed l\u00fd c\u1ea3m x\u00fac \u00b7 S\u1ee3 h\u00e3i \u00b7 Lo \u00e2u \u00b7 T\u1ee9c gi\u1eadn',
+      effect:'M\u1ea5t \u0111i\u1ec1u h\u00f2a c\u1ea3m x\u00fac \u2192 D\u1ec5 x\u00fac \u0111\u1ed9ng, d\u1ec5 t\u1ee9c gi\u1eadn. C\u00f3 th\u1ec3 h\u00e0nh x\u1eed hung h\u0103ng h\u01a1n.',
+      img:'images/amygdala.png', effectColor:'#f5a623' },
+    { name:'H\u1ed3i h\u1ea3i m\u00e3', en:'Hippocampus', emoji:'\uD83C\uDF0A', color:'#00f5d4',
+      fn:'H\u00ecnh th\u00e0nh tr\u00ed nh\u1edb ng\u1eafn h\u1ea1n \u00b7 C\u1ee7ng c\u1ed1 k\u00fd \u1ee9c d\u00e0i h\u1ea1n',
+      effect:'Gi\u00e1n \u0111o\u1ea1n ghi nh\u1edb \u2192 <strong>Blackout</strong>: v\u1eabn t\u1ec9nh nh\u01b0ng kh\u00f4ng l\u01b0u k\u00fd \u1ee9c.',
+      img:'images/hippocampus.png', effectColor:'#00f5d4' },
+    { name:'Ti\u1ec3u n\u00e3o', en:'Cerebellum', emoji:'\u2696\uFE0F', color:'#9b59b6',
+      fn:'\u0110i\u1ec1u ch\u1ec9nh th\u0103ng b\u1eb1ng \u00b7 Ph\u1ed1i h\u1ee3p c\u01a1 \u00b7 \u0110\u1ed9 ch\u00ednh x\u00e1c v\u1eadn \u0111\u1ed9ng',
+      effect:'\u0110i lo\u1ea1ng cho\u1ea1ng \u00b7 C\u1ea7m n\u1eafm k\u00e9m \u00b7 N\u00f3i ng\u1ecfng. D\u1ec5 ng\u00e3 v\u00e0 tai n\u1ea1n.',
+      img:null, effectColor:'#9b59b6' },
+    { name:'Th\u00e2n n\u00e3o', en:'Brainstem', emoji:'\u26A0\uFE0F', color:'#e74c3c',
+      fn:'Duy tr\u00ec th\u1ee9c t\u1ec9nh \u00b7 \u0110i\u1ec1u h\u00f2a nh\u1ecbp th\u1edf \u00b7 Nh\u1ecbp tim',
+      effect:'<strong style="color:#e74c3c">Nguy hi\u1ec3m nh\u1ea5t:</strong> N\u1ed3ng \u0111\u1ed9 cao \u2192 H\u00f4n m\u00ea \u00b7 Suy h\u00f4 h\u1ea5p \u00b7 \u0110e d\u1ecda t\u00ednh m\u1ea1ng.',
+      img:null, effectColor:'#e74c3c' },
+    { name:'V\u00f9ng d\u01b0\u1edbi \u0111\u1ed3i', en:'Hypothalamus', emoji:'\uD83C\uDF21\uFE0F', color:'#2ecc71',
+      fn:'C\u00e2n b\u1eb1ng n\u1ed9i m\u00f4i \u00b7 Th\u00e2n nhi\u1ec7t \u00b7 \u0110i\u1ec1u h\u00f2a n\u1ed9i ti\u1ebft \u00b7 \u0110\u00f3i kh\u00e1t',
+      effect:'T\u0103ng ti\u1ec3u ti\u1ec7n \u00b7 M\u1eb7t \u0111\u1ecf \u00b7 Th\u00e8m \u0103n \u00b7 Nguy c\u01a1 h\u1ea1 th\u00e2n nhi\u1ec7t.',
+      img:null, effectColor:'#2ecc71' },
+  ];
+  let activeRegion = 0;
+  const regionNav = document.getElementById('regionNav');
+  const regionDetail = document.getElementById('regionDetail');
+  function renderRegionNav(){
+    if(!regionNav) return;
+    regionNav.innerHTML = '';
+    REGIONS_DATA.forEach((r,i)=>{
+      const el = document.createElement('div');
+      el.className = 'rni' + (i===activeRegion?' active':'');
+      el.style.setProperty('--rni-color', r.color);
+      el.innerHTML = `<span class="rni-emoji">${r.emoji}</span><div class="rni-text"><div class="rni-name" style="color:${i===activeRegion?r.color:'var(--text)'}">${r.name}</div><div class="rni-en">${r.en}</div></div>`;
+      el.onclick = () => { activeRegion=i; renderRegionNav(); renderRegionDetail(); };
+      regionNav.appendChild(el);
+    });
+  }
+  function renderRegionDetail(){
+    if(!regionDetail) return;
+    const r = REGIONS_DATA[activeRegion];
+    regionDetail.style.borderColor = r.color+'44';
+    const imgHTML = r.img
+      ? `<div class="rd-img-panel"><img src="${r.img}" alt="${r.name}"></div>`
+      : `<div class="rd-no-img">${r.emoji}</div>`;
+    regionDetail.innerHTML = `
+      <div class="rd-left">
+        <div class="rd-title">
+          <span class="rd-emoji">${r.emoji}</span>
+          <div><div class="rd-name" style="color:${r.color}">${r.name}</div><div class="rd-en">${r.en}</div></div>
+        </div>
+        <div class="rd-section">
+          <span class="label" style="color:${r.color}">&#10003; Ch&#7913;c n&#259;ng b&#236;nh th&#432;&#7901;ng</span>
+          ${r.fn}
+        </div>
+        <div class="rd-effect-box rd-section" style="background:${r.effectColor}18;border:1px solid ${r.effectColor}44;">
+          <span class="label" style="color:${r.effectColor}">&#9888; T&#225;c &#273;&#7897;ng khi u&#7889;ng r&#432;&#7907;u</span>
+          ${r.effect}
+        </div>
+      </div>
+      ${imgHTML}`;
+  }
+  if(regionNav) { renderRegionNav(); renderRegionDetail(); }
+  // ── Ethanol Journey Explorer ────────────────────────────────
+  const ETHANOL_STEPS = [
+    { icon:'\uD83D\uDC44', name:'Mi\u1ec7ng', color:'#00d4ff',
+      desc:'Ethanol v\u00e0o h\u1ec7 ti\u00eau h\u00f3a qua mi\u1ec7ng, xu\u1ed1ng th\u1ef1c qu\u1ea3n v\u00e0 d\u1ea1 d\u00e0y.',
+      caption:'\u00f0\u009f\u0092\u00a1 Ethanol ho\u00e0 tan trong n\u01b0\u1edbc b\u1ecdt ngay khi v\u00e0o mi\u1ec7ng. H\u1ea5p th\u1ee5 nh\u1ecf b\u1eaft \u0111\u1ea7u t\u1ea1i ni\u00eam m\u1ea1c mi\u1ec7ng.',
+      img:'images/ethanol_step1.jpg' },
+    { icon:'\uD83C\uDF7B', name:'D\u1ea1 d\u00e0y', color:'#f5a623',
+      desc:'Kho\u1ea3ng 20% Ethanol \u0111\u01b0\u1ee3c h\u1ea5p th\u1ee5 qua ni\u00eam m\u1ea1c d\u1ea1 d\u00e0y.',
+      caption:'\u26a0\ufe0f Th\u1ee9c \u0103n trong d\u1ea1 d\u00e0y l\u00e0m ch\u1eadm qu\u00e1 tr\u00ecnh h\u1ea5p th\u1ee5. B\u1ee5ng r\u1ed7ng = h\u1ea5p th\u1ee5 nhanh h\u01a1n.',
+      img:'images/ethanol_step2.jpg' },
+    { icon:'\uD83E\uDEB1', name:'Ru\u1ed9t non', color:'#2ecc71',
+      desc:'~80% Ethanol \u0111\u01b0\u1ee3c h\u1ea5p th\u1ee5 ch\u1ee7 y\u1ebfu t\u1ea1i ru\u1ed9t non v\u00e0o m\u00e1u.',
+      caption:'\uD83D\uDCA1 H\u1ea5p th\u1ee5 nhanh nh\u1ea5t \u2014 di\u1ec7n t\u00edch b\u1ec1 m\u1eb7t l\u1edbn, n\u00f3ng cao. N\u1ed3ng \u0111\u1ed9 c\u1ed3n trong m\u00e1u t\u0103ng r\u00f5.',
+      img:'images/ethanol_step3.jpg' },
+    { icon:'\u2665', name:'Tu\u1ea7n ho\u00e0n', color:'#e74c3c',
+      desc:'Ethanol v\u00e0o m\u00e1u, qua gan (ch\u1ea5t ch\u1edb) v\u00e0 \u0111\u01b0\u1ee3c v\u1eadn chuy\u1ec3n kh\u1eafp c\u01a1 th\u1ec3.',
+      caption:'\uD83E\uDDA0 Gan ch\u1ee9 y\u1ebfu lo\u1ea1i Ethanol (ADH enzyme) nh\u01b0ng c\u00f3 gi\u1edbi h\u1ea1n ~1 \u0111\u01a1n v\u1ecb/gi\u1edd.',
+      img:'images/ethanol_step4.jpg' },
+    { icon:'\uD83E\uDDE0', name:'N\u00e3o b\u1ed9', color:'#9b59b6',
+      desc:'Ethanol v\u01b0\u1ee3t h\u00e0ng r\u00e0o m\u00e1u-n\u00e3o (BBB) nh\u1edd ph\u00e2n t\u1eed nh\u1ecf, tan trong c\u1ea3 n\u01b0\u1edbc v\u00e0 m\u1ee1.',
+      caption:'\uD83D\uDD11 BBB b\u00ecnh th\u01b0\u1eddng l\u1ecdc h\u1ea7u h\u1ebft c\u00e1c ch\u1ea5t \u2014 nh\u01b0ng Ethanol v\u01b0\u1ee3t qua d\u1ec5 d\u00e0ng. T\u00e1c \u0111\u1ed9ng l\u00ean GABA & Glutamate b\u1eaft \u0111\u1ea7u.',
+      img:'images/ethanol_step5.jpg' },
+  ];
+  let activeEthStep = 0;
+  const ethFlow = document.getElementById('ethFlow');
+  const ethImg = document.getElementById('ethImg');
+  const ethCaption = document.getElementById('ethCaption');
+  const ethImgPanel = document.getElementById('ethImgPanel');
+  function renderEthFlow(){
+    if(!ethFlow) return;
+    ethFlow.innerHTML = '';
+    ETHANOL_STEPS.forEach((s,i)=>{
+      const el = document.createElement('div');
+      el.className = 'eth-step' + (i===activeEthStep?' active':'');
+      el.style.setProperty('--eth-color', s.color);
+      el.innerHTML = `<span class="eth-step-icon">${s.icon}</span><div class="eth-step-text"><div class="eth-step-name" style="color:${i===activeEthStep?s.color:'var(--text)'}">${s.name}</div></div>`;
+      el.onclick = () => { activeEthStep=i; renderEthFlow(); renderEthImg(); };
+      ethFlow.appendChild(el);
+      if(i < ETHANOL_STEPS.length-1){
+        const arr = document.createElement('div');
+        arr.className = 'eth-connector';
+        arr.innerHTML = '&#8595;';
+        ethFlow.appendChild(arr);
+      }
+    });
+  }
+  function renderEthImg(){
+    if(!ethImg) return;
+    const s = ETHANOL_STEPS[activeEthStep];
+    ethImgPanel.style.borderColor = s.color+'44';
+    ethImg.style.opacity = '0';
+    ethImg.src = s.img;
+    ethCaption.innerHTML = `<div class="eth-desc">${s.desc}</div><div class="eth-note">${s.caption}</div>`;
+    ethImg.onload = () => { ethImg.style.transition='opacity .22s'; ethImg.style.opacity='1'; };
+  }
+  if(ethFlow){ renderEthFlow(); renderEthImg(); }
+</script>
+</body>
+</html>
