@@ -735,8 +735,21 @@
   document.getElementById('next').onclick=()=>goTo(current+1);
   document.getElementById('prev').onclick=()=>goTo(current-1);
   document.addEventListener('keydown',e=>{
-    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();goTo(current+1);}
-    if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();goTo(current-1);}
+    const _s = slides[current];
+    const _hasEth = !!_s.querySelector('#ethFlow');
+    const _hasReg = !!_s.querySelector('#regionNav');
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){
+      e.preventDefault();
+      if(_hasEth && activeEthStep < ETHANOL_STEPS.length-1){ activeEthStep++; renderEthFlow(); renderEthImg(); }
+      else if(_hasReg && activeRegion < REGIONS_DATA.length-1){ activeRegion++; renderRegionNav(); renderRegionDetail(); }
+      else { goTo(current+1); }
+    }
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){
+      e.preventDefault();
+      if(_hasEth && activeEthStep > 0){ activeEthStep--; renderEthFlow(); renderEthImg(); }
+      else if(_hasReg && activeRegion > 0){ activeRegion--; renderRegionNav(); renderRegionDetail(); }
+      else { goTo(current-1); }
+    }
     if(e.key==='Home'||e.key==='h'||e.key==='H'){e.preventDefault();goTo(OVERVIEW_SLIDE);}
     if(e.key==='End')goTo(total-1);
   });
@@ -749,12 +762,19 @@
     + '.region-nav,.region-detail,.eth-flow,.eth-img-panel,.ov-item,'
     + '.cycle-node,a,button,input,select,.hkey';
   document.getElementById('deck').addEventListener('click', e => {
-    if (!e.target.closest(NO_ADV)) goTo(current + 1);
+    if (e.target.closest(NO_ADV)) return;
+    const _s = slides[current];
+    if (_s.querySelector('#ethFlow') && activeEthStep < ETHANOL_STEPS.length-1){ activeEthStep++; renderEthFlow(); renderEthImg(); }
+    else if (_s.querySelector('#regionNav') && activeRegion < REGIONS_DATA.length-1){ activeRegion++; renderRegionNav(); renderRegionDetail(); }
+    else { goTo(current+1); }
   });
   // Right-click → previous
   document.getElementById('deck').addEventListener('contextmenu', e => {
     e.preventDefault();
-    goTo(current - 1);
+    const _s = slides[current];
+    if (_s.querySelector('#ethFlow') && activeEthStep > 0){ activeEthStep--; renderEthFlow(); renderEthImg(); }
+    else if (_s.querySelector('#regionNav') && activeRegion > 0){ activeRegion--; renderRegionNav(); renderRegionDetail(); }
+    else { goTo(current-1); }
   });
   // Fullscreen toggle
   window.toggleFS = function() {
