@@ -535,7 +535,8 @@
   const counter = document.getElementById('counter');
   const progressBar = document.getElementById('progress-bar');
   const total = slides.length;
-  let current = 0;
+  const _savedSlide = parseInt(localStorage.getItem('bap_slide') || '0', 10);
+  let current = (_savedSlide >= 0 && _savedSlide < slides.length) ? _savedSlide : 0;
   slides.forEach((_,i)=>{
     const d=document.createElement('div');
     d.className='dot'+(i===0?' active':'');
@@ -631,6 +632,7 @@
   function goTo(idx){
     if(idx<0||idx>=total)return;
     const prev=current; current=idx;
+    localStorage.setItem('bap_slide', idx);
     if(idx>prev){slides[prev].classList.add('exit-left');setTimeout(()=>slides[prev].classList.remove('exit-left'),500);}
     update();
   }
