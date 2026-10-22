@@ -127,7 +127,92 @@
     .neuron-ring { animation:spin 18s linear infinite; transform-origin:center; }
     .neuron-ring2 { animation:spin 12s linear infinite reverse; transform-origin:center; }
     @keyframes spin { from{transform:rotate(0deg);}to{transform:rotate(360deg);} }
-    @media(max-width:900px){.slide{padding:36px 26px;}.region-grid,.nt-split,.overview-grid{grid-template-columns:repeat(2,1fr);}}
+    @media(max-width:900px){
+      .slide{padding:80px 30px 44px;}
+      .region-grid,.nt-split,.overview-grid{grid-template-columns:repeat(2,1fr);}
+    }
+    @media(max-width:640px){
+      /* === LAYOUT === */
+      .slide{padding:74px 14px 44px;}
+      .slide-inner{max-height:80vh;}
+      /* === NAV === */
+      #hint{display:none!important;}
+      .nav-btn{width:36px;height:36px;font-size:15px;}
+      #prev{left:6px;}#next{right:6px;}
+      /* === TOP BAR === */
+      #home-btn{padding:5px 10px;font-size:11px;}
+      #section-bar{gap:5px;padding:5px 9px;}
+      #section-bar .sec-pips,#section-bar .sec-prog,#section-bar .sec-divider{display:none;}
+      #section-bar .sec-name{font-size:10px;max-width:100px;overflow:hidden;text-overflow:ellipsis;}
+      /* === SLIDE HEADER === */
+      #slide-header{top:42px;max-width:90vw;}
+      .sh-title{font-size:clamp(.95rem,4.5vw,1.25rem);white-space:normal;line-height:1.25;}
+      /* === TYPOGRAPHY === */
+      h1{font-size:1.35rem;margin-bottom:10px;}
+      .chapter-number{font-size:3.2rem;}
+      .slide:has(.chapter-number) h2.section-title{font-size:1.3rem;}
+      .sub{font-size:.82rem;margin-bottom:14px;line-height:1.55;}
+      .divider{margin:0 auto 14px;}
+      /* === CARDS === */
+      .card-row{flex-direction:column;gap:8px;}
+      .card{min-width:0;max-width:100%;flex:1 0 auto;}
+      /* === GRIDS → 1 col === */
+      .overview-grid{grid-template-columns:1fr;gap:8px;}
+      .ov-item{padding:11px 13px;}
+      .ov-num{font-size:1.2rem;}
+      .region-grid{grid-template-columns:1fr;}
+      .nt-split{grid-template-columns:1fr;gap:10px;}
+      .nt-panel{padding:13px 15px;}
+      /* === REGION EXPLORER === */
+      .region-explorer{grid-template-columns:1fr;height:auto;gap:10px;}
+      .region-nav{flex-direction:row;overflow-x:auto;flex-wrap:nowrap;gap:5px;max-height:none;padding-bottom:3px;scrollbar-width:none;}
+      .region-nav::-webkit-scrollbar{display:none;}
+      .rni{flex-shrink:0;flex-direction:column;align-items:center;padding:7px 10px;gap:2px;border-radius:10px;min-width:52px;}
+      .rni-text{display:none;}
+      .rni-emoji{font-size:1.25rem;}
+      .region-detail{grid-template-columns:1fr;gap:10px;padding:14px;}
+      .rd-img-panel{height:160px;max-height:160px;}
+      /* === ETHANOL EXPLORER === */
+      .ethanol-explorer{grid-template-columns:1fr;height:auto;gap:10px;}
+      .eth-flow{flex-direction:row;overflow-x:auto;flex-wrap:nowrap;gap:0;scrollbar-width:none;}
+      .eth-flow::-webkit-scrollbar{display:none;}
+      .eth-step{flex-direction:column;text-align:center;padding:8px 9px;flex-shrink:0;min-width:66px;gap:3px;}
+      .eth-step-name{font-size:.7rem;}
+      .eth-connector{margin-left:0;font-size:.75rem;}
+      .eth-img-panel{height:auto;}
+      .eth-img-wrap{min-height:110px;}
+      .eth-caption{font-size:.78rem;padding:8px 10px;}
+      .eth-caption .eth-desc{font-size:.84rem;}
+      /* === CYCLE === */
+      .cycle-wrap{flex-direction:column!important;align-items:center!important;gap:14px!important;}
+      .cycle-wrap>.cycle{max-width:100%;}
+      .cycle-wrap>div[style]{max-width:100%!important;flex:none!important;width:100%!important;}
+      .cycle-node{padding:11px 13px;}
+      /* === TREAT LIST === */
+      .treat-list{gap:8px;}
+      .treat-item{padding:11px 13px;gap:10px;}
+      .treat-icon{font-size:1.2rem;min-width:26px;}
+      .treat-body h4{font-size:.85rem;}
+      .treat-body p{font-size:.74rem;}
+      /* === STATS === */
+      .stat-box{padding:13px 14px;}
+      .stat-num{font-size:1.7rem;}
+      .stat-label{font-size:.72rem;}
+      /* === FLOW === */
+      .flow{flex-direction:column;align-items:center;gap:4px;}
+      .flow-arrow{transform:rotate(90deg);padding:0;}
+      .flow-item{min-width:180px;max-width:100%;}
+      /* === TABLES === */
+      .wks-table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.68rem;}
+      .wks-table th,.wks-table td{padding:7px 9px;}
+      .comp-table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.7rem;}
+      /* === IMAGE PANELS === */
+      .img-panel{height:140px!important;}
+      /* === CALLOUTS === */
+      .callout{padding:11px 13px;font-size:.8rem;}
+      /* === BRAIN ANIM === */
+      .brain-anim{width:88px;height:88px;margin-bottom:10px;}
+    }
     /* Region Explorer */
     .region-explorer { display:grid; grid-template-columns:210px 1fr; gap:16px; width:100%; max-width:1020px; height:420px; }
     .region-nav { display:flex; flex-direction:column; gap:7px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:var(--border) transparent; }
@@ -463,7 +548,7 @@
   <div class="badge"><span class="dot-pulse"></span>V&#242;ng l&#7863;p nghi&#7879;n</div>
   <h2 class="section-title">&#128260; V&#242;ng L&#7863;p Nghi&#7879;n R&#432;&#7907;u</h2>
   <div class="divider"></div>
-  <div style="display:flex;gap:36px;width:100%;max-width:980px;align-items:flex-start;justify-content:center;">
+  <div class="cycle-wrap" style="display:flex;gap:36px;width:100%;max-width:980px;align-items:flex-start;justify-content:center;">
     <div class="cycle">
       <div class="cycle-node" style="border-top:2px solid var(--cyan)"><strong class="accent-cyan">&#9312; U&#7889;ng Say / Ph&#7847;n Th&#432;&#7903;ng</strong><span>Tr&#7843;i nghi&#7879;m d&#7877; ch&#7883;u &middot; Dopamine t&#259;ng &middot; C&#7911;ng c&#7889; h&#224;nh vi l&#7863;p l&#7841;i</span></div>
       <div class="cycle-arrow-v">&darr;</div>
