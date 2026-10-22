@@ -10,19 +10,19 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --navy: #050d1f; --navy2: #0a1628; --navy3: #0f1f3d;
-      --accent: #3d7af5; --cyan: #00d4ff; --teal: #00f5d4;
-      --purple: #9b59b6; --orange: #f5a623; --red: #e74c3c; --green: #2ecc71;
-      --text: #e8edf5; --muted: #7a8ba5;
-      --glass: rgba(255,255,255,0.05); --glass2: rgba(255,255,255,0.08);
-      --border: rgba(255,255,255,0.1);
+      --navy: #f0f5ff; --navy2: #e5edfb; --navy3: #d8e4f8;
+      --accent: #2563eb; --cyan: #0284c7; --teal: #0d9488;
+      --purple: #7c3aed; --orange: #d97706; --red: #dc2626; --green: #16a34a;
+      --text: #1e2d4a; --muted: #536075;
+      --glass: rgba(255,255,255,0.6); --glass2: rgba(255,255,255,0.92);
+      --border: rgba(0,0,80,0.1);
     }
     html, body { width:100%; height:100%; overflow:hidden; font-family:'Be Vietnam Pro',sans-serif; background:var(--navy); color:var(--text); }
     #deck { width:100vw; height:100vh; position:relative; overflow:hidden; }
     .slide { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:115px 75px 55px; opacity:0; pointer-events:none; transition:opacity .5s cubic-bezier(.4,0,.2,1), transform .5s cubic-bezier(.4,0,.2,1); transform:translateX(55px); overflow:hidden; }
     .slide.active { opacity:1; pointer-events:all; transform:translateX(0); }
     .slide.exit-left { opacity:0; transform:translateX(-55px); }
-    .slide::before { content:''; position:absolute; inset:0; background: radial-gradient(ellipse 70% 60% at 20% 80%, rgba(61,122,245,.12) 0%, transparent 70%), radial-gradient(ellipse 50% 50% at 80% 20%, rgba(0,212,255,.08) 0%, transparent 60%), linear-gradient(135deg, var(--navy) 0%, var(--navy2) 50%, var(--navy3) 100%); z-index:0; }
+    .slide::before { content:''; position:absolute; inset:0; background: radial-gradient(ellipse 70% 60% at 20% 80%, rgba(37,99,235,.07) 0%, transparent 70%), radial-gradient(ellipse 50% 50% at 80% 20%, rgba(2,132,199,.05) 0%, transparent 60%), linear-gradient(135deg, var(--navy) 0%, var(--navy2) 50%, var(--navy3) 100%); z-index:0; }
     .bg-nodes { position:absolute; inset:0; z-index:0; opacity:.06; transform:scale(0.6); transform-origin:center center; }
     .slide > * { position:relative; z-index:1; }
     #progress-bar { position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg,var(--cyan),var(--accent),var(--teal)); transition:width .4s ease; z-index:100; box-shadow:0 0 12px var(--cyan); }
@@ -47,7 +47,7 @@
     h2.section-title { font-size:clamp(1.1rem,2vw,1.65rem); font-weight:800; letter-spacing:-.02em; text-align:center; margin-bottom:8px; line-height:1.25; }
     .sub { font-size:1rem; color:var(--muted); text-align:center; max-width:680px; line-height:1.7; margin-bottom:32px; }
     .divider { width:60px; height:3px; background:linear-gradient(90deg,var(--accent),var(--cyan)); border-radius:999px; margin:0 auto 26px; }
-    .chapter-number { font-size:6.5rem; font-weight:900; line-height:1; letter-spacing:-.04em; background:linear-gradient(135deg,rgba(61,122,245,.2),rgba(0,212,255,.1)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:8px; font-family:'Space Grotesk',sans-serif; }
+    .chapter-number { font-size:6.5rem; font-weight:900; line-height:1; letter-spacing:-.04em; background:linear-gradient(135deg,rgba(37,99,235,.22),rgba(2,132,199,.18)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:8px; font-family:'Space Grotesk',sans-serif; }
     .card-row { display:flex; gap:14px; width:100%; max-width:1040px; flex-wrap:wrap; justify-content:center; }
     .card { background:var(--glass2); border:1px solid var(--border); border-radius:16px; padding:20px; flex:1 1 200px; min-width:200px; max-width:300px; backdrop-filter:blur(8px); transition:all .3s ease; }
     .card:hover { transform:translateY(-4px); border-color:rgba(61,122,245,.3); }
@@ -86,9 +86,9 @@
     .comp-table { width:100%; max-width:1020px; border-collapse:separate; border-spacing:0; font-size:.83rem; }
     .comp-table th { padding:13px 16px; text-align:left; font-weight:700; font-size:.88rem; letter-spacing:.04em; border-bottom:1px solid var(--border); }
     .comp-table th:nth-child(2) { color:var(--cyan); } .comp-table th:nth-child(3) { color:var(--orange); }
-    .comp-table td { padding:11px 16px; border-bottom:1px solid rgba(255,255,255,.05); color:var(--muted); line-height:1.5; vertical-align:top; }
+    .comp-table td { padding:11px 16px; border-bottom:1px solid rgba(0,0,80,.06); color:var(--muted); line-height:1.5; vertical-align:top; }
     .comp-table td:first-child { color:var(--text); font-weight:600; font-size:.8rem; }
-    .comp-table tr:hover td { background:var(--glass); }
+    .comp-table tr:hover td { background:rgba(37,99,235,.04); }
     .pill { display:inline-block; padding:3px 9px; border-radius:999px; font-size:.76rem; font-weight:600; }
     .pill-cyan { background:rgba(0,212,255,.15); color:var(--cyan); } .pill-orange { background:rgba(245,166,35,.15); color:var(--orange); }
     .region-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:15px; width:100%; max-width:1020px; }
@@ -102,13 +102,13 @@
     .wks-table { width:100%; max-width:1020px; font-size:.76rem; border-collapse:separate; border-spacing:0; }
     .wks-table th { padding:11px 13px; text-align:left; font-weight:700; font-size:.8rem; border-bottom:1px solid var(--border); }
     .wks-table th:nth-child(2) { color:var(--orange); } .wks-table th:nth-child(3) { color:var(--red); }
-    .wks-table td { padding:9px 13px; border-bottom:1px solid rgba(255,255,255,.05); color:var(--muted); line-height:1.5; vertical-align:top; }
+    .wks-table td { padding:9px 13px; border-bottom:1px solid rgba(0,0,80,.06); color:var(--muted); line-height:1.5; vertical-align:top; }
     .wks-table td:first-child { color:var(--text); font-weight:600; }
-    .wks-table tr:hover td { background:var(--glass); }
+    .wks-table tr:hover td { background:rgba(37,99,235,.04); }
     .callout { width:100%; max-width:780px; padding:18px 22px; border-radius:14px; border-left:4px solid; font-size:.88rem; line-height:1.65; margin-top:14px; }
-    .callout-warning { background:rgba(231,76,60,.08); border-color:var(--red); color:#f1a8a0; }
-    .callout-info { background:rgba(61,122,245,.08); border-color:var(--accent); color:#a5bdf5; }
-    .callout-teal { background:rgba(0,245,212,.06); border-color:var(--teal); color:#80f5e0; }
+    .callout-warning { background:rgba(220,38,38,.07); border-color:var(--red); color:#991b1b; }
+    .callout-info { background:rgba(37,99,235,.07); border-color:var(--accent); color:#1e3a8a; }
+    .callout-teal { background:rgba(13,148,136,.07); border-color:var(--teal); color:#134e4a; }
     .slide-inner { display:flex; flex-direction:column; align-items:center; width:100%; max-height:84vh; overflow-y:auto; padding:0 3px; scrollbar-width:thin; scrollbar-color:var(--border) transparent; }
     .slide-inner::-webkit-scrollbar { width:4px; } .slide-inner::-webkit-scrollbar-thumb { background:var(--border); border-radius:999px; }
     .treat-list { display:flex; flex-direction:column; gap:13px; width:100%; max-width:780px; }
@@ -133,7 +133,7 @@
     .region-nav { display:flex; flex-direction:column; gap:7px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:var(--border) transparent; }
     .rni { display:flex; align-items:center; gap:10px; padding:10px 14px; border-radius:11px; border:1px solid var(--border); background:var(--glass2); cursor:pointer; transition:all .22s ease; }
     .rni:hover { transform:translateX(4px); }
-    .rni.active { border-color:var(--rni-color,var(--accent)); background:rgba(61,122,245,.12); box-shadow:inset 3px 0 0 var(--rni-color,var(--accent)); transform:translateX(4px); }
+    .rni.active { border-color:var(--rni-color,var(--accent)); background:rgba(37,99,235,.08); box-shadow:inset 3px 0 0 var(--rni-color,var(--accent)); transform:translateX(4px); }
     .rni-emoji { font-size:1.1rem; flex-shrink:0; }
     .rni-text { flex:1; min-width:0; }
     .rni-name { font-size:.8rem; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
@@ -156,7 +156,7 @@
     .eth-flow { display:flex; flex-direction:column; gap:0; justify-content:center; }
     .eth-step { display:flex; align-items:center; gap:11px; padding:11px 14px; border-radius:11px; border:1px solid var(--border); background:var(--glass2); cursor:pointer; transition:all .22s ease; }
     .eth-step:hover { transform:translateX(3px); }
-    .eth-step.active { border-color:var(--eth-color,var(--cyan)); background:rgba(0,212,255,.1); box-shadow:inset 3px 0 0 var(--eth-color,var(--cyan)); transform:translateX(4px); }
+    .eth-step.active { border-color:var(--eth-color,var(--cyan)); background:rgba(2,132,199,.08); box-shadow:inset 3px 0 0 var(--eth-color,var(--cyan)); transform:translateX(4px); }
     .eth-step-icon { font-size:1.2rem; flex-shrink:0; }
     .eth-step-text { flex:1; }
     .eth-step-name { font-size:.82rem; font-weight:700; }
@@ -166,7 +166,7 @@
     .eth-img-panel { background:var(--glass2); border:1px solid var(--border); border-radius:16px; padding:14px; display:flex; flex-direction:column; gap:10px; overflow:hidden; }
     .eth-img-wrap { flex:2; min-height:0; border-radius:10px; overflow:hidden; background:rgba(255,255,255,.95); display:flex; align-items:center; justify-content:center; }
     .eth-img-wrap img { width:100%; height:100%; object-fit:contain; display:block; transition:opacity .22s ease; }
-    .eth-caption { flex:1; min-height:0; overflow-y:auto; font-size:.88rem; color:var(--muted); line-height:1.65; padding:10px 14px; border-radius:8px; background:rgba(0,212,255,.06); border:1px solid rgba(0,212,255,.15); }
+    .eth-caption { flex:1; min-height:0; overflow-y:auto; font-size:.88rem; color:var(--muted); line-height:1.65; padding:10px 14px; border-radius:8px; background:rgba(2,132,199,.07); border:1px solid rgba(2,132,199,.2); }
     .eth-caption .eth-desc { color:var(--text); font-size:.93rem; font-weight:500; margin-bottom:7px; }
     .eth-caption .eth-note { color:var(--muted); font-size:.85rem; }
     /* Home button - top left */
@@ -183,7 +183,7 @@
     #section-bar .sec-name { font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; transition:color .4s ease; }
     #section-bar .sec-divider { width:1px; height:13px; background:var(--border); margin:0 2px; }
     #section-bar .sec-pips { display:flex; gap:5px; align-items:center; }
-    #section-bar .sec-pip { width:18px; height:4px; border-radius:999px; background:rgba(255,255,255,.12); transition:all .3s ease; }
+    #section-bar .sec-pip { width:18px; height:4px; border-radius:999px; background:rgba(0,0,80,.12); transition:all .3s ease; }
     #section-bar .sec-pip.done { opacity:.5; }
     #section-bar .sec-pip.active { }
     #section-bar .sec-prog { font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; margin-left:2px; transition:color .4s ease; letter-spacing:.04em; }
@@ -422,6 +422,10 @@
       <div class="card" style="border-top:2px solid var(--orange);flex:1 1 220px;"><span class="card-icon">&#128065;&#65039;</span><h3 class="accent-orange">Th&#249;y ch&#7849;m &amp; Th&#249;y &#273;&#7843;o</h3><p>Th&#249;y ch&#7849;m: &#7843;o gi&#225;c kinh ho&#224;ng (s&#7843;ng run).</p><p style="margin-top:6px;">Th&#249;y &#273;&#7843;o: t&#225;i c&#7845;u tr&#250;c &#8594; ph&#225;t xung b&#225;o &#273;&#7897;ng li&#234;n t&#7909;c.</p><p style="margin-top:6px;">&#8594; <strong>C&#417;n th&#232;m c&#7891;n c&#432;&#7905;ng ch&#7871;</strong></p></div>
       <div class="card c-purple" style="flex:1 1 220px;"><span class="card-icon">&#128314;</span><h3 class="accent-purple">&#272;&#7891;i th&#7883; &amp; Ti&#7875;u n&#227;o</h3><p>Thi&#7871;u Vitamin B1 &#8594; xu&#7845;t huy&#7871;t ho&#7841;i t&#7917; &#273;&#7891;i th&#7883;-th&#7875; v&#250;.</p><p style="margin-top:6px;font-style:italic;">H&#7897;i ch&#7913;ng Wernicke-Korsakoff</p><p style="margin-top:6px;">&#8594; <strong>Tam ch&#7913;ng th&#7845;t &#273;i&#7873;u v&#297;nh vi&#7877;n:</strong> &#273;i l&#7843;o &#273;&#7843;o &middot; ch&#7881; tr&#432;&#7907;t m&#7909;c ti&#234;u &middot; nh&#227;n c&#7847;u rung gi&#7853;t</p></div>
     </div>
+    <div class="img-panel" style="width:100%;max-width:820px;height:175px;margin-top:14px;">
+      <img src="images/ct_scan_atrophy.png" alt="CT scan so sanh nao binh thuong va nao teo do ruou">
+    </div>
+    <p style="font-size:.78rem;color:var(--muted);text-align:center;margin-top:7px;">&#128202; CT scan: N&atilde;o b&igrave;nh th&#432;&ograve;ng (A) vs. N&atilde;o teo do l&#7841;m d&#7909;ng r&#432;&#7907;u m&atilde;n t&iacute;nh (B) &mdash; gi&atilde;n n&atilde;o th&#7845;t r&otilde; r&#7879;t</p>
   </div>
 </section><section class="slide">
   <div class="badge"><span class="dot-pulse"></span>H&#7897;i ch&#7913;ng &#273;&#7863;c bi&#7879;t</div>
@@ -468,7 +472,11 @@
       <div class="cycle-node" style="border-top:2px solid var(--red)"><strong class="accent-red">&#9314; &#7844;m &#7842;nh / Th&#232;m Mu&#7889;n</strong><span>T&#237;n hi&#7879;u g&#7907;i (&#273;&#7883;a &#273;i&#7875;m, b&#7841;n b&#232;, stress) &#8594; th&#232;m mu&#7889;n c&#432;&#7905;ng ch&#7871;</span></div>
       <div class="cycle-arrow-v" style="color:var(--muted);">&uarr;&uarr;&uarr; (l&#7863;p l&#7841;i)</div>
     </div>
-    <div style="flex:1;max-width:340px;">
+    <div style="flex:1;max-width:340px;display:flex;flex-direction:column;gap:10px;">
+      <div class="img-panel" style="height:185px;">
+        <img src="images/brain_dopamine_reward.png" alt="Brain dopamine reward pathways">
+      </div>
+      <p style="font-size:.74rem;color:var(--muted);text-align:center;margin:-2px 0 0;">&#127941; H&#7879; th&#7889;ng ph&#7847;n th&#432;&#7903;ng Dopamine &mdash; c&#417; s&#7903; c&#7911;a nghi&#7879;n</p>
       <div class="callout callout-info"><strong>V&#237; d&#7909; minh h&#7885;a:</strong><br/>Anh A b&#7883; v&#7907; m&#7855;ng &#8594; b&#7913;c b&#7897;i &#8594; ra qu&#225;n r&#432;&#7907;u gi&#7843;i to&#7843; v&#7899;i b&#7841;n b&#232;.<br/><br/>&#8594; H&#224;nh vi &#273;&#432;&#7907;c <strong>c&#7911;ng c&#7889;</strong>: m&#7895;i khi stress, n&#227;o l&#7841;i g&#7907;i &#8220;gi&#7843;i ph&#225;p&#8221; l&#224; r&#432;&#7907;u.</div>
       <div class="callout callout-teal" style="margin-top:12px;">&#9888;&#65039; &#272;&#226;y l&#224; <strong>m&#244; h&#236;nh kh&#225;i qu&#225;t</strong> &#8212; kh&#244;ng ph&#7843;i tr&#236;nh t&#7921; b&#7855;t bu&#7897;c, kh&#244;ng gi&#7889;ng nhau &#7903; m&#7885;i ng&#432;&#7901;i.</div>
     </div>
@@ -611,7 +619,7 @@
       for(let i=0;i<totalInCh;i++){
         const p = document.createElement('span');
         p.className = 'sec-pip' + (i===slideInCh-1?' active':i<slideInCh-1?' done':'');
-        p.style.background = i===slideInCh-1 ? ch.color : i<slideInCh-1 ? ch.color+'66' : 'rgba(255,255,255,.12)';
+        p.style.background = i===slideInCh-1 ? ch.color : i<slideInCh-1 ? ch.color+'66' : 'rgba(0,0,80,.12)';
         if(i===slideInCh-1) p.style.boxShadow = '0 0 6px '+ch.color+'99';
         secPips.appendChild(p);
       }
@@ -657,18 +665,18 @@
       fn:'H\u00ecnh th\u00e0nh tr\u00ed nh\u1edb ng\u1eafn h\u1ea1n \u00b7 C\u1ee7ng c\u1ed1 k\u00fd \u1ee9c d\u00e0i h\u1ea1n',
       effect:'Gi\u00e1n \u0111o\u1ea1n ghi nh\u1edb \u2192 <strong>Blackout</strong>: v\u1eabn t\u1ec9nh nh\u01b0ng kh\u00f4ng l\u01b0u k\u00fd \u1ee9c.',
       img:'images/hippocampus.png', effectColor:'#00f5d4' },
-    { name:'Ti\u1ec3u n\u00e3o', en:'Cerebellum', emoji:'\u2696\uFE0F', color:'#9b59b6',
+    { name:'Ti\u1ec3u n\u00e3o', en:'Cerebellum', emoji:'\u2696\uFE0F', color:'#7c3aed',
       fn:'\u0110i\u1ec1u ch\u1ec9nh th\u0103ng b\u1eb1ng \u00b7 Ph\u1ed1i h\u1ee3p c\u01a1 \u00b7 \u0110\u1ed9 ch\u00ednh x\u00e1c v\u1eadn \u0111\u1ed9ng',
       effect:'\u0110i lo\u1ea1ng cho\u1ea1ng \u00b7 C\u1ea7m n\u1eafm k\u00e9m \u00b7 N\u00f3i ng\u1ecfng. D\u1ec5 ng\u00e3 v\u00e0 tai n\u1ea1n.',
-      img:null, effectColor:'#9b59b6' },
+      img:'images/cerebellum_anatomy.png', effectColor:'#7c3aed' },
     { name:'Th\u00e2n n\u00e3o', en:'Brainstem', emoji:'\u26A0\uFE0F', color:'#e74c3c',
       fn:'Duy tr\u00ec th\u1ee9c t\u1ec9nh \u00b7 \u0110i\u1ec1u h\u00f2a nh\u1ecbp th\u1edf \u00b7 Nh\u1ecbp tim',
       effect:'<strong style="color:#e74c3c">Nguy hi\u1ec3m nh\u1ea5t:</strong> N\u1ed3ng \u0111\u1ed9 cao \u2192 H\u00f4n m\u00ea \u00b7 Suy h\u00f4 h\u1ea5p \u00b7 \u0110e d\u1ecda t\u00ednh m\u1ea1ng.',
       img:null, effectColor:'#e74c3c' },
-    { name:'V\u00f9ng d\u01b0\u1edbi \u0111\u1ed3i', en:'Hypothalamus', emoji:'\uD83C\uDF21\uFE0F', color:'#2ecc71',
+    { name:'V\u00f9ng d\u01b0\u1edbi \u0111\u1ed3i', en:'Hypothalamus', emoji:'\uD83C\uDF21\uFE0F', color:'#16a34a',
       fn:'C\u00e2n b\u1eb1ng n\u1ed9i m\u00f4i \u00b7 Th\u00e2n nhi\u1ec7t \u00b7 \u0110i\u1ec1u h\u00f2a n\u1ed9i ti\u1ebft \u00b7 \u0110\u00f3i kh\u00e1t',
       effect:'T\u0103ng ti\u1ec3u ti\u1ec7n \u00b7 M\u1eb7t \u0111\u1ecf \u00b7 Th\u00e8m \u0103n \u00b7 Nguy c\u01a1 h\u1ea1 th\u00e2n nhi\u1ec7t.',
-      img:null, effectColor:'#2ecc71' },
+      img:'images/hypothalamus_vi.png', effectColor:'#16a34a' },
   ];
   let activeRegion = 0;
   const regionNav = document.getElementById('regionNav');
