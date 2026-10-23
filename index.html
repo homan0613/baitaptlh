@@ -499,8 +499,8 @@
       /* 16. Original interactive slides hidden in print */
       .print-hidden { display:none !important; }
     }
-    /* Print-clone: always hidden in normal (non-print) mode */
-    .print-clone { display:none !important; }
+    /* Print-clone: hidden on screen, visible only when printing (@media print overrides this) */
+    @media screen { .print-clone { display:none !important; } }
 </style>
 </head>
 <body>
