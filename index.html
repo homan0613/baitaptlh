@@ -494,11 +494,13 @@
 
       /* 14. Slide-inner: no height cap */
       .slide-inner { max-height:none !important; overflow:visible !important; }
-      /* 15. Print-clone slides: force visible */
+      /* 15. Print-clone slides: force visible when printing */
       .print-clone { display:flex !important; }
       /* 16. Original interactive slides hidden in print */
       .print-hidden { display:none !important; }
     }
+    /* Print-clone: always hidden in normal (non-print) mode */
+    .print-clone { display:none !important; }
 </style>
 </head>
 <body>
@@ -1123,10 +1125,17 @@
     if(!ethImg) return;
     const s = ETHANOL_STEPS[activeEthStep];
     ethImgPanel.style.borderColor = s.color+'44';
+    ethImg.style.transition = 'none';
     ethImg.style.opacity = '0';
+    // Assign onload BEFORE setting src to avoid race condition with cached images
+    ethImg.onload = () => { ethImg.style.transition='opacity .22s'; ethImg.style.opacity='1'; };
     ethImg.src = s.img;
     ethCaption.innerHTML = `<div class="eth-desc">${s.desc}</div><div class="eth-note">${s.caption}</div>`;
-    ethImg.onload = () => { ethImg.style.transition='opacity .22s'; ethImg.style.opacity='1'; };
+    // Fallback: if browser already has image cached and complete, show immediately
+    if(ethImg.complete && ethImg.naturalWidth > 0){
+      ethImg.style.transition = 'opacity .22s';
+      ethImg.style.opacity = '1';
+    }
   }
   if(ethFlow){ renderEthFlow(); renderEthImg(); }
 
