@@ -1046,7 +1046,7 @@
       el.className = 'rni' + (i===activeRegion?' active':'');
       el.style.setProperty('--rni-color', r.color);
       el.innerHTML = `<span class="rni-emoji">${r.emoji}</span><div class="rni-text"><div class="rni-name" style="color:${i===activeRegion?r.color:'var(--text)'}">${r.name}</div><div class="rni-en">${r.en}</div></div>`;
-      el.onclick = () => { activeRegion=i; renderRegionNav(); renderRegionDetail(); };
+      el.onclick = (e) => { e.stopPropagation(); activeRegion=i; renderRegionNav(); renderRegionDetail(); };
       regionNav.appendChild(el);
     });
   }
@@ -1111,7 +1111,7 @@
       el.className = 'eth-step' + (i===activeEthStep?' active':'');
       el.style.setProperty('--eth-color', s.color);
       el.innerHTML = `<span class="eth-step-icon">${s.icon}</span><div class="eth-step-text"><div class="eth-step-name" style="color:${i===activeEthStep?s.color:'var(--text)'}">${s.name}</div></div>`;
-      el.onclick = () => { activeEthStep=i; renderEthFlow(); renderEthImg(); };
+      el.onclick = (e) => { e.stopPropagation(); activeEthStep=i; renderEthFlow(); renderEthImg(); };
       ethFlow.appendChild(el);
       if(i < ETHANOL_STEPS.length-1){
         const arr = document.createElement('div');
