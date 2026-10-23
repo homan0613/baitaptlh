@@ -131,12 +131,12 @@
     .neuron-ring { animation:spin 18s linear infinite; transform-origin:center; }
     .neuron-ring2 { animation:spin 12s linear infinite reverse; transform-origin:center; }
     @keyframes spin { from{transform:rotate(0deg);}to{transform:rotate(360deg);} }
-    @media(max-width:900px){
+    @media screen and (max-width:900px){
       .slide{padding:80px 30px 44px;}
       .region-grid,.nt-split,.overview-grid{grid-template-columns:repeat(2,1fr);}
     }
     /* ── TABLET (≤768px) ─────────────────────────────────────── */
-    @media(max-width:768px){
+    @media screen and (max-width:768px){
       .slide { padding:74px 20px 80px; }
       .slide.active { overflow-y:auto; -webkit-overflow-scrolling:touch; }
       .slide-inner { max-height:none; }
@@ -161,7 +161,7 @@
       #hint { display:none!important; }
     }
     /* ── MOBILE (≤640px) ─────────────────────────────────────── */
-    @media(max-width:640px){
+    @media screen and (max-width:640px){
       /* === SLIDE BASE === */
       .slide { padding:68px 16px 90px; }
       .slide.active { overflow-y:auto; -webkit-overflow-scrolling:touch; }
@@ -357,7 +357,7 @@
     .invasion-line { animation:line-flicker 1.5s ease-in-out infinite; }
     @keyframes line-flicker { 0%,100%{opacity:.65;}50%{opacity:1;} }
     /* Mobile home */
-    @media(max-width:640px){
+    @media screen and (max-width:640px){
       #slide-home { padding:70px 14px 44px; }
       .home-content { grid-template-columns:1fr;gap:18px; }
       .home-right { order:-1; }
@@ -380,7 +380,7 @@
       background:rgba(61,122,245,.2); border-color:var(--accent);
       color:var(--cyan); box-shadow:0 0 14px rgba(61,122,245,.25);
     }
-    @media(max-width:640px){ #print-btn{ display:none; } }
+    @media screen and (max-width:640px){ #print-btn{ display:none; } }
 
     @media print {
       /* 1. Page setup */
@@ -456,9 +456,11 @@
       .home-title { font-size:1.7rem !important; }
       .home-lead { font-size:.82rem !important; }
 
-      /* 9. Card & grid layouts */
-      .card-row { flex-wrap:wrap !important; gap:8px !important; }
-      .card { flex:1 1 200px !important; min-width:0 !important; }
+      /* 9. Card & grid layouts — force horizontal (row) in print */
+      .card-row { display:flex !important; flex-direction:row !important; flex-wrap:wrap !important; gap:8px !important; align-items:stretch !important; }
+      .card { flex:1 1 28% !important; min-width:0 !important; max-width:none !important; }
+      .nt-split { grid-template-columns:1fr 1fr !important; }
+      .region-grid { grid-template-columns:repeat(2,1fr) !important; }
       .overview-grid { grid-template-columns:repeat(3,1fr) !important; gap:8px !important; }
 
       /* 10. Tables — restore normal display for print */
