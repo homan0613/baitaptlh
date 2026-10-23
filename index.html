@@ -494,6 +494,10 @@
 
       /* 14. Slide-inner: no height cap */
       .slide-inner { max-height:none !important; overflow:visible !important; }
+      /* 15. Print-clone slides: force visible */
+      .print-clone { display:flex !important; }
+      /* 16. Original interactive slides hidden in print */
+      .print-hidden { display:none !important; }
     }
 </style>
 </head>
@@ -1248,6 +1252,109 @@
     window.addEventListener('resize', resize);
     init();
     requestAnimationFrame(drawFrame);
+  })();
+  // ── PRINT: expand interactive slides to one page per item ──
+  (function(){
+    let printClones = [];
+
+    function makeEthClone(step, idx){
+      const sec = document.createElement('section');
+      sec.className = 'slide print-clone';
+      const navItems = ETHANOL_STEPS.map((s,j) =>
+        `<div class="eth-step${j===idx?' active':''}" style="--eth-color:${s.color}">
+           <span class="eth-step-icon">${s.icon}</span>
+           <div class="eth-step-text"><div class="eth-step-name" style="color:${j===idx?s.color:'var(--text)'}">${s.name}</div></div>
+         </div>
+         ${j<ETHANOL_STEPS.length-1?'<div class="eth-connector">↓</div>':''}`
+      ).join('');
+      sec.innerHTML =
+        `<div class="badge"><span class="dot-pulse"></span>Cơ chế hấp thu</div>
+         <h2 class="section-title">Đường đi Ethanol — ${step.icon} ${step.name}</h2>
+         <div class="divider"></div>
+         <div class="ethanol-explorer" style="grid-template-columns:160px 1fr;height:auto;max-width:1020px;">
+           <div class="eth-flow" style="flex-direction:column;">${navItems}</div>
+           <div class="eth-img-panel" style="border-color:${step.color}44;">
+             <div class="eth-img-wrap"><img src="${step.img}" style="width:100%;height:100%;object-fit:contain;"></div>
+             <div class="eth-caption">
+               <div class="eth-desc">${step.desc}</div>
+               <div class="eth-note" style="margin-top:8px;">${step.caption}</div>
+             </div>
+           </div>
+         </div>`;
+      return sec;
+    }
+
+    function makeRegionClone(r, idx){
+      const sec = document.createElement('section');
+      sec.className = 'slide print-clone';
+      const navItems = REGIONS_DATA.map((reg,j) =>
+        `<div class="rni${j===idx?' active':''}" style="--rni-color:${reg.color}">
+           <span class="rni-emoji">${reg.emoji}</span>
+           <div class="rni-text"><div class="rni-name" style="color:${j===idx?reg.color:'var(--text)'}">${reg.name}</div><div class="rni-en">${reg.en}</div></div>
+         </div>`
+      ).join('');
+      const imgHTML = r.img
+        ? `<div class="rd-img-panel"><img src="${r.img}" alt="${r.name}"></div>`
+        : `<div class="rd-no-img">${r.emoji}</div>`;
+      sec.innerHTML =
+        `<div class="badge"><span class="dot-pulse"></span>Vùng não</div>
+         <h2 class="section-title">6 Vùng Não — ${r.emoji} ${r.name}</h2>
+         <div class="divider"></div>
+         <div class="region-explorer" style="grid-template-columns:170px 1fr;height:auto;max-width:1020px;">
+           <div class="region-nav" style="flex-direction:column;overflow:visible;">${navItems}</div>
+           <div class="region-detail" style="border-color:${r.color}44;grid-template-columns:1fr 200px;">
+             <div class="rd-left">
+               <div class="rd-title"><span class="rd-emoji">${r.emoji}</span><div><div class="rd-name" style="color:${r.color}">${r.name}</div><div class="rd-en">${r.en}</div></div></div>
+               <div class="rd-section"><span class="label" style="color:${r.color}">✓ Chức năng bình thường</span>${r.fn}</div>
+               <div class="rd-effect-box rd-section" style="background:${r.effectColor}18;border:1px solid ${r.effectColor}44;">
+                 <span class="label" style="color:${r.effectColor}">⚠ Tác động khi uống rượu</span>${r.effect}
+               </div>
+             </div>
+             ${imgHTML}
+           </div>
+         </div>`;
+      return sec;
+    }
+
+    function buildPrintSlides(){
+      removePrintSlides();
+      const deck = document.getElementById('deck');
+
+      // Ethanol explorer slide
+      const ethSlide = document.getElementById('ethFlow')?.closest('.slide');
+      if(ethSlide){
+        ethSlide.classList.add('print-hidden');
+        ETHANOL_STEPS.forEach((step,i) => {
+          const clone = makeEthClone(step,i);
+          deck.insertBefore(clone, ethSlide.nextSibling);
+          printClones.push(clone);
+        });
+      }
+
+      // Region explorer slide
+      const regSlide = document.getElementById('regionNav')?.closest('.slide');
+      if(regSlide){
+        regSlide.classList.add('print-hidden');
+        REGIONS_DATA.forEach((r,i) => {
+          const clone = makeRegionClone(r,i);
+          deck.insertBefore(clone, regSlide.nextSibling);
+          printClones.push(clone);
+        });
+      }
+    }
+
+    function removePrintSlides(){
+      printClones.forEach(el => el.remove());
+      printClones = [];
+      document.querySelectorAll('.print-hidden').forEach(el => el.classList.remove('print-hidden'));
+    }
+
+    window.addEventListener('beforeprint', buildPrintSlides);
+    window.addEventListener('afterprint',  removePrintSlides);
+
+    // Override print button to also build clones before dialog opens
+    const printBtn = document.getElementById('print-btn');
+    if(printBtn) printBtn.onclick = function(){ buildPrintSlides(); window.print(); };
   })();
 </script>
 </body>
