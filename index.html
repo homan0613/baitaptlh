@@ -475,8 +475,9 @@
       table th, table td { padding:5px 7px !important; }
 
       /* 11. Image panels */
-      .img-panel { height:auto !important; max-height:120mm !important; }
-      .img-panel img, .rd-img-panel img, .eth-img-wrap img,
+      .img-panel { max-height:70mm !important; overflow:hidden !important; }
+      .img-panel img { max-width:100% !important; max-height:70mm !important; height:auto !important; width:auto !important; object-fit:contain !important; display:block !important; margin:0 auto !important; }
+      .rd-img-panel img, .eth-img-wrap img,
       .home-brain-img { max-width:100% !important; height:auto !important; }
 
       /* 12. Explorers: compact for print */
