@@ -324,8 +324,9 @@
     .sh-title { font-size:clamp(1.5rem,2.8vw,2.2rem); font-weight:800; letter-spacing:-.02em; color:var(--text); white-space:nowrap; text-align:center; }
     /* Chapter intro slides keep their h2 — make it bigger */
     .slide:has(.chapter-number) h2.section-title { font-size:clamp(1.8rem,3.2vw,2.6rem); }
-    /* Hide original badge/title/divider inside slides — JS wraps them in .slide-hdr */
-    .slide .slide-hdr { display:none !important; }
+    /* Hide original badge/title/divider inside slides on SCREEN only — JS wraps them in .slide-hdr */
+    /* In print, .slide-hdr is shown again (floating #slide-header is hidden in print) */
+    @media screen { .slide .slide-hdr { display:none !important; } }
 
 
     /* ── Home slide redesign (DARK MODE) ─────────────────────── */
@@ -484,6 +485,8 @@
       .slide-inner { max-height:none !important; overflow:visible !important; }
       /* 15. Print-clone slides: force visible when printing */
       .print-clone { display:flex !important; }
+      /* 16a. Show .slide-hdr (badge+title+divider) in print — hidden on screen by the @media screen rule above */
+      .slide .slide-hdr { display:flex !important; flex-direction:column; align-items:center; width:100%; }
       /* 16. Original interactive slides hidden in print */
       .print-hidden { display:none !important; }
     }
