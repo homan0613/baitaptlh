@@ -515,6 +515,24 @@
     .rd-manifest-box { border-radius:10px; padding:8px 12px; background:rgba(0,0,80,.035); border-left:3px solid; }
     @media screen and (max-width:900px){ .fx-grid { grid-template-columns:repeat(2,1fr); } }
     @media screen and (max-width:640px){ .fx-grid { grid-template-columns:1fr; gap:8px; } }
+    /* Slide Mở đầu: Ethanol là gì (2 card ngang) */
+    .intro-grid { display:grid; grid-template-columns:repeat(2, 1fr); gap:24px; align-items:stretch; width:100%; max-width:1220px; margin:0 auto; }
+    .intro-card { background:var(--glass2); border:1px solid var(--border); border-top:3px solid var(--fx,var(--accent)); border-radius:16px; padding:22px 26px; min-width:0; }
+    .intro-card h3 { font-size:1.3rem; font-weight:800; color:var(--fx,var(--text)); margin-bottom:10px; }
+    .intro-card p, .intro-card li { font-size:1.05rem; color:var(--muted); line-height:1.6; }
+    .intro-card strong { color:var(--text); }
+    .intro-card ul { padding-left:18px; margin-top:4px; }
+    .intro-card li { margin-bottom:8px; }
+    .intro-card p + p { margin-top:5px; }
+    .intro-card .intro-label { font-weight:700; color:var(--text); margin-top:5px; }
+    .metab-chain { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:10px 0 16px; }
+    .mc-chip { display:inline-flex; flex-direction:column; align-items:center; padding:5px 11px; border-radius:9px; background:rgba(37,99,235,.08); border:1px solid rgba(37,99,235,.22); font-weight:700; font-size:.95rem; color:var(--text); font-family:'Space Grotesk',sans-serif; }
+    .mc-chip small { font-family:'Be Vietnam Pro',sans-serif; font-weight:500; font-size:.72rem; color:var(--red); }
+    .mc-toxic { background:rgba(220,38,38,.08); border-color:rgba(220,38,38,.3); color:var(--red); }
+    .mc-arrow { display:inline-flex; flex-direction:column; align-items:center; color:var(--accent); font-size:1rem; line-height:1; }
+    .mc-arrow em { font-size:.68rem; font-style:normal; font-weight:700; color:var(--muted); margin-top:2px; }
+    #slide-intro .intro-sub { margin-bottom:12px !important; max-width:1000px; }
+    @media screen and (max-width:900px){ .intro-grid { grid-template-columns:1fr; } }
     /* Print-clone: hidden on screen, visible only when printing (@media print overrides this) */
     @media screen { .print-clone { display:none !important; } }
     /* ═══════════════════════════════════════════════════════════════════════
@@ -700,6 +718,18 @@
       .treat-group-items .treat-item { flex-direction: column; gap: 6px; }
       .treat-group-items .treat-body h4 { font-size: 1.12rem; }
       .treat-group-items .treat-body p { font-size: 0.95rem; }
+      /* ── 12e. Alcohol-Induced Blackout: 3 card màu phân biệt, rộng 1240px ── */
+      #blackout-cards { display: grid !important; grid-template-columns: repeat(3, 1fr); gap: 24px !important; max-width: 1240px !important; width: 100%; margin: 0 auto; }
+      #blackout-cards .card { max-width: none !important; min-width: 0 !important; padding: 18px 22px !important; border-width: 1.5px; border-style: solid; }
+      #blackout-cards .card:hover { transform: none; }
+      #blackout-cards .bo-yes  { background: #dcfce7; border-color: #86efac; }
+      #blackout-cards .bo-no   { background: #fee2e2; border-color: #fca5a5; }
+      #blackout-cards .bo-mech { background: #ffffff; border-color: #cbd5e1; }
+      #blackout-cards .bo-yes h3  { color: #065f46; }
+      #blackout-cards .bo-no h3   { color: #991b1b; }
+      #blackout-cards .bo-mech h3 { color: #1e293b; }
+      #blackout-cards .card li { color: #1f2937; }
+      #blackout-warning { max-width: 1240px !important; margin-left: auto; margin-right: auto; margin-top: 18px !important; }
       /* ── 13. Kết luận "Những điểm cần nhớ": grid 3 trên / 2 dưới ── */
       #slide-conclusion .card-row {
         display: grid !important;
@@ -796,12 +826,36 @@
   <h2 class="section-title">T&#7893;ng quan 6 ph&#7847;n</h2>
   <div class="divider"></div>
   <div class="overview-grid">
-    <div class="ov-item" onclick="goTo(2)"><div class="ov-num">1</div><div class="ov-text"><h4>&#128640; &#272;&#432;&#7901;ng &#273;i c&#7911;a ethanol</h4><p>T&#7915; &#273;&#432;&#7901;ng ti&#234;u h&#243;a &#273;&#7871;n h&#224;ng r&#224;o m&#225;u n&#227;o</p></div></div>
-    <div class="ov-item" onclick="goTo(4)"><div class="ov-num">2</div><div class="ov-text"><h4>&#9879;&#65039; Ch&#7845;t d&#7851;n truy&#7873;n th&#7847;n kinh</h4><p>GABA, Glutamate v&#224; th&#7909; th&#7875; m&#7909;c ti&#234;u</p></div></div>
-    <div class="ov-item" onclick="goTo(8)"><div class="ov-num">3</div><div class="ov-text"><h4>&#129504; V&#249;ng n&#227;o b&#7883; &#7843;nh h&#432;&#7903;ng</h4><p>7 v&#249;ng n&#227;o b&#7883; &#7843;nh h&#432;&#7903;ng v&#224; bi&#7875;u hi&#7879;n th&#7921;c t&#7871;</p></div></div>
-    <div class="ov-item" onclick="goTo(10)"><div class="ov-num">4</div><div class="ov-text"><h4>&#9201; &#7842;nh h&#432;&#7903;ng c&#7845;p &amp; m&#227;n t&#237;nh</h4><p>Ng&#7855;n h&#7841;n v&#224; t&#7893;n th&#432;&#417;ng v&#297;nh vi&#7877;n</p></div></div>
-    <div class="ov-item" onclick="goTo(15)"><div class="ov-num">5</div><div class="ov-text"><h4>&#128260; V&#242;ng l&#7863;p nghi&#7879;n</h4><p>Th&#237;ch nghi th&#7847;n kinh v&#224; c&#417; ch&#7871; nghi&#7879;n</p></div></div>
-    <div class="ov-item" onclick="goTo(18)"><div class="ov-num">6</div><div class="ov-text"><h4>&#128138; &#272;i&#7873;u tr&#7883; &amp; ph&#7909;c h&#7891;i</h4><p>C&#225;c ph&#432;&#417;ng ph&#225;p v&#224; li&#7879;u ph&#225;p hi&#7879;n &#273;&#7841;i</p></div></div>
+    <div class="ov-item" onclick="goTo(3)"><div class="ov-num">1</div><div class="ov-text"><h4>&#128640; &#272;&#432;&#7901;ng &#273;i c&#7911;a ethanol</h4><p>T&#7915; &#273;&#432;&#7901;ng ti&#234;u h&#243;a &#273;&#7871;n h&#224;ng r&#224;o m&#225;u n&#227;o</p></div></div>
+    <div class="ov-item" onclick="goTo(5)"><div class="ov-num">2</div><div class="ov-text"><h4>&#9879;&#65039; Ch&#7845;t d&#7851;n truy&#7873;n th&#7847;n kinh</h4><p>GABA, Glutamate v&#224; th&#7909; th&#7875; m&#7909;c ti&#234;u</p></div></div>
+    <div class="ov-item" onclick="goTo(9)"><div class="ov-num">3</div><div class="ov-text"><h4>&#129504; V&#249;ng n&#227;o b&#7883; &#7843;nh h&#432;&#7903;ng</h4><p>7 v&#249;ng n&#227;o b&#7883; &#7843;nh h&#432;&#7903;ng v&#224; bi&#7875;u hi&#7879;n th&#7921;c t&#7871;</p></div></div>
+    <div class="ov-item" onclick="goTo(11)"><div class="ov-num">4</div><div class="ov-text"><h4>&#9201; &#7842;nh h&#432;&#7903;ng c&#7845;p &amp; m&#227;n t&#237;nh</h4><p>Ng&#7855;n h&#7841;n v&#224; t&#7893;n th&#432;&#417;ng v&#297;nh vi&#7877;n</p></div></div>
+    <div class="ov-item" onclick="goTo(16)"><div class="ov-num">5</div><div class="ov-text"><h4>&#128260; V&#242;ng l&#7863;p nghi&#7879;n</h4><p>Th&#237;ch nghi th&#7847;n kinh v&#224; c&#417; ch&#7871; nghi&#7879;n</p></div></div>
+    <div class="ov-item" onclick="goTo(19)"><div class="ov-num">6</div><div class="ov-text"><h4>&#128138; &#272;i&#7873;u tr&#7883; &amp; ph&#7909;c h&#7891;i</h4><p>C&#225;c ph&#432;&#417;ng ph&#225;p v&#224; li&#7879;u ph&#225;p hi&#7879;n &#273;&#7841;i</p></div></div>
+  </div>
+</section><section class="slide" id="slide-intro">
+  <div class="badge"><span class="dot-pulse"></span>Khái niệm nền tảng</div>
+  <h2 class="section-title">&#127866; Ethanol là gì &amp; vì sao lại gây say?</h2>
+  <div class="divider"></div>
+  <p class="sub intro-sub">Bản chất hóa học và con đường chuyển hóa của cồn trong cơ thể</p>
+  <div class="intro-grid">
+    <div class="intro-card" style="--fx:var(--cyan)">
+      <h3>&#129514; Ethanol là gì?</h3>
+      <ul>
+        <li><strong>Bản chất:</strong> Là <strong>cồn ethylic (C&#8322;H&#8325;OH)</strong> &#8212; hợp chất hữu cơ không màu, dễ bay hơi.</li>
+        <li><strong>Đặc tính vật lý:</strong> Phân tử cực nhỏ, vừa tan rất tốt trong nước vừa tan trong lipid (chất béo).</li>
+        <li><strong>Vai trò:</strong> Là thành phần chính trực tiếp tạo cảm giác say trong bia, rượu vang và rượu mạnh.</li>
+        <li><strong>Nguồn gốc:</strong> Hình thành khi nấm men lên men đường tự nhiên có trong nho, lúa mạch, khoai tây và các nguyên liệu tinh bột khác.</li>
+      </ul>
+    </div>
+    <div class="intro-card" style="--fx:var(--red)">
+      <h3>&#128260; Ethanol biến thành gì trong cơ thể?</h3>
+      <p class="intro-label">Chuỗi chuyển hóa tại gan:</p>
+      <div class="metab-chain">
+        <span class="mc-chip">Ethanol</span><span class="mc-arrow">&#10132;<em>ADH</em></span><span class="mc-chip mc-toxic">Acetaldehyde<small>độc hơn cả ethanol</small></span><span class="mc-arrow">&#10132;<em>ALDH</em></span><span class="mc-chip">Acetate</span><span class="mc-arrow">&#10132;</span><span class="mc-chip">H&#8322;O + CO&#8322; + Năng lượng</span>
+      </div>
+      <p><strong>Khi uống quá nhanh hoặc quá nhiều:</strong> Ethanol và độc chất <strong>acetaldehyde</strong> bị tích tụ trong máu &#8594; gây đỏ mặt, buồn nôn, đau đầu, mất phối hợp. Ở nồng độ rất cao có thể gây <strong>hôn mê, ngừng thở và tử vong</strong>.</p>
+    </div>
   </div>
 </section><section class="slide">
   <div class="chapter-number">01</div>
@@ -931,15 +985,15 @@
   </div>
 </section><section class="slide">
   <div class="badge"><span class="dot-pulse"></span>&#272;&#7863;c bi&#7879;t l&#432;u &#253;</div>
-  <h2 class="section-title">&#127754; Alcohol-Induced Blackout</h2>
+  <h2 class="section-title">Alcohol-Induced Blackout</h2>
   <div class="divider"></div>
   <p class="sub">Khi Hippocampus b&#7883; &#7843;nh h&#432;&#7903;ng n&#7863;ng &#8212; kh&#244;ng th&#7875; t&#7841;o k&#253; &#7913;c m&#7899;i</p>
-  <div class="card-row">
-    <div class="card c-teal"><span class="card-icon">&#9989;</span><h3>Ng&#432;&#7901;i b&#7883; blackout V&#7850;N C&#211; TH&#7874;...</h3><ul><li>N&#243;i chuy&#7879;n, t&#432;&#417;ng t&#225;c ng&#432;&#7901;i kh&#225;c</li><li>&#272;i l&#7841;i, th&#7921;c hi&#7879;n ho&#7841;t &#273;&#7897;ng th&#244;ng th&#432;&#7901;ng</li><li>Nh&#236;n c&#243; v&#7867; &#8220;t&#7881;nh t&#225;o&#8221; v&#7899;i ng&#432;&#7901;i ngo&#224;i</li><li>Ph&#7843;n &#7913;ng v&#7899;i m&#244;i tr&#432;&#7901;ng xung quanh</li></ul></div>
-    <div class="card c-red"><span class="card-icon">&#10060;</span><h3>Nh&#432;ng SAU &#272;&#211; kh&#244;ng th&#7875;...</h3><ul><li>Nh&#7899; l&#7841;i nh&#7919;ng g&#236; &#273;&#227; x&#7843;y ra</li><li>H&#236;nh th&#224;nh k&#253; &#7913;c m&#7899;i trong giai &#273;o&#7841;n &#273;&#243;</li><li>Gi&#7843;i th&#237;ch h&#224;nh &#273;&#7897;ng c&#7911;a m&#236;nh</li><li>C&#243; tr&#237; nh&#7899; li&#234;n t&#7909;c v&#7873; bu&#7893;i t&#7889;i &#273;&#243;</li></ul></div>
-    <div class="card c-blue"><span class="card-icon">&#129516;</span><h3>C&#417; ch&#7871;</h3><ul><li>Ethanol &#7913;c ch&#7871; th&#7909; th&#7875; NMDA</li><li>Ph&#225; v&#7905; <em>t&#237;nh d&#7867;o synapse</em></li><li>Hippocampus kh&#244;ng ghi nh&#7853;n th&#244;ng tin m&#7899;i</li><li>K&#253; &#7913;c ng&#7855;n h&#7841;n &#8594; d&#224;i h&#7841;n b&#7883; gi&#225;n &#273;o&#7841;n</li></ul></div>
+  <div class="card-row" id="blackout-cards">
+    <div class="card bo-yes"><h3>Ng&#432;&#7901;i b&#7883; blackout V&#7850;N C&#211; TH&#7874;...</h3><ul><li>N&#243;i chuy&#7879;n, t&#432;&#417;ng t&#225;c ng&#432;&#7901;i kh&#225;c</li><li>&#272;i l&#7841;i, th&#7921;c hi&#7879;n ho&#7841;t &#273;&#7897;ng th&#244;ng th&#432;&#7901;ng</li><li>Nh&#236;n c&#243; v&#7867; &#8220;t&#7881;nh t&#225;o&#8221; v&#7899;i ng&#432;&#7901;i ngo&#224;i</li><li>Ph&#7843;n &#7913;ng v&#7899;i m&#244;i tr&#432;&#7901;ng xung quanh</li></ul></div>
+    <div class="card bo-no"><h3>Nh&#432;ng SAU &#272;&#211; kh&#244;ng th&#7875;...</h3><ul><li>Nh&#7899; l&#7841;i nh&#7919;ng g&#236; &#273;&#227; x&#7843;y ra</li><li>H&#236;nh th&#224;nh k&#253; &#7913;c m&#7899;i trong giai &#273;o&#7841;n &#273;&#243;</li><li>Gi&#7843;i th&#237;ch h&#224;nh &#273;&#7897;ng c&#7911;a m&#236;nh</li><li>C&#243; tr&#237; nh&#7899; li&#234;n t&#7909;c v&#7873; bu&#7893;i t&#7889;i &#273;&#243;</li></ul></div>
+    <div class="card bo-mech"><h3>C&#417; ch&#7871;</h3><ul><li>Ethanol &#7913;c ch&#7871; th&#7909; th&#7875; NMDA</li><li>Ph&#225; v&#7905; <em>t&#237;nh d&#7867;o synapse</em></li><li>Hippocampus kh&#244;ng ghi nh&#7853;n th&#244;ng tin m&#7899;i</li><li>K&#253; &#7913;c ng&#7855;n h&#7841;n &#8594; d&#224;i h&#7841;n b&#7883; gi&#225;n &#273;o&#7841;n</li></ul></div>
   </div>
-  <div class="callout callout-warning" style="max-width:880px;">&#9888;&#65039; <strong>Blackout &#8800; B&#7845;t t&#7881;nh.</strong> Ng&#432;&#7901;i &#273;ang blackout v&#7851;n c&#243; th&#7875; th&#7921;c hi&#7879;n c&#225;c h&#224;nh vi nguy hi&#7875;m m&#224; kh&#244;ng c&#243; k&#253; &#7913;c sau &#273;&#243;.</div>
+  <div class="callout callout-warning" id="blackout-warning"><strong>Blackout &#8800; B&#7845;t t&#7881;nh.</strong> Ng&#432;&#7901;i &#273;ang blackout v&#7851;n c&#243; th&#7875; th&#7921;c hi&#7879;n c&#225;c h&#224;nh vi nguy hi&#7875;m m&#224; kh&#244;ng c&#243; k&#253; &#7913;c sau &#273;&#243;.</div>
 </section><section class="slide">
   <div class="badge"><span class="dot-pulse"></span>Dài hạn</div>
   <h2 class="section-title">&#128308; Tổn thương mãn tính (dài hạn)</h2>
@@ -1125,12 +1179,13 @@
   const secProg = sectionBar.querySelector('.sec-prog');
   const OVERVIEW_SLIDE = 1;
   const CHAPTERS = [
-    { start:2,  end:3,  num:1, name:'Ph\u1ea7n 1 \u2014 \u0110\u01b0\u1eddng \u0111i ethanol',        color:'#00d4ff' },
-    { start:4,  end:7,  num:2, name:'Ph\u1ea7n 2 \u2014 D\u1eabn truy\u1ec1n TK',                    color:'#00f5d4' },
-    { start:8,  end:9,  num:3, name:'Ph\u1ea7n 3 \u2014 V\u00f9ng n\u00e3o',                         color:'#9b59b6' },
-    { start:10, end:14, num:4, name:'Ph\u1ea7n 4 \u2014 \u1ea2nh h\u01b0\u1edfng',                  color:'#f5a623' },
-    { start:15, end:17, num:5, name:'Ph\u1ea7n 5 \u2014 V\u00f2ng l\u1eb7p nghi\u1ec7n',            color:'#e74c3c' },
-    { start:18, end:20, num:6, name:'Ph\u1ea7n 6 \u2014 \u0110i\u1ec1u tr\u1ecb & ph\u1ee5c h\u1ed3i', color:'#2ecc71' },
+    { start:2 , end:2 , num:0, name:'\uD83D\uDCA1 M\u1edf \u0111\u1ea7u \u2014 Kh\u00e1i ni\u1ec7m n\u1ec1n t\u1ea3ng', color:'#0284c7' },
+    { start:3 , end:4 , num:1, name:'Ph\u1ea7n 1 \u2014 \u0110\u01b0\u1eddng \u0111i ethanol',        color:'#00d4ff' },
+    { start:5 , end:8 , num:2, name:'Ph\u1ea7n 2 \u2014 D\u1eabn truy\u1ec1n TK',                    color:'#00f5d4' },
+    { start:9 , end:10, num:3, name:'Ph\u1ea7n 3 \u2014 V\u00f9ng n\u00e3o',                         color:'#9b59b6' },
+    { start:11, end:15, num:4, name:'Ph\u1ea7n 4 \u2014 \u1ea2nh h\u01b0\u1edfng',                  color:'#f5a623' },
+    { start:16, end:18, num:5, name:'Ph\u1ea7n 5 \u2014 V\u00f2ng l\u1eb7p nghi\u1ec7n',            color:'#e74c3c' },
+    { start:19, end:21, num:6, name:'Ph\u1ea7n 6 \u2014 \u0110i\u1ec1u tr\u1ecb & ph\u1ee5c h\u1ed3i', color:'#2ecc71' },
   ];
   const slideHeader = document.getElementById('slide-header');
   const shBadgeText = document.getElementById('sh-badge-text');
