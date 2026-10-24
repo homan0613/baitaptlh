@@ -492,6 +492,82 @@
     }
     /* Print-clone: hidden on screen, visible only when printing (@media print overrides this) */
     @media screen { .print-clone { display:none !important; } }
+    /* ═══════════════════════════════════════════════════════════════════════
+       PROJECTOR TYPOGRAPHY OVERRIDES — tối ưu cho máy chiếu ≥ 1366×768
+       Bọc trong @media screen để không ảnh hưởng layout in (@media print).
+    ════════════════════════════════════════════════════════════════════════ */
+    @media screen {
+      /* ── Tương phản màu chữ muted: tối hơn để dễ đọc trên máy chiếu ── */
+      :root { --muted: #3c4f66; }
+
+      /* ── Văn bản cơ bản: p, li ─────────────────────────────────────── */
+      .slide p, .slide li { font-size: 1.15rem; line-height: 1.62; }
+      .sub { font-size: 1.05rem !important; line-height: 1.65; }
+
+      /* ── Card components ───────────────────────────────────────────── */
+      .card h3 { font-size: 1.35rem; }
+      .card p, .card li { font-size: 1.05rem; line-height: 1.6; }
+
+      /* ── Overview grid ─────────────────────────────────────────────── */
+      .ov-text h4 { font-size: 1.05rem; }
+      .ov-text p  { font-size: 0.95rem; line-height: 1.55; }
+      .ov-num { font-size: 1.9rem; }
+
+      /* ── Neurotransmitter panels ───────────────────────────────────── */
+      .nt-panel h3  { font-size: 1.3rem; }
+      .nt-badge     { font-size: 0.88rem; padding: 6px 15px; }
+      .nt-row-item p { font-size: 1.05rem; line-height: 1.6; }
+      .nt-effect    { font-size: 1rem; line-height: 1.58; }
+
+      /* ── Bảng so sánh GABA/Glutamate ──────────────────────────────── */
+      .comp-table        { font-size: 1rem; }
+      .comp-table th     { font-size: 1.15rem; padding: 14px 16px; }
+      .comp-table td     { font-size: 1.05rem; padding: 13px 16px; line-height: 1.55; }
+      .comp-table td:first-child { font-size: 1.05rem; }
+      .pill              { font-size: 0.92rem; padding: 4px 11px; }
+
+      /* ── Bảng Wernicke–Korsakoff ───────────────────────────────────── */
+      .wks-table      { font-size: 0.95rem; }
+      .wks-table th   { font-size: 1.05rem; padding: 12px 14px; }
+      .wks-table td   { font-size: 0.95rem; padding: 11px 14px; line-height: 1.55; }
+
+      /* ── Callouts ──────────────────────────────────────────────────── */
+      .callout { font-size: 1.05rem; line-height: 1.65; }
+
+      /* ── Danh sách điều trị ────────────────────────────────────────── */
+      .treat-body h4 { font-size: 1.35rem; }
+      .treat-body p  { font-size: 1.05rem; line-height: 1.6; }
+
+      /* ── Vòng lặp nghiện (cycle nodes) ────────────────────────────── */
+      .cycle-node strong { font-size: 1.1rem; }
+      .cycle-node span   { font-size: 1rem; }
+
+      /* ── Stat boxes ────────────────────────────────────────────────── */
+      .stat-label { font-size: 1rem; line-height: 1.5; }
+
+      /* ── Lưới 6 vùng não (region cards) ───────────────────────────── */
+      .rc-name   { font-size: 1.05rem; }
+      .rc-fn     { font-size: 0.92rem; line-height: 1.55; }
+      .rc-effect { font-size: 0.92rem; line-height: 1.55; }
+
+      /* ── Region explorer (interactive sidebar) ─────────────────────── */
+      .rni-name  { font-size: 0.95rem; }
+      .rni-en    { font-size: 0.8rem; }
+      .rd-name   { font-size: 1.2rem; }
+      .rd-en     { font-size: 0.88rem; }
+      .rd-section { font-size: 0.95rem; line-height: 1.6; }
+      .rd-section .label { font-size: 0.82rem; }
+      .rd-effect-box { font-size: 0.95rem; line-height: 1.6; }
+
+      /* ── Ethanol explorer ──────────────────────────────────────────── */
+      .eth-step-name         { font-size: 1rem; }
+      .eth-caption           { font-size: 1rem; line-height: 1.65; }
+      .eth-caption .eth-desc { font-size: 1.1rem; }
+      .eth-caption .eth-note { font-size: 0.95rem; }
+
+      /* ── Badge / chú thích nhỏ nhất: không dưới 0.95rem ───────────── */
+      .badge { font-size: 0.95rem; }
+    }
 </style>
 </head>
 <body>
