@@ -1071,7 +1071,7 @@
       const el = document.createElement('div');
       el.className = 'rni' + (i===activeRegion?' active':'');
       el.style.setProperty('--rni-color', r.color);
-      el.innerHTML = `<span class="rni-emoji">${r.emoji}</span><div class="rni-text"><div class="rni-name" style="color:${i===activeRegion?r.color:'var(--text)'}">${r.name}</div><div class="rni-en">${r.en}</div></div>`;
+      el.innerHTML = `<div class="rni-text"><div class="rni-name" style="color:${i===activeRegion?r.color:'var(--text)'}">${r.name}</div><div class="rni-en">${r.en}</div></div>`;
       el.onclick = (e) => { e.stopPropagation(); activeRegion=i; renderRegionNav(); renderRegionDetail(); };
       regionNav.appendChild(el);
     });
@@ -1082,11 +1082,10 @@
     regionDetail.style.borderColor = r.color+'44';
     const imgHTML = r.img
       ? `<div class="rd-img-panel"><img src="${r.img}" alt="${r.name}"></div>`
-      : `<div class="rd-no-img">${r.emoji}</div>`;
+      : `<div class="rd-no-img"></div>`;
     regionDetail.innerHTML = `
       <div class="rd-left">
         <div class="rd-title">
-          <span class="rd-emoji">${r.emoji}</span>
           <div><div class="rd-name" style="color:${r.color}">${r.name}</div><div class="rd-en">${r.en}</div></div>
         </div>
         <div class="rd-section">
@@ -1136,7 +1135,7 @@
       const el = document.createElement('div');
       el.className = 'eth-step' + (i===activeEthStep?' active':'');
       el.style.setProperty('--eth-color', s.color);
-      el.innerHTML = `<span class="eth-step-icon">${s.icon}</span><div class="eth-step-text"><div class="eth-step-name" style="color:${i===activeEthStep?s.color:'var(--text)'}">${s.name}</div></div>`;
+      el.innerHTML = `<div class="eth-step-text"><div class="eth-step-name" style="color:${i===activeEthStep?s.color:'var(--text)'}">${s.name}</div></div>`;
       el.onclick = (e) => { e.stopPropagation(); activeEthStep=i; renderEthFlow(); renderEthImg(); };
       ethFlow.appendChild(el);
       if(i < ETHANOL_STEPS.length-1){
@@ -1297,7 +1296,6 @@
       sec.className = 'slide print-clone';
       const navItems = ETHANOL_STEPS.map((s,j) =>
         `<div class="eth-step${j===idx?' active':''}" style="--eth-color:${s.color}">
-           <span class="eth-step-icon">${s.icon}</span>
            <div class="eth-step-text"><div class="eth-step-name" style="color:${j===idx?s.color:'var(--text)'}">${s.name}</div></div>
          </div>
          ${j<ETHANOL_STEPS.length-1?'<div class="eth-connector">↓</div>':''}`
@@ -1324,22 +1322,21 @@
       sec.className = 'slide print-clone';
       const navItems = REGIONS_DATA.map((reg,j) =>
         `<div class="rni${j===idx?' active':''}" style="--rni-color:${reg.color}">
-           <span class="rni-emoji">${reg.emoji}</span>
            <div class="rni-text"><div class="rni-name" style="color:${j===idx?reg.color:'var(--text)'}">${reg.name}</div><div class="rni-en">${reg.en}</div></div>
          </div>`
       ).join('');
       const imgHTML = r.img
         ? `<div class="rd-img-panel"><img src="${r.img}" alt="${r.name}"></div>`
-        : `<div class="rd-no-img">${r.emoji}</div>`;
+        : `<div class="rd-no-img"></div>`;
       sec.innerHTML =
         `<div class="badge"><span class="dot-pulse"></span>Vùng não</div>
-         <h2 class="section-title">6 Vùng Não — ${r.emoji} ${r.name}</h2>
+         <h2 class="section-title">6 vùng não — ${r.name}</h2>
          <div class="divider"></div>
          <div class="region-explorer" style="grid-template-columns:170px 1fr;height:auto;max-width:1020px;">
            <div class="region-nav" style="flex-direction:column;overflow:visible;">${navItems}</div>
            <div class="region-detail" style="border-color:${r.color}44;grid-template-columns:1fr 200px;">
              <div class="rd-left">
-               <div class="rd-title"><span class="rd-emoji">${r.emoji}</span><div><div class="rd-name" style="color:${r.color}">${r.name}</div><div class="rd-en">${r.en}</div></div></div>
+               <div class="rd-title"><div><div class="rd-name" style="color:${r.color}">${r.name}</div><div class="rd-en">${r.en}</div></div></div>
                <div class="rd-section"><span class="label" style="color:${r.color}">✓ Chức năng bình thường</span>${r.fn}</div>
                <div class="rd-effect-box rd-section" style="background:${r.effectColor}18;border:1px solid ${r.effectColor}44;">
                  <span class="label" style="color:${r.effectColor}">⚠ Tác động khi uống rượu</span>${r.effect}
