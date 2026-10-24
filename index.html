@@ -501,7 +501,7 @@
       :root { --muted: #3c4f66; }
 
       /* ── Văn bản cơ bản: p, li ─────────────────────────────────────── */
-      .slide p, .slide li { font-size: 1.15rem; line-height: 1.62; }
+      /* .slide p, .slide li bỏ override toàn cục — từng component đã có rule riêng bên dưới */
       .sub { font-size: 1.05rem !important; line-height: 1.65; }
 
       /* ── Card components ───────────────────────────────────────────── */
@@ -567,6 +567,65 @@
 
       /* ── Badge / chú thích nhỏ nhất: không dưới 0.95rem ───────────── */
       .badge { font-size: 0.95rem; }
+    }
+    /* ═══════════════════════════════════════════════════════════════════════
+       ANTI-OVERFLOW — ép không có thanh cuộn, màn hình máy chiếu ≥ 1366×768
+       Dùng min-width:901px để không ảnh hưởng breakpoint mobile.
+    ════════════════════════════════════════════════════════════════════════ */
+    @media screen and (min-width:901px) {
+
+      /* ── 1. Slide container: overflow hidden, padding gọn hơn ─────── */
+      .slide {
+        padding: 100px 55px 20px !important;
+        overflow: hidden !important;
+        max-height: 100vh !important;
+      }
+
+      /* ── 2. slide-inner: tắt thanh cuộn, giới hạn chiều cao ────────── */
+      .slide-inner {
+        overflow: hidden !important;
+        max-height: 80vh;
+      }
+
+      /* ── 3. Giảm khoảng trắng tiêu đề / divider / sub ──────────────── */
+      h2.section-title { margin-bottom: 4px !important; }
+      .divider { margin: 0 auto 12px !important; }
+      .sub { margin-bottom: 14px !important; }
+
+      /* ── 4. Slide Tài liệu tham khảo ───────────────────────────────── */
+      /* Citations: restore compact size bị override bởi .slide p trên */
+      #slide-refs p { font-size: 0.9rem !important; line-height: 1.42 !important; }
+      /* Mở rộng để tận dụng chiều ngang màn hình */
+      #slide-refs .slide-inner { max-width: 1280px !important; overflow: hidden !important; }
+      /* Thu hẹp gap giữa các nhóm tài liệu */
+      #slide-refs .slide-inner > div { gap: 10px 22px !important; font-size: 0.9rem !important; line-height: 1.42 !important; }
+
+      /* ── 5. Slide tổng kết: card gọn hơn ──────────────────────────── */
+      .card-row { gap: 10px !important; }
+      .card { padding: 14px 16px !important; }
+
+      /* ── 6. NT split panels: khoảng cách gọn ───────────────────────── */
+      .nt-split { gap: 14px !important; }
+      .nt-panel { padding: 16px 18px !important; }
+      .nt-header { margin-bottom: 10px !important; padding-bottom: 9px !important; }
+      .nt-row { gap: 8px !important; }
+      .nt-row-item { gap: 7px !important; }
+      .nt-effect { margin-top: 9px !important; padding: 9px 12px !important; }
+
+      /* ── 7. Region / Ethanol explorer: chiều cao vừa màn hình ──────── */
+      .region-explorer { height: 375px !important; }
+      .ethanol-explorer { height: 375px !important; }
+
+      /* ── 8. Overview grid ───────────────────────────────────────────── */
+      .overview-grid { gap: 10px !important; }
+      .ov-item { padding: 13px 15px !important; }
+
+      /* ── 9. Callout: giảm padding ───────────────────────────────────── */
+      .callout { padding: 13px 18px !important; margin-top: 10px !important; }
+
+      /* ── 10. Treat list grid: khoảng cách gọn ──────────────────────── */
+      .treat-list { gap: 11px !important; }
+      .treat-item { padding: 13px 16px !important; }
     }
 </style>
 </head>
