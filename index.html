@@ -576,7 +576,7 @@
 
       /* ── 1. Slide container: overflow hidden, padding gọn hơn ─────── */
       .slide {
-        padding: 100px 55px 20px !important;
+        padding: 100px 36px 20px !important;
         overflow: hidden !important;
         max-height: 100vh !important;
       }
@@ -623,6 +623,21 @@
       /* ── 10. Treat list grid: khoảng cách gọn ──────────────────────── */
       .treat-list { gap: 11px !important; }
       .treat-item { padding: 13px 16px !important; }
+      /* ── 11. Mở rộng chiều ngang — giải phóng không gian bên mép ─── */
+      .slide { padding-left: 36px !important; padding-right: 36px !important; }
+      .card-row    { max-width: 1380px !important; }
+      .slide-inner { max-width: 1380px !important; }
+      .nt-split    { max-width: 1380px !important; }
+      .overview-grid  { max-width: 1380px !important; }
+      .region-explorer { max-width: 1380px !important; }
+      .ethanol-explorer { max-width: 1380px !important; }
+      .comp-table  { max-width: 1380px !important; }
+      .wks-table   { max-width: 1380px !important; }
+      .treat-list  { max-width: 1380px !important; }
+      .callout     { max-width: 1380px !important; }
+      .img-panel   { max-width: 1300px !important; }
+      /* Card flex: flex-basis tối thiểu để ko bị bóp quá hẹp */
+      .card { min-width: 220px !important; }
     }</style>
 </head>
 <body>
