@@ -652,6 +652,31 @@
       /* Tuyệt đối không cho scrollbar hiện trong nav */
       .region-nav { overflow: hidden !important; }
       .region-explorer { overflow: hidden !important; }
+      /* ── 13. Kết luận "Những điểm cần nhớ": grid 3 trên / 2 dưới ── */
+      #slide-conclusion .card-row {
+        display: grid !important;
+        grid-template-columns: repeat(6, 1fr) !important;
+        max-width: 1150px !important;
+        gap: 14px !important;
+        margin: 0 auto !important;
+        flex-wrap: unset !important;
+        width: 100% !important;
+      }
+      #slide-conclusion .card-row .card:nth-child(-n+3) {
+        grid-column: span 2 !important;
+        flex: none !important;
+        min-width: 0 !important;
+      }
+      #slide-conclusion .card-row .card:nth-child(n+4) {
+        grid-column: span 3 !important;
+        flex: none !important;
+        min-width: 0 !important;
+      }
+      #slide-conclusion .callout {
+        max-width: 1150px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
     }</style>
 </head>
 <body>
@@ -953,7 +978,7 @@
     <div class="treat-item"><div class="treat-icon">&#127807;</div><div class="treat-body"><h4 class="accent-purple">Li&#7879;u ph&#225;p ch&#7845;p nh&#7853;n &amp; cam k&#7871;t (ACT)</h4><p>H&#7885;c c&#225;ch &#273;&#7889;i di&#7879;n v&#7899;i c&#7843;m x&#250;c kh&#243; ch&#7883;u m&#224; kh&#244;ng h&#224;nh &#273;&#7897;ng theo ch&#250;ng. S&#7889;ng ph&#249; h&#7907;p v&#7899;i gi&#225; tr&#7883; c&#225; nh&#226;n.</p></div></div>
     <div class="treat-item" style="grid-column:span 2"><div class="treat-icon">&#129309;</div><div class="treat-body"><h4 class="accent-green">Ph&#7887;ng v&#7845;n t&#7841;o &#273;&#7897;ng l&#7921;c &amp; h&#7895; tr&#7907; t&#226;m l&#253;-x&#227; h&#7897;i</h4><p>T&#259;ng &#273;&#7897;ng l&#7921;c thay &#273;&#7893;i v&#224; c&#7911;ng c&#7889; h&#224;nh tr&#236;nh ph&#7909;c h&#7891;i qua h&#7895; tr&#7907; chuy&#234;n gia v&#224; c&#7897;ng &#273;&#7891;ng.</p></div></div>
   </div>
-</section><section class="slide">
+</section><section class="slide" id="slide-conclusion">
   <svg class="bg-nodes" viewBox="0 0 1000 600" fill="none">
     <g class="neuron-ring"><circle cx="500" cy="300" r="240" stroke="white" stroke-width="0.5" stroke-dasharray="4 12"/></g>
     <g class="neuron-ring2"><circle cx="500" cy="300" r="170" stroke="white" stroke-width="0.5" stroke-dasharray="2 8"/></g>
