@@ -638,6 +638,20 @@
       .img-panel   { max-width: 1300px !important; }
       /* Card flex: flex-basis tối thiểu để ko bị bóp quá hẹp */
       .card { min-width: 220px !important; }
+      /* ── 12. Region explorer — thu gọn 6 tab nav, giới hạn ảnh ─── */
+      /* Tab nav: giảm padding & gap để 6 tab vừa trong 375px height */
+      .region-nav { gap: 6px !important; }
+      .rni { padding: 7px 12px !important; }
+      .rni-en { font-size: 0.75rem !important; }
+      /* Detail panel: giảm padding, giới hạn chiều cao ảnh */
+      .region-detail { padding: 12px 16px !important; }
+      .rd-left { gap: 7px !important; }
+      .rd-img-panel { max-height: 265px !important; }
+      .rd-effect-box { padding: 8px 12px !important; }
+      .rd-name { font-size: 1.05rem !important; }
+      /* Tuyệt đối không cho scrollbar hiện trong nav */
+      .region-nav { overflow: hidden !important; }
+      .region-explorer { overflow: hidden !important; }
     }</style>
 </head>
 <body>
