@@ -26,6 +26,7 @@
     .slide::before { content:''; position:absolute; inset:0; background: radial-gradient(ellipse 70% 60% at 20% 80%, rgba(37,99,235,.07) 0%, transparent 70%), radial-gradient(ellipse 50% 50% at 80% 20%, rgba(2,132,199,.05) 0%, transparent 60%), linear-gradient(135deg, var(--navy) 0%, var(--navy2) 50%, var(--navy3) 100%); z-index:0; }
     .bg-nodes { position:absolute; inset:0; z-index:0; opacity:.06; transform:scale(0.6); transform-origin:center center; }
     .slide > * { position:relative; z-index:1; }
+    .slide > .bg-nodes { position:absolute; z-index:0; pointer-events:none; } /* hình nền trang trí: không chiếm chỗ trong bố cục */
     #progress-bar { position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg,var(--cyan),var(--accent),var(--teal)); transition:width .4s ease; z-index:100; box-shadow:0 0 12px var(--cyan); }
     #counter { display:none; }
     .nav-btn { position:fixed; top:50%; transform:translateY(-50%); width:40px; height:40px; border-radius:50%; border:1px solid var(--border); background:var(--glass2); backdrop-filter:blur(12px); cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--text); font-size:18px; z-index:100; opacity:0.22; transition:opacity .25s ease, box-shadow .25s ease, background .25s ease, border-color .25s ease; user-select:none; }
@@ -512,6 +513,8 @@
     /* Region explorer: 3 mục chi tiết dạng gạch đầu dòng */
     .rd-list { padding-left:17px; margin-top:2px; }
     .rd-list li { margin-bottom:2px; }
+    .rd-note { border-radius:10px; padding:7px 12px; font-size:.86rem; line-height:1.5; background:rgba(220,38,38,.07); border:1px solid rgba(220,38,38,.25); color:#991b1b; }
+    .rd-note strong { color:#991b1b; }
     .rd-manifest-box { border-radius:10px; padding:8px 12px; background:rgba(0,0,80,.035); border-left:3px solid; }
     @media screen and (max-width:900px){ .fx-grid { grid-template-columns:repeat(2,1fr); } }
     @media screen and (max-width:640px){ .fx-grid { grid-template-columns:1fr; gap:8px; } }
@@ -711,25 +714,18 @@
       #neuroadapt-banner { max-width: 1220px !important; margin-left: auto; margin-right: auto; margin-top: 14px !important; }
       /* ── 12d. Điều trị: Giải độc + Dùng thuốc ở trên, nhóm phòng ngừa tái nghiện bên dưới ── */
       #treat-list { display: grid !important; grid-template-columns: 1fr 1fr; gap: 12px !important; }
-      #treat-list > .treat-item { align-items: center; }
       #treat-list .treat-group { grid-column: 1 / -1; border: 1px solid var(--border); border-radius: 16px; padding: 12px 14px 14px; background: rgba(13,148,136,.05); }
       .treat-group-title { font-weight: 800; font-size: 1.05rem; color: var(--teal); margin-bottom: 10px; }
       .treat-group-items { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
       .treat-group-items .treat-item { flex-direction: column; gap: 6px; }
       .treat-group-items .treat-body h4 { font-size: 1.12rem; }
       .treat-group-items .treat-body p { font-size: 0.95rem; }
-      /* ── 12e. Alcohol-Induced Blackout: 3 card màu phân biệt, rộng 1240px ── */
-      #blackout-cards { display: grid !important; grid-template-columns: repeat(3, 1fr); gap: 24px !important; max-width: 1240px !important; width: 100%; margin: 0 auto; }
-      #blackout-cards .card { max-width: none !important; min-width: 0 !important; padding: 18px 22px !important; border-width: 1.5px; border-style: solid; }
-      #blackout-cards .card:hover { transform: none; }
-      #blackout-cards .bo-yes  { background: #dcfce7; border-color: #86efac; }
-      #blackout-cards .bo-no   { background: #fee2e2; border-color: #fca5a5; }
-      #blackout-cards .bo-mech { background: #ffffff; border-color: #cbd5e1; }
-      #blackout-cards .bo-yes h3  { color: #065f46; }
-      #blackout-cards .bo-no h3   { color: #991b1b; }
-      #blackout-cards .bo-mech h3 { color: #1e293b; }
-      #blackout-cards .card li { color: #1f2937; }
-      #blackout-warning { max-width: 1240px !important; margin-left: auto; margin-right: auto; margin-top: 18px !important; }
+      /* ── 12f. Q&A: căn giữa thật theo chiều dọc, 3 ô số liệu rộng & thấp ── */
+      #slide-qa { padding-top: 60px !important; padding-bottom: 60px !important; }
+      #slide-qa > div:first-of-type { font-size: 3.6rem !important; margin-bottom: 10px !important; }
+      #slide-qa h1 { margin-bottom: 10px; }
+      #slide-qa > p { margin-bottom: 24px !important; }
+      #slide-qa .stat-box { flex: 0 0 250px; padding: 18px 22px; }
       /* ── 13. Kết luận "Những điểm cần nhớ": grid 3 trên / 2 dưới ── */
       #slide-conclusion .card-row {
         display: grid !important;
@@ -830,8 +826,8 @@
     <div class="ov-item" onclick="goTo(5)"><div class="ov-num">2</div><div class="ov-text"><h4>&#9879;&#65039; Ch&#7845;t d&#7851;n truy&#7873;n th&#7847;n kinh</h4><p>GABA, Glutamate v&#224; th&#7909; th&#7875; m&#7909;c ti&#234;u</p></div></div>
     <div class="ov-item" onclick="goTo(9)"><div class="ov-num">3</div><div class="ov-text"><h4>&#129504; V&#249;ng n&#227;o b&#7883; &#7843;nh h&#432;&#7903;ng</h4><p>7 v&#249;ng n&#227;o b&#7883; &#7843;nh h&#432;&#7903;ng v&#224; bi&#7875;u hi&#7879;n th&#7921;c t&#7871;</p></div></div>
     <div class="ov-item" onclick="goTo(11)"><div class="ov-num">4</div><div class="ov-text"><h4>&#9201; &#7842;nh h&#432;&#7903;ng c&#7845;p &amp; m&#227;n t&#237;nh</h4><p>Ng&#7855;n h&#7841;n v&#224; t&#7893;n th&#432;&#417;ng v&#297;nh vi&#7877;n</p></div></div>
-    <div class="ov-item" onclick="goTo(16)"><div class="ov-num">5</div><div class="ov-text"><h4>&#128260; V&#242;ng l&#7863;p nghi&#7879;n</h4><p>Th&#237;ch nghi th&#7847;n kinh v&#224; c&#417; ch&#7871; nghi&#7879;n</p></div></div>
-    <div class="ov-item" onclick="goTo(19)"><div class="ov-num">6</div><div class="ov-text"><h4>&#128138; &#272;i&#7873;u tr&#7883; &amp; ph&#7909;c h&#7891;i</h4><p>C&#225;c ph&#432;&#417;ng ph&#225;p v&#224; li&#7879;u ph&#225;p hi&#7879;n &#273;&#7841;i</p></div></div>
+    <div class="ov-item" onclick="goTo(15)"><div class="ov-num">5</div><div class="ov-text"><h4>&#128260; V&#242;ng l&#7863;p nghi&#7879;n</h4><p>Th&#237;ch nghi th&#7847;n kinh v&#224; c&#417; ch&#7871; nghi&#7879;n</p></div></div>
+    <div class="ov-item" onclick="goTo(18)"><div class="ov-num">6</div><div class="ov-text"><h4>&#128138; &#272;i&#7873;u tr&#7883; &amp; ph&#7909;c h&#7891;i</h4><p>C&#225;c ph&#432;&#417;ng ph&#225;p v&#224; li&#7879;u ph&#225;p hi&#7879;n &#273;&#7841;i</p></div></div>
   </div>
 </section><section class="slide" id="slide-intro">
   <div class="badge"><span class="dot-pulse"></span>Khái niệm nền tảng</div>
@@ -984,17 +980,6 @@
     <div class="callout callout-info">&#128161; <strong>Cơ chế cấp tính:</strong> Do sự can thiệp nhanh chóng vào các chất dẫn truyền thần kinh &#8212; <strong>tăng cường hệ GABA</strong> (ức chế) và <strong>suy giảm hệ Glutamate</strong> (hưng phấn) tùy thuộc nồng độ cồn trong máu (BAC).</div>
   </div>
 </section><section class="slide">
-  <div class="badge"><span class="dot-pulse"></span>&#272;&#7863;c bi&#7879;t l&#432;u &#253;</div>
-  <h2 class="section-title">Alcohol-Induced Blackout</h2>
-  <div class="divider"></div>
-  <p class="sub">Khi Hippocampus b&#7883; &#7843;nh h&#432;&#7903;ng n&#7863;ng &#8212; kh&#244;ng th&#7875; t&#7841;o k&#253; &#7913;c m&#7899;i</p>
-  <div class="card-row" id="blackout-cards">
-    <div class="card bo-yes"><h3>Ng&#432;&#7901;i b&#7883; blackout V&#7850;N C&#211; TH&#7874;...</h3><ul><li>N&#243;i chuy&#7879;n, t&#432;&#417;ng t&#225;c ng&#432;&#7901;i kh&#225;c</li><li>&#272;i l&#7841;i, th&#7921;c hi&#7879;n ho&#7841;t &#273;&#7897;ng th&#244;ng th&#432;&#7901;ng</li><li>Nh&#236;n c&#243; v&#7867; &#8220;t&#7881;nh t&#225;o&#8221; v&#7899;i ng&#432;&#7901;i ngo&#224;i</li><li>Ph&#7843;n &#7913;ng v&#7899;i m&#244;i tr&#432;&#7901;ng xung quanh</li></ul></div>
-    <div class="card bo-no"><h3>Nh&#432;ng SAU &#272;&#211; kh&#244;ng th&#7875;...</h3><ul><li>Nh&#7899; l&#7841;i nh&#7919;ng g&#236; &#273;&#227; x&#7843;y ra</li><li>H&#236;nh th&#224;nh k&#253; &#7913;c m&#7899;i trong giai &#273;o&#7841;n &#273;&#243;</li><li>Gi&#7843;i th&#237;ch h&#224;nh &#273;&#7897;ng c&#7911;a m&#236;nh</li><li>C&#243; tr&#237; nh&#7899; li&#234;n t&#7909;c v&#7873; bu&#7893;i t&#7889;i &#273;&#243;</li></ul></div>
-    <div class="card bo-mech"><h3>C&#417; ch&#7871;</h3><ul><li>Ethanol &#7913;c ch&#7871; th&#7909; th&#7875; NMDA</li><li>Ph&#225; v&#7905; <em>t&#237;nh d&#7867;o synapse</em></li><li>Hippocampus kh&#244;ng ghi nh&#7853;n th&#244;ng tin m&#7899;i</li><li>K&#253; &#7913;c ng&#7855;n h&#7841;n &#8594; d&#224;i h&#7841;n b&#7883; gi&#225;n &#273;o&#7841;n</li></ul></div>
-  </div>
-  <div class="callout callout-warning" id="blackout-warning"><strong>Blackout &#8800; B&#7845;t t&#7881;nh.</strong> Ng&#432;&#7901;i &#273;ang blackout v&#7851;n c&#243; th&#7875; th&#7921;c hi&#7879;n c&#225;c h&#224;nh vi nguy hi&#7875;m m&#224; kh&#244;ng c&#243; k&#253; &#7913;c sau &#273;&#243;.</div>
-</section><section class="slide">
   <div class="badge"><span class="dot-pulse"></span>Dài hạn</div>
   <h2 class="section-title">&#128308; Tổn thương mãn tính (dài hạn)</h2>
   <div class="divider"></div>
@@ -1097,8 +1082,8 @@
   <h2 class="section-title">&#128138; &#272;i&#7873;u tr&#7883; r&#7889;i lo&#7841;n s&#7917; d&#7909;ng r&#432;&#7907;u</h2>
   <div class="divider"></div>
   <div class="treat-list" id="treat-list">
-    <div class="treat-item"><div class="treat-icon">&#129529;</div><div class="treat-body"><h4 class="accent-cyan">Giải độc (Detoxification)</h4></div></div>
-    <div class="treat-item"><div class="treat-icon">&#128137;</div><div class="treat-body"><h4 class="accent-orange">Dùng thuốc (Medication)</h4></div></div>
+    <div class="treat-item"><div class="treat-icon">&#129529;</div><div class="treat-body"><h4 class="accent-cyan">Giải độc (Detoxification)</h4><p>Người nghiện rượu nặng cần hỗ trợ y tế để cai rượu an toàn &#8212; có thể cai tại nhà hoặc tại trung tâm chuyên khoa; một số trường hợp cần nhập viện để điều trị hội chứng cai.</p></div></div>
+    <div class="treat-item"><div class="treat-icon">&#128137;</div><div class="treat-body"><h4 class="accent-orange">Dùng thuốc (Medication)</h4><p><strong>Điều trị hội chứng cai:</strong> benzodiazepine, giảm dần liều đến khi ngừng. <strong>Ngăn tái nghiện:</strong> Acamprosate (giảm thèm rượu) &middot; Naltrexone (làm mất tác dụng của cồn) &middot; Disulfiram (khi hai thuốc trên không phù hợp).</p></div></div>
     <div class="treat-group">
       <div class="treat-group-title">&#128737;&#65039; Đào tạo phòng ngừa tái nghiện, bao gồm trị liệu và sửa đổi hành vi</div>
       <div class="treat-group-items">
@@ -1129,20 +1114,40 @@
   <h2 class="section-title">&#128218; Tài liệu tham khảo</h2>
   <div class="divider"></div>
   <div class="slide-inner" style="width:100%;max-width:1020px;text-align:left;">
-    <div style="display:flex;flex-direction:column;gap:18px;font-size:.95rem;line-height:1.6;max-width:900px;margin:0 auto;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px 28px;font-size:.78rem;line-height:1.65;">
+
       <div>
-        <p style="font-weight:700;color:var(--cyan);margin-bottom:6px;">&#128214; Royal College of Psychiatrists</p>
-        <p style="color:var(--muted);"><em>&#8220;Rượu bia, sức khỏe tâm thần và não bộ.&#8221;</em></p>
-        <p style="color:var(--muted);margin-top:4px;word-break:break-all;">https://www.rcpsych.ac.uk/mental-health/translations/vietnamese/alcohol-mental-health-and-the-brain</p>
+        <p style="font-weight:700;color:var(--cyan);margin-bottom:6px;">&#128758; Chuyển hóa &amp; Dược động học Ethanol</p>
+        <p style="color:var(--muted);">Goldman, M. R., et al. (2025). <em>Recent advances in alcohol metabolism: from the gut to the brain</em>. <strong>Physiological Reviews</strong>.</p>
       </div>
+
       <div>
-        <p style="font-weight:700;color:var(--cyan);margin-bottom:6px;">&#128214; National Institute on Alcohol Abuse and Alcoholism (NIAAA)</p>
-        <p style="color:var(--muted);"><em>&#8220;Health Topics: Alcohol and the Brain.&#8221;</em></p>
-        <p style="color:var(--muted);margin-top:4px;word-break:break-all;">https://www.niaaa.nih.gov/alcohols-effects-health/alcohol-topics/health-topics-alcohol-and-brain</p>
+        <p style="font-weight:700;color:var(--cyan);margin-bottom:6px;">&#128306; Cơ chế Thụ thể &amp; Synapse Thần kinh</p>
+        <p style="color:var(--muted);">Kumar, S., et al. (2009). <em>The role of GABA(A) receptors in the acute and chronic effects of ethanol</em>. <strong>PubMed Central</strong>.</p>
+        <p style="color:var(--muted);margin-top:5px;">Abrahao, K. P., Salinas, A. G., &amp; Lovinger, D. M. (2017). <em>Synaptic Targets: Chronic Alcohol Actions</em>.</p>
       </div>
+
+      <div>
+        <p style="font-weight:700;color:var(--cyan);margin-bottom:6px;">&#129504; Mạng lưới Thần kinh &amp; Cơ chế Nghiện</p>
+        <p style="color:var(--muted);">Koob, G. F., &amp; Volkow, N. D. (2016). <em>Neurobiology of addiction: a neurocircuitry analysis</em>.</p>
+        <p style="color:var(--muted);margin-top:5px;"><strong>NIAAA.</strong> <em>Alcohol and the Brain: An Overview &amp; The Cycle of Alcohol Addiction</em>.</p>
+      </div>
+
+      <div>
+        <p style="font-weight:700;color:var(--cyan);margin-bottom:6px;">&#129518; Tổn thương Cấu trúc, Ký ức &amp; Bệnh lý TK</p>
+        <p style="color:var(--muted);">Habas, E., et al. (2023). <em>Wernicke Encephalopathy: An Updated Narrative Review</em>. <strong>Saudi Journal of Medicine &amp; Medical Sciences</strong>.</p>
+        <p style="color:var(--muted);margin-top:5px;">Wetherill, R. R., &amp; Fromme, K. (2016). <em>Alcohol-induced blackouts: A review of recent clinical research</em>.</p>
+        <p style="color:var(--muted);margin-top:5px;"><strong>EFNS.</strong> <em>Guidelines for Diagnosis and Management of Wernicke Encephalopathy</em>.</p>
+      </div>
+
+      <div style="grid-column:1/-1;">
+        <p style="font-weight:700;color:var(--cyan);margin-bottom:6px;">&#128202; Bằng chứng Hình ảnh học (CT Scan)</p>
+        <p style="color:var(--muted);">Sandhu, G. S., &amp; Nagrale, H. R. <em>CT Scan Evidence of Brain Atrophy in Chronic Alcoholics</em>. <strong>Journal of Neurosciences in Rural Practice</strong>.</p>
+      </div>
+
     </div>
   </div>
-</section><section class="slide">
+</section><section class="slide" id="slide-qa">
   <svg class="bg-nodes" viewBox="0 0 1000 600" fill="none">
     <g class="neuron-ring"><circle cx="500" cy="300" r="280" stroke="white" stroke-width="0.4" stroke-dasharray="6 20"/></g>
     <g class="neuron-ring2"><circle cx="500" cy="300" r="170" stroke="white" stroke-width="0.5" stroke-dasharray="2 8"/></g>
@@ -1183,9 +1188,9 @@
     { start:3 , end:4 , num:1, name:'Ph\u1ea7n 1 \u2014 \u0110\u01b0\u1eddng \u0111i ethanol',        color:'#00d4ff' },
     { start:5 , end:8 , num:2, name:'Ph\u1ea7n 2 \u2014 D\u1eabn truy\u1ec1n TK',                    color:'#00f5d4' },
     { start:9 , end:10, num:3, name:'Ph\u1ea7n 3 \u2014 V\u00f9ng n\u00e3o',                         color:'#9b59b6' },
-    { start:11, end:15, num:4, name:'Ph\u1ea7n 4 \u2014 \u1ea2nh h\u01b0\u1edfng',                  color:'#f5a623' },
-    { start:16, end:18, num:5, name:'Ph\u1ea7n 5 \u2014 V\u00f2ng l\u1eb7p nghi\u1ec7n',            color:'#e74c3c' },
-    { start:19, end:21, num:6, name:'Ph\u1ea7n 6 \u2014 \u0110i\u1ec1u tr\u1ecb & ph\u1ee5c h\u1ed3i', color:'#2ecc71' },
+    { start:11, end:14, num:4, name:'Ph\u1ea7n 4 \u2014 \u1ea2nh h\u01b0\u1edfng',                  color:'#f5a623' },
+    { start:15, end:17, num:5, name:'Ph\u1ea7n 5 \u2014 V\u00f2ng l\u1eb7p nghi\u1ec7n',            color:'#e74c3c' },
+    { start:18, end:20, num:6, name:'Ph\u1ea7n 6 \u2014 \u0110i\u1ec1u tr\u1ecb & ph\u1ee5c h\u1ed3i', color:'#2ecc71' },
   ];
   const slideHeader = document.getElementById('slide-header');
   const shBadgeText = document.getElementById('sh-badge-text');
@@ -1349,6 +1354,7 @@
           'Củng cố trí nhớ, chuyển ký ức ngắn hạn thành ký ức dài hạn.'],
       effect:'Suy giảm dẫn truyền qua thụ thể <strong>NMDA</strong> (hệ Glutamate), làm gián đoạn tính dẻo synapse cần thiết cho việc ghi nhớ và hình thành ký ức mới.',
       manifest:'Mất trí nhớ tạm thời do rượu (<strong>Alcohol-induced blackout</strong>) — vẫn tỉnh táo giao tiếp lúc uống nhưng sau đó không nhớ những gì đã diễn ra.',
+      note:'<strong>Lưu ý: Blackout ≠ Bất tỉnh</strong> — Người uống vẫn tỉnh táo giao tiếp, đi lại và phản ứng với môi trường lúc say, nhưng quá trình ghi nhận ký ức mới bị cắt đứt hoàn toàn.',
       img:'images/hippocampus.png', effectColor:'#0d9488' },
     { name:'Tiểu não', en:'Cerebellum', emoji:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><line x1="12" y1="6" x2="12" y2="15"/><line x1="4" y1="11" x2="20" y2="11"/><line x1="12" y1="15" x2="8" y2="22"/><line x1="12" y1="15" x2="16" y2="22"/></svg>', color:'#7c3aed',
       fn:['Điều chỉnh thăng bằng và tư thế.',
@@ -1402,7 +1408,8 @@
         ${r.manifest ? `<div class="rd-manifest-box rd-section" style="border-color:${r.effectColor};">
           <span class="label" style="color:${r.effectColor}">&#128065; Bi&#7875;u hi&#7879;n th&#7921;c t&#7871;</span>
           ${rdList(r.manifest)}
-        </div>` : ''}`;
+        </div>` : ''}
+        ${r.note ? `<div class="rd-note">&#9888;&#65039; ${r.note}</div>` : ''}`;
   }
   let activeRegion = 0;
   const regionNav = document.getElementById('regionNav');
