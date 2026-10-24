@@ -28,9 +28,9 @@
     .slide > * { position:relative; z-index:1; }
     #progress-bar { position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg,var(--cyan),var(--accent),var(--teal)); transition:width .4s ease; z-index:100; box-shadow:0 0 12px var(--cyan); }
     #counter { display:none; }
-    .nav-btn { position:fixed; top:50%; transform:translateY(-50%); width:50px; height:50px; border-radius:50%; border:1px solid var(--border); background:var(--glass2); backdrop-filter:blur(12px); cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--text); font-size:20px; z-index:100; transition:all .25s ease; user-select:none; }
-    .nav-btn:hover { background:rgba(61,122,245,.25); border-color:var(--accent); box-shadow:0 0 20px rgba(61,122,245,.3); }
-    #prev { left:18px; } #next { right:18px; }
+    .nav-btn { position:fixed; top:50%; transform:translateY(-50%); width:40px; height:40px; border-radius:50%; border:1px solid var(--border); background:var(--glass2); backdrop-filter:blur(12px); cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--text); font-size:18px; z-index:100; opacity:0.22; transition:opacity .25s ease, box-shadow .25s ease, background .25s ease, border-color .25s ease; user-select:none; }
+    .nav-btn:hover { opacity:1; background:rgba(61,122,245,.25); border-color:var(--accent); box-shadow:0 0 20px rgba(61,122,245,.3); }
+    #prev { left:12px; } #next { right:12px; }
     #dots { display:none; }
     #hint { position:fixed; top:14px; right:22px; font-size:12px; color:var(--muted); z-index:100; display:flex; gap:7px; align-items:center; background:var(--glass2); border:1px solid var(--border); border-radius:999px; padding:6px 14px; backdrop-filter:blur(12px); }
     .key { display:inline-flex; align-items:center; justify-content:center; border:1px solid var(--border); border-radius:4px; width:22px; height:22px; font-size:11px; background:var(--glass); }
@@ -576,7 +576,7 @@
 
       /* ── 1. Slide container: overflow hidden, padding gọn hơn ─────── */
       .slide {
-        padding: 100px 36px 20px !important;
+        padding: 100px 60px 20px !important;
         overflow: hidden !important;
         max-height: 100vh !important;
       }
@@ -624,7 +624,7 @@
       .treat-list { gap: 11px !important; }
       .treat-item { padding: 13px 16px !important; }
       /* ── 11. Mở rộng chiều ngang — giải phóng không gian bên mép ─── */
-      .slide { padding-left: 36px !important; padding-right: 36px !important; }
+      .slide { padding-left: 60px !important; padding-right: 60px !important; }
       .card-row    { max-width: 1380px !important; }
       .slide-inner { max-width: 1380px !important; }
       .nt-split    { max-width: 1380px !important; }
