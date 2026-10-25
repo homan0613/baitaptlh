@@ -132,12 +132,12 @@
     .neuron-ring { animation:spin 18s linear infinite; transform-origin:center; }
     .neuron-ring2 { animation:spin 12s linear infinite reverse; transform-origin:center; }
     @keyframes spin { from{transform:rotate(0deg);}to{transform:rotate(360deg);} }
-    @media screen and (max-width:900px){
+    @media screen and (max-width:900px) and (pointer:coarse){
       .slide{padding:80px 30px 44px;}
       .region-grid,.nt-split,.overview-grid{grid-template-columns:repeat(2,1fr);}
     }
     /* ── TABLET (≤768px) ─────────────────────────────────────── */
-    @media screen and (max-width:768px){
+    @media screen and (max-width:768px) and (pointer:coarse){
       .slide { padding:74px 20px 80px; }
       .slide.active { overflow-y:auto; -webkit-overflow-scrolling:touch; }
       .slide-inner { max-height:none; }
@@ -162,7 +162,7 @@
       #hint { display:none!important; }
     }
     /* ── MOBILE (≤640px) ─────────────────────────────────────── */
-    @media screen and (max-width:640px){
+    @media screen and (max-width:640px) and (pointer:coarse){
       /* === SLIDE BASE === */
       .slide { padding:68px 16px 90px; }
       .slide.active { overflow-y:auto; -webkit-overflow-scrolling:touch; }
@@ -359,7 +359,7 @@
     .invasion-line { animation:line-flicker 1.5s ease-in-out infinite; }
     @keyframes line-flicker { 0%,100%{opacity:.65;}50%{opacity:1;} }
     /* Mobile home */
-    @media screen and (max-width:640px){
+    @media screen and (max-width:640px) and (pointer:coarse){
       #slide-home { padding:70px 14px 44px; }
       .home-content { grid-template-columns:1fr;gap:18px; }
       .home-right { order:-1; }
@@ -515,8 +515,8 @@
     .rd-note { border-radius:10px; padding:7px 12px; font-size:.86rem; line-height:1.5; background:rgba(220,38,38,.07); border:1px solid rgba(220,38,38,.25); color:#991b1b; }
     .rd-note strong { color:#991b1b; }
     .rd-manifest-box { border-radius:10px; padding:8px 12px; background:rgba(0,0,80,.035); border-left:3px solid; }
-    @media screen and (max-width:900px){ .fx-grid { grid-template-columns:repeat(2,1fr); } }
-    @media screen and (max-width:640px){ .fx-grid { grid-template-columns:1fr; gap:8px; } }
+    @media screen and (max-width:900px) and (pointer:coarse){ .fx-grid { grid-template-columns:repeat(2,1fr); } }
+    @media screen and (max-width:640px) and (pointer:coarse){ .fx-grid { grid-template-columns:1fr; gap:8px; } }
     /* Slide Mở đầu (Dẫn nhập): 2 card ít chữ, thoáng */
     .intro-grid { display:grid; grid-template-columns:repeat(2, 1fr); gap:32px; width:100%; max-width:1050px; margin:28px auto; align-items:stretch; }
     .intro-card { background:var(--glass2); border:1px solid var(--border); border-top:3px solid var(--fx,var(--accent)); border-radius:18px; padding:28px 32px; min-width:0; }
@@ -526,7 +526,7 @@
     .intro-card strong { color:var(--text); }
     .intro-card ul { padding-left:20px; }
     #slide-intro .intro-bridge { max-width:1050px !important; margin:0 auto !important; text-align:center; font-weight:500; }
-    @media screen and (max-width:900px){ .intro-grid { grid-template-columns:1fr; } }
+    @media screen and (max-width:900px) and (pointer:coarse){ .intro-grid { grid-template-columns:1fr; } }
     /* Print-clone: hidden on screen, visible only when printing (@media print overrides this) */
     @media screen { .print-clone { display:none !important; } }
     /* ═══════════════════════════════════════════════════════════════════════
@@ -609,7 +609,7 @@
        ANTI-OVERFLOW — ép không có thanh cuộn, màn hình máy chiếu ≥ 1366×768
        Dùng min-width:901px để không ảnh hưởng breakpoint mobile.
     ════════════════════════════════════════════════════════════════════════ */
-    @media screen and (min-width:901px) {
+    @media screen and (min-width:901px), screen and (pointer:fine) {
 
       /* ── 1. Slide container: overflow hidden, padding gọn hơn ─────── */
       .slide {
@@ -713,9 +713,9 @@
       .treat-group-items .treat-body p { font-size: 0.95rem; }
       /* ── 12f. Q&A: căn giữa thật theo chiều dọc, 3 ô số liệu rộng & thấp ── */
       #slide-qa { padding-top: 60px !important; padding-bottom: 60px !important; }
-      #slide-qa > div:first-of-type { font-size: 3.6rem !important; margin-bottom: 10px !important; }
+      #slide-qa .fit-box > div:first-of-type { font-size: 3.6rem !important; margin-bottom: 10px !important; }
       #slide-qa h1 { margin-bottom: 10px; }
-      #slide-qa > p { margin-bottom: 24px !important; }
+      #slide-qa .fit-box > p { margin-bottom: 24px !important; }
       #slide-qa .stat-box { flex: 0 0 250px; padding: 18px 22px; }
       /* ── 13. Kết luận "Những điểm cần nhớ": grid 3 trên / 2 dưới ── */
       #slide-conclusion .card-row {
@@ -746,7 +746,49 @@
         margin-left: auto !important;
         margin-right: auto !important;
       }
-    }</style>
+    }
+    /* ═══════════════════════════════════════════════════════════════════════
+       FIT-TO-FRAME — JS bọc nội dung mỗi slide trong .fit-box rồi scale để
+       luôn vừa khung dưới tiêu đề, ở mọi mức zoom: không tràn, không scroll.
+    ════════════════════════════════════════════════════════════════════════ */
+    .slide > .fit-box { position:absolute; left:0; top:0; z-index:1; display:flex; flex-direction:column; align-items:center; transform-origin:0 0; }
+    .fit-box .slide-inner { max-height:none !important; overflow:visible !important; }
+    .fit-box .eth-caption { overflow:visible; }
+    .fit-box .region-nav { padding:2px 8px 2px 2px; }
+    .nt-badge { white-space:nowrap; }
+    /* Ảnh có chiều cao cố định → kích thước bố cục không phụ thuộc lúc ảnh tải xong */
+    .home-brain-img { aspect-ratio:1 / 1; }
+    .fx-img-card .img-panel { position:relative; min-height:170px; }
+    .fx-img-card .img-panel img { position:absolute; inset:0; width:100%; height:100%; max-height:none; }
+    @media screen and (min-width:901px), screen and (pointer:fine) {
+      /* Hành trình ethanol: khung cao hơn, ảnh chiếm phần lớn */
+      .ethanol-explorer { height:540px !important; max-width:1200px !important; grid-template-columns:230px 1fr; }
+      .eth-step { padding:14px 18px; }
+      .eth-step-name { font-size:1.1rem; }
+      .eth-img-wrap { flex:1 1 0; }
+      .eth-caption { flex:none; }
+      /* Vùng não: ảnh lớn hơn, chiều cao cố định */
+      .region-detail { grid-template-columns:1fr 300px !important; min-height:0; }
+      .rd-img-panel { height:340px !important; max-height:none !important; }
+      /* GABA / Glutamate: ảnh minh họa lớn hơn */
+      .nt-layout { grid-template-columns:1fr 320px 1fr !important; max-width:1300px !important; align-items:center !important; }
+      .nt-layout .img-panel { height:380px; }
+      /* Vòng lặp nghiện: cột ảnh rộng hơn */
+      .cycle-wrap { grid-template-columns:1fr 250px 1fr !important; max-width:1240px !important; align-items:center !important; }
+      .cycle-wrap .img-panel { height:190px !important; }
+      .cycle-wrap .img-caption { font-size:.85rem !important; }
+    }
+    /* Khi cửa sổ hẹp (zoom lớn): rút gọn thanh điều hướng để không đè lên nhau */
+    @media screen and (max-width:1100px) and (pointer:fine) {
+      #hint .hsep { display:none; }
+      #section-bar .sec-pips, #section-bar .sec-divider { display:none; }
+      .sh-title { white-space:normal; }
+    }
+    @media screen and (max-width:760px) and (pointer:fine) {
+      #section-bar .sec-name { max-width:160px; overflow:hidden; text-overflow:ellipsis; }
+    }
+    @media screen and (max-width:900px) and (pointer:coarse) { .fit-box { display:contents; } }
+    @media print { .fit-box { display:contents !important; } }</style>
 </head>
 <body>
 <div id="progress-bar"></div>
@@ -870,7 +912,7 @@
   <div class="badge"><span class="dot-pulse"></span>H&#7879; th&#7889;ng GABA</div>
   <h2 class="section-title">&#129514; GABA &#8212; Ch&#226;n phanh c&#7911;a n&#227;o</h2>
   <div class="divider"></div>
-  <div style="display:grid;grid-template-columns:1fr 260px 1fr;gap:16px;width:100%;max-width:1020px;align-items:start;">
+  <div class="nt-layout" style="display:grid;grid-template-columns:1fr 260px 1fr;gap:16px;width:100%;max-width:1020px;align-items:start;">
     <div class="nt-panel">
       <div class="nt-header"><span class="nt-badge nt-inhibit">&#7913;c ch&#7871;</span><h3>B&#236;nh th&#432;&#7901;ng</h3></div>
       <div class="nt-row">
@@ -895,7 +937,7 @@
   <div class="badge"><span class="dot-pulse"></span>H&#7879; th&#7889;ng Glutamate</div>
   <h2 class="section-title">&#9889; Glutamate &#8212; Ch&#226;n ga c&#7911;a n&#227;o</h2>
   <div class="divider"></div>
-  <div style="display:grid;grid-template-columns:1fr 260px 1fr;gap:16px;width:100%;max-width:1020px;align-items:start;">
+  <div class="nt-layout" style="display:grid;grid-template-columns:1fr 260px 1fr;gap:16px;width:100%;max-width:1020px;align-items:start;">
     <div class="nt-panel">
       <div class="nt-header"><span class="nt-badge nt-excite">h&#432;ng ph&#7845;n</span><h3>B&#236;nh th&#432;&#7901;ng</h3></div>
       <div class="nt-row">
@@ -1050,11 +1092,11 @@
       <div class="img-panel" style="height:148px;">
         <img src="images/brain_dopamine_reward.png" alt="Brain dopamine reward pathways">
       </div>
-      <p style="font-size:.65rem;color:var(--muted);text-align:center;line-height:1.3;">&#127941; H&#7879; th&#7889;ng ph&#7847;n th&#432;&#7903;ng Dopamine</p>
+      <p class="img-caption" style="font-size:.65rem;color:var(--muted);text-align:center;line-height:1.3;">&#127941; H&#7879; th&#7889;ng ph&#7847;n th&#432;&#7903;ng Dopamine</p>
       <div class="img-panel" style="height:148px;">
         <img src="images/addiction_cycle_brain.jpg" alt="Addiction cycle brain regions">
       </div>
-      <p style="font-size:.65rem;color:var(--muted);text-align:center;line-height:1.3;">&#129504; V&#242;ng l&#7863;p nghi&#7879;n 3 giai &#273;o&#7841;n</p>
+      <p class="img-caption" style="font-size:.65rem;color:var(--muted);text-align:center;line-height:1.3;">&#129504; V&#242;ng l&#7863;p nghi&#7879;n 3 giai &#273;o&#7841;n</p>
     </div>
     <!-- Col 3: Examples -->
     <div style="display:flex;flex-direction:column;gap:10px;">
@@ -1158,6 +1200,16 @@
   const counter = document.getElementById('counter');
   const progressBar = document.getElementById('progress-bar');
   const total = slides.length;
+  // Bọc nội dung mỗi slide vào .fit-box (trừ nền trang trí) để scale vừa khung
+  let fitReady = false;
+  slides.forEach(slide => {
+    const box = document.createElement('div');
+    box.className = 'fit-box';
+    Array.from(slide.children).forEach(el => {
+      if (!el.matches('.bg-nodes, canvas')) box.appendChild(el);
+    });
+    slide.appendChild(box);
+  });
   const _savedSlide = parseInt(localStorage.getItem('bap_slide') || '0', 10);
   let current = (_savedSlide >= 0 && _savedSlide < slides.length) ? _savedSlide : 0;
   slides.forEach((_,i)=>{
@@ -1252,6 +1304,7 @@
     } else {
       sectionBar.classList.remove('visible');
     }
+    if (fitReady) fitSlide(slides[current]);
   }
   function goTo(idx){
     if(idx<0||idx>=total)return;
@@ -1596,6 +1649,82 @@
     init();
     requestAnimationFrame(drawFrame);
   })();
+  // ── FIT-TO-FRAME: phóng to/thu nhỏ nội dung để luôn vừa khung ────────
+  // Khung = vùng dưới tiêu đề cố định, chừa lề cho nút ←/→. Tìm tỉ lệ s lớn
+  // nhất sao cho khi dàn trang ở bề rộng W/s, nội dung cao ≤ H/s.
+  const FIT_MAX = 1.8;
+  const mobileMQ = window.matchMedia('(max-width:900px) and (pointer:coarse)');
+  // Slide có nhiều tab: scale theo tab dài nhất để kích thước không nhảy khi chuyển tab
+  const FIT_VARIANTS = new Map();
+  if (regionNav) FIT_VARIANTS.set(regionNav.closest('.slide'), {
+    count: REGIONS_DATA.length,
+    get: () => activeRegion,
+    set: i => { activeRegion = i; renderRegionNav(); renderRegionDetail(); },
+    stable: regionDetail,
+  });
+  function fitFrame(slide){
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const padX = Math.max(64, vw * 0.045);
+    let top;
+    if (SLIDE_HDRS[current] && slide === slides[current]) {
+      top = slideHeader.getBoundingClientRect().bottom + 22;
+    } else {
+      top = Math.max(document.getElementById('top-left').getBoundingClientRect().bottom,
+                     document.getElementById('hint').getBoundingClientRect().bottom) + 22;
+    }
+    const bottom = Math.max(24, vh * 0.04);
+    return { x: padX, y: top, w: vw - 2 * padX, h: Math.max(80, vh - top - bottom) };
+  }
+  function fitsAt(box, f, s){
+    const L = f.w / s;
+    box.style.width = L + 'px';
+    return box.offsetHeight * s <= f.h && box.scrollWidth <= L + 1;
+  }
+  function bestScale(box, f){
+    if (fitsAt(box, f, FIT_MAX)) return FIT_MAX;
+    let lo = 0.05, hi = FIT_MAX;
+    for (let i = 0; i < 18; i++) {
+      const mid = (lo + hi) / 2;
+      if (fitsAt(box, f, mid)) lo = mid; else hi = mid;
+    }
+    return lo;
+  }
+  function fitSlide(slide){
+    const box = slide.querySelector(':scope > .fit-box');
+    if (!box) return;
+    if (mobileMQ.matches) { box.removeAttribute('style'); return; }
+    const f = fitFrame(slide);
+    const v = FIT_VARIANTS.get(slide);
+    let s;
+    if (v) {
+      const cur = v.get();
+      v.stable.style.minHeight = '';
+      s = FIT_MAX;
+      for (let i = 0; i < v.count; i++) { v.set(i); s = Math.min(s, bestScale(box, f)); }
+      box.style.width = (f.w / s) + 'px';
+      let maxH = 0;
+      for (let i = 0; i < v.count; i++) { v.set(i); maxH = Math.max(maxH, v.stable.offsetHeight); }
+      v.set(cur);
+      v.stable.style.minHeight = maxH + 'px';
+    } else {
+      s = bestScale(box, f);
+    }
+    box.style.width = (f.w / s) + 'px';
+    const h = box.offsetHeight * s;
+    box.style.transform = `translate(${f.x}px, ${f.y + Math.max(0, (f.h - h) / 2)}px) scale(${s})`;
+  }
+  let fitQueued = false;
+  function refit(){
+    if (fitQueued) return;
+    fitQueued = true;
+    requestAnimationFrame(() => { fitQueued = false; fitSlide(slides[current]); });
+  }
+  window.addEventListener('resize', refit);
+  window.addEventListener('load', refit);
+  if (document.fonts) document.fonts.ready.then(refit);
+  mobileMQ.addEventListener?.('change', refit);
+  fitReady = true;
+  fitSlide(slides[current]);
   // ── PRINT: expand interactive slides to one page per item ──
   (function(){
     let printClones = [];
@@ -1689,7 +1818,7 @@
     }
 
     window.addEventListener('beforeprint', buildPrintSlides);
-    window.addEventListener('afterprint',  removePrintSlides);
+    window.addEventListener('afterprint',  () => { removePrintSlides(); refit(); });
 
     // Preload all slide images at startup so they're cached for print
     (function preload(){
