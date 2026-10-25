@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Dieu gi xay ra trong nao khi chung ta uong ruou?</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,500;1,600&display=swap" rel="stylesheet">
+  <link href="fonts/fonts.css" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -18,7 +16,7 @@
       --glass: rgba(255,255,255,0.6); --glass2: rgba(255,255,255,0.92);
       --border: rgba(0,0,80,0.1);
     }
-    html, body { width:100%; height:100%; overflow:hidden; font-family:'Be Vietnam Pro',sans-serif; background:var(--navy); color:var(--text); }
+    html, body { width:100%; height:100%; overflow:hidden; font-family:'Be Vietnam Pro','Segoe UI',Arial,sans-serif; background:var(--navy); color:var(--text); }
     #deck { width:100vw; height:100vh; position:relative; overflow:hidden; }
     .slide { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:115px 75px 55px; opacity:0; pointer-events:none; transition:opacity .5s cubic-bezier(.4,0,.2,1), transform .5s cubic-bezier(.4,0,.2,1); transform:translateX(55px); overflow:hidden; }
     .slide.active { opacity:1; pointer-events:all; transform:translateX(0); }
@@ -52,7 +50,7 @@
     h2.section-title { font-size:clamp(1.1rem,2vw,1.65rem); font-weight:800; letter-spacing:-.02em; text-align:center; margin-bottom:8px; line-height:1.25; }
     .sub { font-size:1rem; color:var(--muted); text-align:center; max-width:680px; line-height:1.7; margin-bottom:32px; }
     .divider { width:60px; height:3px; background:linear-gradient(90deg,var(--accent),var(--cyan)); border-radius:999px; margin:0 auto 26px; }
-    .chapter-number { font-size:6.5rem; font-weight:900; line-height:1; letter-spacing:-.04em; background:linear-gradient(135deg,rgba(37,99,235,.22),rgba(2,132,199,.18)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:8px; font-family:'Space Grotesk',sans-serif; }
+    .chapter-number { font-size:6.5rem; font-weight:900; line-height:1; letter-spacing:-.04em; background:linear-gradient(135deg,rgba(37,99,235,.22),rgba(2,132,199,.18)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:8px; font-family:'Space Grotesk','Segoe UI',Arial,sans-serif; }
     .card-row { display:flex; gap:14px; width:100%; max-width:1040px; flex-wrap:wrap; justify-content:center; }
     .card { background:var(--glass2); border:1px solid var(--border); border-radius:16px; padding:20px; flex:1 1 200px; min-width:200px; max-width:300px; backdrop-filter:blur(8px); transition:all .3s ease; }
     .card:hover { transform:translateY(-4px); border-color:rgba(61,122,245,.3); }
@@ -68,7 +66,7 @@
     .overview-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:15px; width:100%; max-width:980px; }
     .ov-item { background:var(--glass2); border:1px solid var(--border); border-radius:14px; padding:18px; display:flex; gap:13px; align-items:flex-start; transition:all .3s ease; cursor:pointer; }
     .ov-item:hover { border-color:var(--accent); transform:translateY(-2px); }
-    .ov-num { font-family:'Space Grotesk',sans-serif; font-size:1.7rem; font-weight:700; color:rgba(61,122,245,.4); line-height:1; min-width:28px; }
+    .ov-num { font-family:'Space Grotesk','Segoe UI',Arial,sans-serif; font-size:1.7rem; font-weight:700; color:rgba(61,122,245,.4); line-height:1; min-width:28px; }
     .ov-text h4 { font-size:.88rem; font-weight:700; margin-bottom:4px; } .ov-text p { font-size:.76rem; color:var(--muted); line-height:1.5; }
     .flow { display:flex; align-items:center; width:100%; max-width:880px; flex-wrap:wrap; justify-content:center; margin-top:18px; }
     .flow-item { display:flex; flex-direction:column; align-items:center; gap:7px; background:var(--glass2); border:1px solid var(--border); border-radius:14px; padding:16px 20px; min-width:115px; text-align:center; font-size:.8rem; color:var(--muted); transition:all .3s ease; }
@@ -125,7 +123,7 @@
     .cycle-node strong { font-size:.92rem; display:block; margin-bottom:5px; } .cycle-node span { font-size:.78rem; color:var(--muted); }
     .cycle-arrow-v { font-size:1.4rem; color:var(--accent); text-align:center; padding:3px; }
     .stat-box { background:var(--glass2); border:1px solid var(--border); border-radius:16px; padding:22px 28px; text-align:center; flex:1 1 150px; }
-    .stat-num { font-family:'Space Grotesk',sans-serif; font-size:2.4rem; font-weight:700; background:linear-gradient(135deg,var(--cyan),var(--teal)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height:1.1; }
+    .stat-num { font-family:'Space Grotesk','Segoe UI',Arial,sans-serif; font-size:2.4rem; font-weight:700; background:linear-gradient(135deg,var(--cyan),var(--teal)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height:1.1; }
     .stat-label { font-size:.8rem; color:var(--muted); margin-top:5px; line-height:1.4; }
     .brain-anim { width:160px; height:160px; margin-bottom:28px; }
     .brain-anim svg { width:100%; height:100%; }
@@ -294,7 +292,7 @@
     /* Home button - top left */
     /* Top-left nav group */
     #top-left { position:fixed; top:14px; left:22px; display:flex; align-items:center; gap:8px; z-index:100; }
-    #home-btn { display:flex; align-items:center; gap:7px; background:var(--glass2); border:1px solid var(--border); border-radius:999px; padding:7px 15px; cursor:pointer; color:var(--muted); font-size:12px; font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spacing:.04em; backdrop-filter:blur(12px); transition:all .3s ease; opacity:0; pointer-events:none; flex-shrink:0; white-space:nowrap; }
+    #home-btn { display:flex; align-items:center; gap:7px; background:var(--glass2); border:1px solid var(--border); border-radius:999px; padding:7px 15px; cursor:pointer; color:var(--muted); font-size:12px; font-family:'Space Grotesk','Segoe UI',Arial,sans-serif; font-weight:600; letter-spacing:.04em; backdrop-filter:blur(12px); transition:all .3s ease; opacity:0; pointer-events:none; flex-shrink:0; white-space:nowrap; }
     #home-btn.visible { opacity:1; pointer-events:all; }
     #home-btn:hover { background:rgba(61,122,245,.2); border-color:var(--accent); color:var(--cyan); box-shadow:0 0 14px rgba(61,122,245,.25); }
     #home-btn svg { width:13px; height:13px; fill:currentColor; }
@@ -302,13 +300,13 @@
     #section-bar { display:flex; align-items:center; gap:10px; background:var(--glass2); border:1px solid var(--border); border-radius:999px; padding:7px 16px; backdrop-filter:blur(14px); opacity:0; pointer-events:none; transition:opacity .4s ease, border-color .4s ease; white-space:nowrap; }
     #section-bar.visible { opacity:1; }
     #section-bar .sec-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; transition:background .4s ease, box-shadow .4s ease; }
-    #section-bar .sec-name { font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; transition:color .4s ease; }
+    #section-bar .sec-name { font-family:'Space Grotesk','Segoe UI',Arial,sans-serif; font-size:12px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; transition:color .4s ease; }
     #section-bar .sec-divider { width:1px; height:13px; background:var(--border); margin:0 2px; }
     #section-bar .sec-pips { display:flex; gap:5px; align-items:center; }
     #section-bar .sec-pip { width:18px; height:4px; border-radius:999px; background:rgba(0,0,80,.12); transition:all .3s ease; }
     #section-bar .sec-pip.done { opacity:.5; }
     #section-bar .sec-pip.active { }
-    #section-bar .sec-prog { font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; margin-left:2px; transition:color .4s ease; letter-spacing:.04em; }
+    #section-bar .sec-prog { font-family:'Space Grotesk','Segoe UI',Arial,sans-serif; font-size:11px; font-weight:700; margin-left:2px; transition:color .4s ease; letter-spacing:.04em; }
     .ov-item { position:relative; overflow:hidden; }
     .ov-item::after { content:'\2192'; position:absolute; right:14px; top:50%; transform:translateY(-50%) translateX(6px); font-size:1rem; color:var(--accent); opacity:0; transition:all .3s ease; }
     .ov-item:hover::after { opacity:1; transform:translateY(-50%) translateX(0); }
@@ -337,7 +335,7 @@
 
     .home-content { display:grid;grid-template-columns:1fr 1fr;gap:44px;width:100%;max-width:1140px;align-items:center;position:relative;z-index:1; }
     .home-left { display:flex;flex-direction:column; }
-    .home-badge { display:inline-flex;align-items:center;gap:10px;background:rgba(0,190,235,.35);border:1px solid rgba(0,212,255,.65);border-radius:10px;padding:9px 20px;font-size:13px;font-weight:600;font-style:italic;color:#ffffff;letter-spacing:.01em;margin-bottom:20px;width:fit-content;font-family:'Be Vietnam Pro',sans-serif;line-height:1.4;text-shadow:0 0 10px rgba(0,212,255,.3);box-shadow:0 0 18px rgba(0,212,255,.15); }
+    .home-badge { display:inline-flex;align-items:center;gap:10px;background:rgba(0,190,235,.35);border:1px solid rgba(0,212,255,.65);border-radius:10px;padding:9px 20px;font-size:13px;font-weight:600;font-style:italic;color:#ffffff;letter-spacing:.01em;margin-bottom:20px;width:fit-content;font-family:'Be Vietnam Pro','Segoe UI',Arial,sans-serif;line-height:1.4;text-shadow:0 0 10px rgba(0,212,255,.3);box-shadow:0 0 18px rgba(0,212,255,.15); }
     .home-title { font-size:clamp(1.7rem,3vw,2.8rem);font-weight:900;line-height:1.18;letter-spacing:-.025em;color:#e8f0ff;margin-bottom:16px; }
     .home-brain-glow { background:linear-gradient(135deg,#00d4ff 0%,#7c3aed 50%,#ef4444 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:brain-glow-anim 3s ease-in-out infinite; }
     @keyframes brain-glow-anim { 0%,100%{filter:drop-shadow(0 0 8px rgba(0,212,255,.6));}50%{filter:drop-shadow(0 0 18px rgba(124,58,237,.7));} }
