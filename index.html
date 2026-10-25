@@ -766,8 +766,10 @@
       .eth-img-wrap { flex:1 1 0; }
       .eth-caption { flex:none; }
       /* Vùng não: ảnh lớn hơn, chiều cao cố định */
-      .region-detail { grid-template-columns:1fr 300px !important; min-height:0; }
-      .rd-img-panel { height:340px !important; max-height:none !important; }
+      .region-detail { grid-template-columns:1fr 1fr !important; min-height:0; gap:24px !important; }
+      .rd-img-panel { height:440px !important; max-height:none !important; }
+      .rd-name { font-size:1.35rem !important; }
+      .rd-section { font-size:1rem !important; }
       /* GABA / Glutamate: ảnh minh họa lớn hơn */
       .nt-layout { grid-template-columns:1fr 320px 1fr !important; max-width:1300px !important; align-items:center !important; }
       .nt-layout .img-panel { height:380px; }
@@ -910,9 +912,10 @@
   <div class="badge"><span class="dot-pulse"></span>H&#7879; th&#7889;ng GABA</div>
   <h2 class="section-title">&#129514; GABA &#8212; Ch&#226;n phanh c&#7911;a n&#227;o</h2>
   <div class="divider"></div>
+  <p class="sub" style="max-width:1100px;"><strong>GABA</strong> (gamma-Aminobutyric acid) là chất dẫn truyền thần kinh gắn vào thụ thể GABA, có tác động <strong>ức chế</strong> dẫn truyền thần kinh.</p>
   <div class="nt-layout" style="display:grid;grid-template-columns:1fr 260px 1fr;gap:16px;width:100%;max-width:1020px;align-items:start;">
     <div class="nt-panel">
-      <div class="nt-header"><span class="nt-badge nt-inhibit">&#7913;c ch&#7871;</span><h3>B&#236;nh th&#432;&#7901;ng</h3></div>
+      <div class="nt-header"><span class="nt-badge nt-inhibit">&#7913;c ch&#7871;</span><h3>Sinh lý</h3></div>
       <div class="nt-row">
         <div class="nt-row-item"><div class="di" style="background:var(--cyan)"></div><p>GABA g&#7855;n v&#224;o th&#7909; th&#7875; <strong>GABA-A</strong> tr&#234;n neuron nh&#7853;n</p></div>
         <div class="nt-row-item"><div class="di" style="background:var(--cyan)"></div><p>M&#7903; k&#234;nh cho <strong>ion Cl&#8315;</strong> &#273;i v&#224;o t&#7871; b&#224;o</p></div>
@@ -937,7 +940,7 @@
   <div class="divider"></div>
   <div class="nt-layout" style="display:grid;grid-template-columns:1fr 260px 1fr;gap:16px;width:100%;max-width:1020px;align-items:start;">
     <div class="nt-panel">
-      <div class="nt-header"><span class="nt-badge nt-excite">h&#432;ng ph&#7845;n</span><h3>B&#236;nh th&#432;&#7901;ng</h3></div>
+      <div class="nt-header"><span class="nt-badge nt-excite">h&#432;ng ph&#7845;n</span><h3>Sinh lý</h3></div>
       <div class="nt-row">
         <div class="nt-row-item"><div class="di" style="background:var(--orange)"></div><p>Glutamate g&#7855;n v&#224;o th&#7909; th&#7875; <strong>NMDA</strong> tr&#234;n neuron nh&#7853;n</p></div>
         <div class="nt-row-item"><div class="di" style="background:var(--orange)"></div><p>M&#7903; k&#234;nh cho ion d&#432;&#417;ng <strong>Na&#8314;, Ca&#178;&#8314;</strong> v&#224;o t&#7871; b&#224;o</p></div>
@@ -966,8 +969,7 @@
       <tbody>
         <tr><td>Vai tr&#242; sinh l&#253;</td><td><span class="pill pill-cyan">&#7913;c ch&#7871;</span> &#8212; l&#224;m d&#7883;u ho&#7841;t &#273;&#7897;ng th&#7847;n kinh</td><td><span class="pill pill-orange">h&#432;ng ph&#7845;n</span> &#8212; k&#237;ch th&#237;ch t&#432; duy, ghi nh&#7899;</td></tr>
         <tr><td>Th&#7909; th&#7875; m&#7909;c ti&#234;u</td><td>GABA-A</td><td>NMDA</td></tr>
-        <tr><td>Ion li&#234;n quan</td><td>Cl&#8315; (&#226;m) v&#224;o &#8594; &#7913;c ch&#7871; neuron</td><td>Na&#8314;, Ca&#178;&#8314; (d&#432;&#417;ng) v&#224;o &#8594; k&#237;ch th&#237;ch neuron</td></tr>
-        <tr><td>T&#225;c &#273;&#7897;ng Ethanol</td><td><strong style="color:var(--cyan)">T&#259;ng c&#432;&#7901;ng</strong> &#8212; m&#7903; k&#234;nh Cl&#8315; l&#226;u h&#417;n</td><td><strong style="color:var(--orange)">&#7913;c ch&#7871;</strong> &#8212; ng&#259;n ion d&#432;&#417;ng v&#224;o t&#7871; b&#224;o</td></tr>
+        <tr><td>T&#225;c &#273;&#7897;ng Ethanol</td><td><strong style="color:var(--cyan)">Tăng cường</strong> tác động ức chế</td><td><strong style="color:var(--orange)">Suy giảm</strong> tác động kích thích</td></tr>
         <tr><td>&#7848;n d&#7909;</td><td>&#129462; <em>&#272;&#7841;p m&#7841;nh ch&#226;n <strong>phanh</strong></em></td><td>&#129462; <em>Nh&#7843; ch&#226;n <strong>ga</strong></em></td></tr>
         <tr><td>H&#7853;u qu&#7843;</td><td>Bu&#7891;n ng&#7911; &middot; Ph&#7843;n x&#7841; ch&#7853;m &middot; M&#7845;t th&#259;ng b&#7857;ng &middot; N&#243;i ng&#7885;ng</td><td>Suy gi&#7843;m tr&#237; nh&#7899; &middot; Ch&#7853;m t&#432; duy &middot; K&#233;m t&#7853;p trung &middot; Blackout</td></tr>
       </tbody>
@@ -1045,11 +1047,11 @@
     <table class="wks-table">
       <thead><tr><th>Tiêu chí phân biệt</th><th>&#128993; Bệnh não Wernicke (Wernicke&#8217;s Encephalopathy &#8212; WE)</th><th>&#128308; Hội chứng Korsakoff (Korsakoff&#8217;s Syndrome &#8212; KS)</th></tr></thead>
       <tbody>
-        <tr><td>Bản chất &amp; diễn tiến</td><td>Cấp tính / bán cấp, nguy hiểm tính mạng nhưng <strong>có thể đảo ngược</strong> nếu điều trị kịp thời.</td><td>Di chứng mạn tính hình thành sau đợt WE &#8212; <strong>phần lớn không thể đảo ngược</strong>.</td></tr>
+        <tr><td>Bản chất</td><td>Rối loạn thần kinh <strong>cấp tính</strong>.</td><td>Rối loạn thần kinh <strong>mạn tính</strong>.</td></tr>
         <tr><td>Cơ chế trực tiếp</td><td>Sự sụt giảm / thiếu hụt <strong>Thiamin (Vitamin B1)</strong> cấp tính đột ngột.</td><td>Di chứng tổn thương cấu trúc não vĩnh viễn do WE không được điều trị thiamin đầy đủ và kịp thời.</td></tr>
         <tr><td>Triệu chứng lâm sàng chính</td><td><strong>Tam chứng cổ điển:</strong> (1) Rối loạn vận động mắt (nhìn đôi, liệt cơ mắt) &middot; (2) Thất điều tiểu não (mất thăng bằng, dáng đi loạng choạng) &middot; (3) Thay đổi trạng thái tâm thần cấp (lú lẫn, thờ ơ, chậm chạp).</td><td><strong>Hội chứng trí nhớ &#8211; tâm thần mạn tính:</strong> (1) Mất trí nhớ toàn thể (đặc biệt là quên về sau / <em>anterograde amnesia</em>) &middot; (2) <strong>Bịa chuyện (confabulation)</strong> &middot; (3) Rối loạn chức năng điều hành &amp; mất nhận thức bệnh &middot; (4) Thờ ơ, phẳng lặng cảm xúc.</td></tr>
         <tr><td>Vùng não tổn thương</td><td>Phù não, xung huyết/xuất huyết quanh cống não, não thất III, IV, thể vú và đồi thị.</td><td>Teo vĩnh viễn thể vú, nhân đồi thị giữa-lưng; đặc biệt mất nơ-ron nghiêm trọng tại <strong>Nhân đồi thị trước (Anterior thalamic nuclei)</strong>.</td></tr>
-        <tr><td>Đáp ứng điều trị</td><td><strong>Đáp ứng rất nhanh</strong> với Thiamin (Vitamin B1) liều cao qua đường tiêm/truyền tĩnh mạch (IV).</td><td>Không hiệu quả với thuốc &middot; Phục hồi phụ thuộc vào việc ngừng rượu hoàn toàn và phục hồi chức năng nhận thức.</td></tr>
+        <tr><td>Điều trị</td><td><strong>Có thể điều trị được</strong>.</td><td><strong>Hầu như không thể đảo ngược</strong>.</td></tr>
         <tr><td>Mối liên quan lâm sàng</td><td>Là giai đoạn cấp tính tiền đề. Nếu không điều trị thiamin khẩn cấp, <strong>~80% bệnh nhân WE</strong> nghiện rượu sẽ chuyển sang KS.</td><td>Là giai đoạn di chứng muộn. Khi triệu chứng cấp của WE và mạn của KS xuất hiện đồng thời, gọi chung là <strong>Hội chứng WKS</strong>.</td></tr>
       </tbody>
     </table>
@@ -1358,17 +1360,15 @@
   // ── Region Explorer ──────────────────────────────────────
   const REGIONS_DATA = [
     { name:'Vỏ não trước trán', en:'Prefrontal Cortex', emoji:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="3" x2="12" y2="20"/><line x1="8" y1="20" x2="16" y2="20"/><path d="M12 3 L3 7"/><path d="M12 3 L21 7"/><path d="M3 7 l-1 6a2 2 0 0 0 4 0 L3 7z"/><path d="M21 7 l-1 6a2 2 0 0 0 4 0 L21 7z"/></svg>', color:'#3d7af5',
-      fn:['Đánh giá tình huống, cân nhắc lợi ích và rủi ro.',
-          'Ra quyết định có chủ đích.',
-          'Điều chỉnh cảm xúc và hành vi phù hợp với hoàn cảnh xã hội.'],
-      effect:'Suy giảm khả năng đánh giá tình huống và kiểm soát hành vi; dễ hành động theo cảm xúc/ham muốn tức thời, ít cân nhắc hậu quả.',
-      manifest:'Nói những điều bình thường không dám nói, quyết định bốc đồng, hành xử bộc phát hoặc có tính gây hấn.',
+      fn:['Đánh giá tình huống, ra quyết định.',
+          'Điều chỉnh cảm xúc và hành vi.'],
+      effect:'Suy giảm kiểm soát hành vi, ít cân nhắc hậu quả.',
+      manifest:'Nói năng, quyết định bốc đồng; dễ gây hấn.',
       img:'images/prefrontal.png', effectColor:'#3d7af5' },
     { name:'Hạch hạnh nhân', en:'Amygdala', emoji:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 1-7-7c0-2.5.9-4.7 2.5-6.3.2 1.6.7 2.9 1.8 3.8.4-3.2 1.4-6 3.2-8 1.2 2.2 1.5 5.1 2.5 7 .5-1.5.5-3 .5-4.7C17.5 8.8 19 12 19 15a7 7 0 0 1-7 7z"/></svg>', color:'#f5a623',
-      fn:['Xử lý tín hiệu cảm xúc (đặc biệt là sợ hãi, lo âu, tức giận).',
-          'Phối hợp với vùng dưới đồi và vỏ não trước trán điều chỉnh phản ứng cảm xúc.'],
-      effect:'Thay đổi khả năng điều hòa cảm xúc; suy giảm phối hợp giữa hệ viền và vỏ não trước trán khiến phản ứng không còn phù hợp bối cảnh.',
-      manifest:'Dễ xúc động, dễ tức giận, phản ứng thái quá hoặc khó kiểm soát cảm xúc.',
+      fn:['Xử lý cảm xúc: sợ hãi, lo âu, tức giận.'],
+      effect:'Rối loạn khả năng điều hòa cảm xúc.',
+      manifest:'Dễ xúc động, dễ nổi nóng, phản ứng thái quá.',
       img:'images/amygdala.png', effectColor:'#f5a623' },
     { name:'Hồi hải mã', en:'Hippocampus', emoji:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="13" y2="13"/></svg>', color:'#0d9488',
       fn:['Tiếp nhận và xử lý thông tin mới.',
@@ -1378,37 +1378,30 @@
       note:'<strong>Lưu ý: Blackout ≠ Bất tỉnh</strong> — Người uống vẫn tỉnh táo giao tiếp, đi lại và phản ứng với môi trường lúc say, nhưng quá trình ghi nhận ký ức mới bị cắt đứt hoàn toàn.',
       img:'images/hippocampus.png', effectColor:'#0d9488' },
     { name:'Tiểu não', en:'Cerebellum', emoji:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><line x1="12" y1="6" x2="12" y2="15"/><line x1="4" y1="11" x2="20" y2="11"/><line x1="12" y1="15" x2="8" y2="22"/><line x1="12" y1="15" x2="16" y2="22"/></svg>', color:'#7c3aed',
-      fn:['Điều chỉnh thăng bằng và tư thế.',
-          'Phối hợp hoạt động các nhóm cơ, kiểm soát độ chính xác, thời gian và lực của động tác.'],
-      effect:'Rối loạn các mạch thần kinh vận động, kém phối hợp cơ và giảm khả năng điều chỉnh sai số vận động.',
-      manifest:'Đi đứng loạng choạng, cầm nắm thiếu chính xác, nói ngọng, phản ứng vận động chậm.',
+      fn:['Giữ thăng bằng, phối hợp vận động chính xác.'],
+      effect:'Rối loạn phối hợp cơ.',
+      manifest:'Đi loạng choạng, cầm nắm thiếu chính xác, nói ngọng.',
       img:'images/cerebellum_anatomy_real.png', effectColor:'#7c3aed' },
     { name:'Thân não', en:'Brainstem', emoji:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 12 6 12 8 5 10 19 13 9 15 15 17 12 22 12"/></svg>', color:'#dc2626',
-      fn:['Duy trì trạng thái thức tỉnh.',
-          'Điều hòa nhịp thở và nhịp tim.',
-          'Kiểm soát các phản xạ sống thiết yếu (nuốt, ho...).'],
+      fn:['Duy trì tỉnh táo, nhịp thở, nhịp tim.',
+          'Phản xạ sống: nuốt, ho.'],
       effectLabel:'Khi nồng độ ethanol quá cao',
-      effect:'Ức chế nghiêm trọng hệ thần kinh trung ương, làm suy giảm mức độ tỉnh táo, hô hấp và các chức năng sinh tồn.',
-      manifest:'Lơ mơ, khó đánh thức, mất phản xạ bảo vệ đường thở, thở chậm, hôn mê và tử vong (<strong style="color:#dc2626">Ngộ độc rượu cấp tính — cấp cứu y khoa</strong>).',
+      effect:'Ức chế hô hấp và các chức năng sinh tồn.',
+      manifest:'Lơ mơ, thở chậm, hôn mê, có thể tử vong (<strong style="color:#dc2626">Ngộ độc rượu cấp — cấp cứu y khoa</strong>).',
       img:'images/brainstem_anatomy.png', effectColor:'#dc2626' },
     { name:'Vùng dưới đồi', en:'Hypothalamus', emoji:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/><line x1="10.5" y1="7" x2="13.5" y2="7"/><line x1="10.5" y1="10" x2="13.5" y2="10"/><line x1="10.5" y1="13" x2="13.5" y2="13"/></svg>', color:'#16a34a',
-      fn:['Duy trì cân bằng nội môi; điều hòa cảm giác đói, khát, thân nhiệt.',
-          'Kiểm soát trục nội tiết (tuyến yên - thượng thận), điều hòa stress và hệ thần kinh tự chủ (nhịp tim, huyết áp, mồ hôi).'],
+      fn:['Cân bằng nội môi: đói, khát, thân nhiệt, nội tiết.'],
       effectLabel:'Khi chịu tác động &amp; Biểu hiện thực tế',
-      effect:['<strong>Tăng tiểu tiện &amp; khát nước:</strong> Ức chế hormone chống bài niệu ADH (vasopressin) → thận tăng thải nước → mất nước, mệt mỏi, nôn nao hôm sau.',
-              '<strong>Rối loạn thân nhiệt:</strong> Giãn mạch ngoại vi làm da nóng, đỏ mặt nhưng thực chất cơ thể thoát nhiệt nhanh → nguy cơ hạ thân nhiệt khi trời lạnh.',
-              '<strong>Thay đổi cảm giác đói:</strong> Rối loạn tín hiệu leptin &amp; ghrelin → kích thích thèm ăn (đồ nhiều calo, dầu mỡ, muối) vào ban đêm.'],
+      effect:['Ức chế ADH → tiểu nhiều, mất nước, nôn nao.',
+              'Giãn mạch → nóng mặt nhưng mất nhiệt, dễ hạ thân nhiệt.',
+              'Rối loạn leptin/ghrelin → thèm ăn về đêm.'],
       manifest:null,
       img:'images/hypothalamus_vi.png', effectColor:'#16a34a' },
     { name:'Nhân Accumbens', en:'Nucleus Accumbens', emoji:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3 12 2"/></svg>', color:'#db2777',
-      fn:['Xử lý tín hiệu khen thưởng, tạo cảm giác sảng khoái, dễ chịu (trung tâm cốt lõi của hệ thống tưởng thưởng — reward system).',
-          'Thúc đẩy động lực, định hướng hành vi tìm kiếm phần thưởng.',
-          'Củng cố các thói quen và hành vi mang lại cảm giác tích cực.',
-          'Phối hợp với hạch hạnh nhân và vỏ não trước trán để liên kết kích thích môi trường với cảm giác dễ chịu.'],
-      effect:'Kích thích giải phóng đột ngột <strong>Dopamine</strong> và các peptide opioid nội sinh (<strong>endorphin</strong>), khiến não ghi nhận uống rượu là trải nghiệm có lợi cần lặp lại.',
-      manifest:['Hưng phấn, thư giãn, giảm căng thẳng tức thì ở những ly đầu.',
-                'Thúc đẩy muốn uống thêm để duy trì khoái cảm.',
-                'Hình thành liên tưởng với bối cảnh (quán xá, bạn nhậu, tiếng cụng ly) → kích hoạt cơn thèm cồn.'],
+      fn:['Trung tâm tưởng thưởng: tạo khoái cảm, thúc đẩy động lực.'],
+      effect:'Tăng giải phóng <strong>Dopamine</strong> &amp; <strong>endorphin</strong> → não ghi nhận uống rượu là “phần thưởng”.',
+      manifest:['Hưng phấn, thư giãn ở những ly đầu.',
+                'Muốn uống thêm; bối cảnh quán nhậu gợi cơn thèm.'],
       img:'images/brain_dopamine_reward.png', effectColor:'#db2777' },
   ];
   // Nội dung cột trái của panel chi tiết vùng não (dùng chung cho slide và bản in)
@@ -1464,7 +1457,7 @@
   const ETHANOL_STEPS = [
     { icon:'\uD83D\uDC44', name:'Mi\u1ec7ng', color:'#00d4ff',
       desc:'Ethanol v\u00e0o h\u1ec7 ti\u00eau h\u00f3a qua mi\u1ec7ng, xu\u1ed1ng th\u1ef1c qu\u1ea3n v\u00e0 d\u1ea1 d\u00e0y.',
-      caption:'\uD83D\uDCA1 Ethanol ho\u00e0 tan trong n\u01b0\u1edbc b\u1ecdt ngay khi v\u00e0o mi\u1ec7ng. H\u1ea5p th\u1ee5 nh\u1ecf b\u1eaft \u0111\u1ea7u t\u1ea1i ni\u00eam m\u1ea1c mi\u1ec7ng.',
+      caption:'💡 Hấp thụ một lượng nhỏ tại niêm mạc miệng.',
       img:'images/ethanol_step1.jpg' },
     { icon:'\uD83C\uDF7B', name:'D\u1ea1 d\u00e0y', color:'#f5a623',
       desc:'Kho\u1ea3ng 20% Ethanol \u0111\u01b0\u1ee3c h\u1ea5p th\u1ee5 qua ni\u00eam m\u1ea1c d\u1ea1 d\u00e0y.',
@@ -1475,12 +1468,12 @@
       caption:'\uD83D\uDCA1 H\u1ea5p th\u1ee5 nhanh nh\u1ea5t \u2014 di\u1ec7n t\u00edch b\u1ec1 m\u1eb7t l\u1edbn. N\u1ed3ng \u0111\u1ed9 c\u1ed3n trong m\u00e1u t\u0103ng r\u00f5.',
       img:'images/ethanol_step3.jpg' },
     { icon:'\u2665', name:'Tu\u1ea7n ho\u00e0n', color:'#e74c3c',
-      desc:'Ethanol v\u00e0o m\u00e1u, \u0111i qua gan v\u00e0 \u0111\u01b0\u1ee3c v\u1eadn chuy\u1ec3n kh\u1eafp c\u01a1 th\u1ec3.',
-      caption:'\uD83E\uDDA0 Gan ch\u1ee7 y\u1ebfu lo\u1ea1i Ethanol (ADH enzyme) nh\u01b0ng c\u00f3 gi\u1edbi h\u1ea1n ~1 \u0111\u01a1n v\u1ecb/gi\u1edd.',
+      desc:'Ethanol vào máu, đi qua gan và được vận chuyển khắp cơ thể.',
+      caption:'🫀 Gan là cơ quan chuyển hoá chính ethanol thành các chất ít độc hơn với tốc độ ~1 đơn vị/giờ.<br>📏 <em>Lưu ý: 1 đơn vị (unit) = 8 gram = 10 mL cồn nguyên chất.</em>',
       img:'images/ethanol_step4.jpg' },
     { icon:'\uD83E\uDDE0', name:'N\u00e3o b\u1ed9', color:'#9b59b6',
-      desc:'Ethanol v\u01b0\u1ee3t h\u00e0ng r\u00e0o m\u00e1u-n\u00e3o (BBB) nh\u1edd ph\u00e2n t\u1eed nh\u1ecf, tan trong c\u1ea3 n\u01b0\u1edbc v\u00e0 m\u1ee1.',
-      caption:'\uD83D\uDD11 BBB b\u00ecnh th\u01b0\u1eddng l\u1ecdc h\u1ea7u h\u1ebft c\u00e1c ch\u1ea5t \u2014 nh\u01b0ng Ethanol v\u01b0\u1ee3t qua d\u1ec5 d\u00e0ng. T\u00e1c \u0111\u1ed9ng l\u00ean GABA & Glutamate b\u1eaft \u0111\u1ea7u.',
+      desc:'Hàng rào máu não (BBB) có vai trò quan trọng trong việc ngăn các chất độc hại, mầm bệnh hay vi khuẩn từ hệ tuần hoàn đi vào não.',
+      caption:'🔑 Do ethanol có kích thước nhỏ, dễ dàng vượt qua hàng rào máu não và tác động lên thần kinh trung ương.',
       img:'images/ethanol_step5.jpg' },
   ];
   let activeEthStep = 0;
