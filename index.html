@@ -92,7 +92,8 @@
     .comp-table th { padding:13px 16px; text-align:left; font-weight:700; font-size:.88rem; letter-spacing:.04em; border-bottom:1px solid var(--border); }
     .comp-table th:nth-child(2) { color:var(--cyan); } .comp-table th:nth-child(3) { color:var(--orange); }
     .comp-table td { padding:11px 16px; border-bottom:1px solid rgba(0,0,80,.06); color:var(--muted); line-height:1.5; vertical-align:top; }
-    .comp-table td:first-child { color:var(--text); font-weight:600; font-size:.8rem; }
+    .comp-table td:first-child { color:var(--text); font-weight:600; font-size:.8rem; text-align:left !important; white-space:nowrap; }
+    .wks-table td:first-child { text-align:left !important; }
     .comp-table tr:hover td { background:rgba(37,99,235,.04); }
     .pill { display:inline-block; padding:3px 9px; border-radius:999px; font-size:.76rem; font-weight:600; }
     .pill-cyan { background:rgba(0,212,255,.15); color:var(--cyan); } .pill-orange { background:rgba(245,166,35,.15); color:var(--orange); }
@@ -560,7 +561,8 @@
       .comp-table        { font-size: 1rem; }
       .comp-table th     { font-size: 1.15rem; padding: 14px 16px; }
       .comp-table td     { font-size: 1.05rem; padding: 13px 16px; line-height: 1.55; }
-      .comp-table td:first-child { font-size: 1.05rem; }
+      .comp-table td:first-child { font-size: 1.05rem; text-align:left !important; white-space:nowrap; }
+      .wks-table td:first-child { text-align:left !important; }
       .pill              { font-size: 0.92rem; padding: 4px 11px; }
 
       /* ── Bảng Wernicke–Korsakoff ───────────────────────────────────── */
