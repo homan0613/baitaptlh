@@ -339,7 +339,8 @@
     .home-content { display:grid;grid-template-columns:1fr 1fr;gap:44px;width:100%;max-width:1140px;align-items:center;position:relative;z-index:1; }
     .home-left { display:flex;flex-direction:column; }
     .home-badge { display:inline-flex;align-items:center;gap:10px;background:rgba(0,190,235,.35);border:1px solid rgba(0,212,255,.65);border-radius:10px;padding:9px 20px;font-size:13px;font-weight:600;font-style:italic;color:#ffffff;letter-spacing:.01em;margin-bottom:20px;width:fit-content;font-family:'Be Vietnam Pro','Segoe UI',Arial,sans-serif;line-height:1.4;text-shadow:0 0 10px rgba(0,212,255,.3);box-shadow:0 0 18px rgba(0,212,255,.15); }
-    .home-title { font-size:clamp(1.7rem,3vw,2.8rem);font-weight:900;line-height:1.18;letter-spacing:-.025em;color:#e8f0ff;margin-bottom:16px; }
+    .home-title { font-size:clamp(1.2rem,2.5vw,2.5rem);font-weight:900;line-height:1.22;letter-spacing:-.025em;color:#e8f0ff;margin-bottom:16px; }
+    .home-title .title-line { display:inline-block; white-space:nowrap; }
     .home-brain-glow { background:linear-gradient(135deg,#00d4ff 0%,#7c3aed 50%,#ef4444 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:brain-glow-anim 3s ease-in-out infinite; }
     @keyframes brain-glow-anim { 0%,100%{filter:drop-shadow(0 0 8px rgba(0,212,255,.6));}50%{filter:drop-shadow(0 0 18px rgba(124,58,237,.7));} }
     .home-lead { font-size:1rem;color:rgba(220,235,255,.92);line-height:1.7;margin-bottom:18px;white-space:nowrap; }
@@ -365,7 +366,8 @@
       .home-content { grid-template-columns:1fr;gap:18px; }
       .home-right { order:-1; }
       .home-brain-img { max-width:240px; }
-      .home-title { font-size:1.35rem; }
+      .home-title { font-size:clamp(1.05rem,4.5vw,1.35rem); }
+      .home-title .title-line { white-space:nowrap; }
     }
     /* ── PRINT / PDF EXPORT ───────────────────────────────── */
 
@@ -836,7 +838,7 @@
   <div class="home-content">
     <div class="home-left">
       <div class="home-badge">&#x1F9EC; Gi&#7843;i ph&#7851;u v&#224; sinh l&#253; ho&#7841;t &#273;&#7897;ng th&#7847;n kinh c&#7845;p cao</div>
-      <h1 class="home-title">&#272;i&#7873;u g&#236; x&#7843;y ra trong <span class="home-brain-glow">n&#227;o b&#7897;</span><br/>khi ch&#250;ng ta u&#7889;ng r&#432;&#7907;u?</h1>
+      <h1 class="home-title"><span class="title-line">&#272;i&#7873;u g&#236; x&#7843;y ra trong <span class="home-brain-glow">n&#227;o b&#7897;</span></span><br/><span class="title-line">khi ch&#250;ng ta u&#7889;ng r&#432;&#7907;u?</span></h1>
       <p class="home-lead">H&#224;nh tr&#236;nh c&#7911;a ethanol &#8212; t&#7915; ly r&#432;&#7907;u &#273;&#7871;n t&#7871; b&#224;o th&#7847;n kinh</p>
       <div class="home-tags">
         <span class="home-tag">C&#417; ch&#7871;</span>
